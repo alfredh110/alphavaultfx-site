@@ -1,0 +1,1 @@
+export default function Challenge() { return <div className='text-xl'>Challenge Page</div>; }
