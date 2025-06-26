@@ -1,1 +1,0 @@
-export default function Home() { return <div>AlphaVaultFX is launching soon!</div>; }
