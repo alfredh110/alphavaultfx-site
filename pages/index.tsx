@@ -1,3 +1,7 @@
 export default function Home() {
-  return <div className="min-h-screen bg-black text-white p-10">Welcome to AlphaVaultFX</div>;
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <h1 className="text-3xl font-bold">Welcome to AlphaVaultFX</h1>
+    </div>
+  );
 }
