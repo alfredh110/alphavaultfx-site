@@ -15,4 +15,4 @@ export default function Home() {
       </div>
     </main>
   );
-}
+}Trigger new build with correct package.json
