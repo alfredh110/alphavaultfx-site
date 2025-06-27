@@ -19,4 +19,4 @@
     "@types/react": "^18.0.28",
     "@types/node": "^18.17.17"
   }
-}
+}// Trigger new Vercel build with correct package.json
