@@ -117,7 +117,7 @@ export default function Home() {
   </div>
 </section>
 
-   {/* How You Benefit Section */}
+  {/* How You Benefit Section */}
 <section className="my-16 py-12 bg-blue-50">
   <h2 className="text-3xl font-bold text-blue-900 mb-8 text-center">
     Find Out How You Can Benefit with AlphaVaultFX
@@ -150,3 +150,6 @@ export default function Home() {
 
   </div>
 </section>
+
+
+   
