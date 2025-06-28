@@ -29,6 +29,7 @@ export default function Home() {
         locale: 'en',
         toolbar_bg: isDark ? '#191919' : '#f1f3f6',
         enable_publishing: false,
+        allow_symbol_change: true,
       });
     };
     document.body.appendChild(script);
@@ -39,7 +40,7 @@ export default function Home() {
       <header className="py-6 text-center">
         <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-400">AlphaVaultFX</h1>
         <button
-          className="mt-4 py-2 px-4 rounded bg-blue-600 text-white dark:bg-blue-400"
+          className="mt-4 py-2 px-4 rounded bg-blue-600 dark:bg-blue-400 text-white"
           onClick={() => setIsDark(!isDark)}
         >
           Toggle {isDark ? 'Light' : 'Dark'} Mode
@@ -49,14 +50,14 @@ export default function Home() {
       <main className="flex-grow flex flex-col items-center justify-center">
         <p className="mb-4">Your trusted proprietary trading firm. Instant funding. No hidden rules.</p>
         <div id="tradingview_chart" className="w-full max-w-4xl h-96"></div>
-        <nav className="mt-6 flex space-x-4">
+        <div className="mt-6 flex space-x-4">
           <Link href="/about">
             <a className="bg-blue-600 dark:bg-blue-400 text-white py-2 px-4 rounded shadow">Learn More</a>
           </Link>
           <Link href="/start">
             <a className="bg-blue-600 dark:bg-blue-400 text-white py-2 px-4 rounded shadow">Start Trading</a>
           </Link>
-        </nav>
+        </div>
       </main>
 
       <footer className="py-4 text-center text-sm text-gray-600 dark:text-gray-400">
@@ -65,4 +66,3 @@ export default function Home() {
     </div>
   );
 }
-
