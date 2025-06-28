@@ -1,8 +1,17 @@
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [isDark]);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -13,7 +22,7 @@ export default function Home() {
       new TradingView.widget({
         container_id: 'tradingview_chart',
         autosize: true,
-        symbol: 'NASDAQ:AAPL',
+        symbol: 'US30',
         interval: 'D',
         timezone: 'Etc/UTC',
         theme: isDark ? 'dark' : 'light',
@@ -27,54 +36,43 @@ export default function Home() {
     document.body.appendChild(script);
   }, [isDark]);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [isDark]);
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
-      <header className="text-center mb-8">
-        <h1 className="text-5xl font-extrabold mb-4">
-          Welcome to <span className="text-blue-600 dark:text-blue-400">AlphaVaultFX</span>
-        </h1>
-        <p className="text-lg max-w-xl mx-auto">
-          Your trusted proprietary trading firm.
-        </p>
+    <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+      <header className="flex justify-between items-center p-4">
+        <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">AlphaVaultFX</h1>
+        <button
+          onClick={() => setIsDark(!isDark)}
+          className="px-3 py-1 rounded bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 hover:opacity-80 transition"
+        >
+          Toggle {isDark ? 'Light' : 'Dark'}
+        </button>
       </header>
 
-      <button
-        onClick={() => setIsDark(!isDark)}
-        className="mb-6 px-4 py-2 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 rounded shadow hover:opacity-80 transition"
-      >
-        Toggle {isDark ? 'Light' : 'Dark'} Mode
-      </button>
+      <main className="flex-grow">
+        <section className="text-center py-10">
+          <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">
+            Dominate the Markets with <span className="text-blue-600 dark:text-blue-400">AlphaVaultFX</span>
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+            Transparent funded trading challenges. No hidden rules. Instant funding.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link href="/dashboard">
+              <a className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white font-semibold py-3 px-6 rounded shadow">
+                Start Trading
+              </a>
+            </Link>
+            <Link href="/about">
+              <a className="border border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 font-semibold py-3 px-6 rounded shadow hover:bg-blue-50 dark:hover:bg-gray-800 transition">
+                Learn More
+              </a>
+            </Link>
+          </div>
+        </section>
 
-      <div className="flex flex-col sm:flex-row gap-4 mb-10">
-        <Link href="/about">
-          <a className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-400 transition text-white font-semibold py-3 px-6 rounded shadow">
-            About Us
-          </a>
-        </Link>
-        <Link href="/dashboard">
-          <a className="bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-400 transition text-white font-semibold py-3 px-6 rounded shadow">
-            Dashboard
-          </a>
-        </Link>
-        <Link href="/contact">
-          <a className="bg-gray-800 dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 transition text-white font-semibold py-3 px-6 rounded shadow">
-            Contact
-          </a>
-        </Link>
-      </div>
+        <section className="py-10 bg-gray-100 dark:bg-gray-800">
+          <h3 className="text-2xl font-bold text-center mb-6">Why AlphaVaultFX?</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="p-4 bg-white dark:bg-gray-700 rounded shadow text-center">
+              <h4 className="font-semibold m
 
-      <div className="w-full max-w-4xl h-96">
-        <div id="tradingview_chart" className="w-full h-full rounded shadow" />
-      </div>
-    </div>
-  );
-}
