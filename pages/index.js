@@ -1,7 +1,16 @@
+import Navbar from '../components/Navbar';
+
 export default function Home() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-900 text-white">
-      <h1 className="text-4xl font-bold">Welcome to AlphaVaultFX</h1>
-    </div>
-  )
+    <>
+      <Navbar />
+      <main style={{ padding: '2rem' }}>
+        <h1>Welcome to Your Prop Trading Platform</h1>
+        <p>
+          Get funded, prove your skills, and trade with our capital. 
+        </p>
+        <a href="/auth/register">Get Started</a>
+      </main>
+    </>
+  );
 }
