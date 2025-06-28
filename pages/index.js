@@ -82,6 +82,41 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+  {/* Trading Objectives Section */}
+<section className="my-16 text-center">
+  <h2 className="text-2xl font-bold text-blue-900 mb-4">Trading Objectives</h2>
+  <p className="text-gray-600 max-w-xl mx-auto mb-6">
+    Choose a trading objective that fits your style. Whether you're looking for a standard evaluation or direct funding, we provide the tools you need to succeed.
+  </p>
+  <div className="flex flex-col md:flex-row justify-center gap-6">
+    <div className="border rounded p-4 shadow w-64">
+      <h3 className="font-semibold text-blue-900 mb-2">Standard</h3>
+      <ul className="text-left text-gray-700">
+        <li>✅ Two-step evaluation</li>
+        <li>✅ Profit target 10%</li>
+        <li>✅ Max daily loss 5%</li>
+      </ul>
+    </div>
+    <div className="border rounded p-4 shadow w-64">
+      <h3 className="font-semibold text-blue-900 mb-2">Express</h3>
+      <ul className="text-left text-gray-700">
+        <li>✅ One-step evaluation</li>
+        <li>✅ Profit target 8%</li>
+        <li>✅ Max daily loss 4%</li>
+      </ul>
+    </div>
+    <div className="border rounded p-4 shadow w-64">
+      <h3 className="font-semibold text-blue-900 mb-2">Direct Funding</h3>
+      <ul className="text-left text-gray-700">
+        <li>✅ No evaluation</li>
+        <li>✅ Instant funding</li>
+        <li>✅ Withdraw anytime</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 
 
     </div>
