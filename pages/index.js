@@ -46,7 +46,43 @@ export default function Home() {
       </ul>
     </div>
   </div>
-</section>
+</section>      
+
+  {/* Trading Objectives Section */}
+      <section className="my-16 max-w-4xl mx-auto text-center">
+        <h2 className="text-2xl font-bold text-blue-900 mb-6">Trading Objectives</h2>
+        <p className="text-gray-600 mb-6">
+          Meet our trading objectives and unlock the opportunity to manage funded accounts. 
+          Choose your preferred account size and targets!
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+            <h3 className="font-bold text-blue-900">10K Account</h3>
+            <ul className="text-sm text-gray-600 mt-2">
+              <li>✔ Profit target: 10%</li>
+              <li>✔ Max loss: 5%</li>
+              <li>✔ Trading period: 30 days</li>
+            </ul>
+          </div>
+          <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+            <h3 className="font-bold text-blue-900">50K Account</h3>
+            <ul className="text-sm text-gray-600 mt-2">
+              <li>✔ Profit target: 10%</li>
+              <li>✔ Max loss: 5%</li>
+              <li>✔ Trading period: 30 days</li>
+            </ul>
+          </div>
+          <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+            <h3 className="font-bold text-blue-900">100K Account</h3>
+            <ul className="text-sm text-gray-600 mt-2">
+              <li>✔ Profit target: 10%</li>
+              <li>✔ Max loss: 5%</li>
+              <li>✔ Trading period: 30 days</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
 
     </div>
   );
