@@ -35,6 +35,49 @@ export default function Home() {
           </button>
         </div>
       </section>
+
+      {/* TRADING FEATURES */}
+      <section className="py-12 bg-blue-800">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="bg-blue-700 rounded-lg p-6 hover:bg-blue-600 transition">
+            <div className="text-4xl mb-2">📈</div>
+            <h3 className="font-bold text-lg mb-2">4 Trading Platforms</h3>
+            <p className="text-gray-300 text-sm">MetaTrader, cTrader & more supported.</p>
+          </div>
+          <div className="bg-blue-700 rounded-lg p-6 hover:bg-blue-600 transition">
+            <div className="text-4xl mb-2">🎓</div>
+            <h3 className="font-bold text-lg mb-2">Academy Access</h3>
+            <p className="text-gray-300 text-sm">Boost your skills with exclusive training.</p>
+          </div>
+          <div className="bg-blue-700 rounded-lg p-6 hover:bg-blue-600 transition">
+            <div className="text-4xl mb-2">💡</div>
+            <h3 className="font-bold text-lg mb-2">Performance Coach</h3>
+            <p className="text-gray-300 text-sm">Get guidance from our trading experts.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* CUSTOMER SUPPORT */}
+      <section className="py-10 text-center">
+        <h2 className="text-2xl font-bold mb-4">Global Customer Support</h2>
+        <p className="text-gray-300 mb-6">Available in 18 languages, 24/7 assistance</p>
+        <div className="flex flex-wrap justify-center gap-3">
+          <span className="text-xl">🇺🇸</span>
+          <span className="text-xl">🇬🇧</span>
+          <span className="text-xl">🇪🇸</span>
+          <span className="text-xl">🇫🇷</span>
+          <span className="text-xl">🇩🇪</span>
+          <span className="text-xl">🇮🇹</span>
+          <span className="text-xl">🇯🇵</span>
+          <span className="text-xl">🇧🇷</span>
+          <span className="text-xl">+ more</span>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-blue-800 py-6 text-center text-sm text-gray-400">
+        © {new Date().getFullYear()} AlphaVaultFX. All rights reserved.
+      </footer>
     </div>
   );
 }
