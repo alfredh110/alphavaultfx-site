@@ -1,14 +1,8 @@
-import Link from 'next/link';
-
 export default function Dashboard() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
       <h1 className="text-3xl font-bold">Dashboard</h1>
       <p className="mt-2">Your trading stats and account overview will show here.</p>
-
-      <Link href="/" className="text-blue-500 hover:underline mt-4">
-        Go to Home
-      </Link>
     </div>
   );
 }
