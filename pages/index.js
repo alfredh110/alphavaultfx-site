@@ -18,6 +18,7 @@ export default function Home() {
     script.src = 'https://s3.tradingview.com/tv.js';
     script.async = true;
     script.onload = () => {
+      // eslint-disable-next-line no-undef
       new TradingView.widget({
         container_id: 'tradingview_chart',
         autosize: true,
@@ -26,7 +27,6 @@ export default function Home() {
         timezone: 'Etc/UTC',
         theme: isDark ? 'dark' : 'light',
         style: '1',
-        locale: 'en',
         toolbar_bg: isDark ? '#191919' : '#f1f3f6',
         enable_publishing: false,
         allow_symbol_change: true,
@@ -37,10 +37,10 @@ export default function Home() {
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
-      <header className="py-6 text-center">
-        <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-400">AlphaVaultFX</h1>
+      <header className="text-center py-6">
+        <h1 className="text-4xl font-bold mb-2">AlphaVaultFX</h1>
         <button
-          className="mt-4 py-2 px-4 rounded bg-blue-600 dark:bg-blue-400 text-white"
+          className="py-2 px-4 rounded bg-blue-600 dark:bg-blue-400 text-white"
           onClick={() => setIsDark(!isDark)}
         >
           Toggle {isDark ? 'Light' : 'Dark'} Mode
@@ -49,18 +49,22 @@ export default function Home() {
 
       <main className="flex-grow flex flex-col items-center justify-center">
         <p className="mb-4">Your trusted proprietary trading firm. Instant funding. No hidden rules.</p>
-        <div id="tradingview_chart" className="w-full max-w-4xl h-96"></div>
-        <div className="mt-6 flex space-x-4">
+        <div id="tradingview_chart" className="w-full max-w-4xl h-96 mb-4"></div>
+        <div className="space-x-4">
           <Link href="/about">
-            <a className="bg-blue-600 dark:bg-blue-400 text-white py-2 px-4 rounded shadow">Learn More</a>
+            <a className="bg-blue-600 dark:bg-blue-400 text-white py-2 px-4 rounded shadow hover:bg-blue-700 dark:hover:bg-blue-500">
+              Learn More
+            </a>
           </Link>
           <Link href="/start">
-            <a className="bg-blue-600 dark:bg-blue-400 text-white py-2 px-4 rounded shadow">Start Trading</a>
+            <a className="bg-blue-600 dark:bg-blue-400 text-white py-2 px-4 rounded shadow hover:bg-blue-700 dark:hover:bg-blue-500">
+              Start Trading
+            </a>
           </Link>
         </div>
       </main>
 
-      <footer className="py-4 text-center text-sm text-gray-600 dark:text-gray-400">
+      <footer className="text-center py-4 text-gray-700 dark:text-gray-400">
         &copy; {new Date().getFullYear()} AlphaVaultFX
       </footer>
     </div>
