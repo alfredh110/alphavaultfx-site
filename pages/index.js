@@ -55,35 +55,3 @@ export default function Home() {
           >
             {isDark ? 'Light' : 'Dark'} Mode
           </button>
-          <select
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
-            className="text-black p-2 rounded"
-          >
-            <option value="US30">US30</option>
-            <option value="NAS100">NAS100</option>
-            <option value="SPX500">SPX500</option>
-          </select>
-        </div>
-      </header>
-
-      <main className="flex-grow flex flex-col items-center justify-center space-y-6 p-4">
-        <p className="text-center">Your trusted proprietary trading firm. Instant funding. No hidden rules.</p>
-        <div id="tradingview_chart" className="w-full max-w-5xl h-96" />
-
-        <div className="flex space-x-4">
-          <Link href="/about">
-            <a className="py-2 px-4 rounded shadow bg-blue-600 text-white hover:bg-blue-700 dark:hover:bg-blue-500 transition">Learn More</a>
-          </Link>
-          <Link href="/start">
-            <a className="py-2 px-4 rounded shadow bg-blue-600 text-white hover:bg-blue-700 dark:hover:bg-blue-500 transition">Start Trading</a>
-          </Link>
-        </div>
-      </main>
-
-      <footer className="p-4 text-center text-sm text-gray-600 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} AlphaVaultFX
-      </footer>
-    </div>
-  );
-}
