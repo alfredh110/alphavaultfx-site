@@ -5,7 +5,7 @@ export default function Home() {
   const [isDark, setIsDark] = useState(false);
   const [symbol, setSymbol] = useState('US30');
 
-  // Load dark mode preference
+  // Load saved dark mode preference
   useEffect(() => {
     const saved = localStorage.getItem('theme');
     if (saved === 'dark') {
@@ -13,7 +13,7 @@ export default function Home() {
     }
   }, []);
 
-  // Apply dark mode class & save preference
+  // Apply dark mode + save preference
   useEffect(() => {
     const root = document.documentElement;
     if (isDark) {
