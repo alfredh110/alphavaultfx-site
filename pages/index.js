@@ -136,6 +136,41 @@ export default function Home() {
   </div>
 </section>
 
+  {/* How You Benefit Section */}
+<section className="my-16 py-12 bg-blue-50">
+  <h2 className="text-3xl font-bold text-blue-900 mb-8 text-center">
+    Find Out How You Can Benefit with AlphaVaultFX
+  </h2>
+  <div className="flex flex-col md:flex-row justify-center gap-6 px-4">
+    
+    <div className="bg-white rounded-lg shadow-lg p-6 w-72 text-center hover:shadow-xl transition">
+      <div className="text-blue-900 text-4xl mb-4">
+        🚀
+      </div>
+      <h3 className="font-semibold text-blue-900 mb-2">Advanced Tools</h3>
+      <p className="text-gray-600">Get access to our premium trading tools and analytics to elevate your performance.</p>
+    </div>
+    
+    <div className="bg-white rounded-lg shadow-lg p-6 w-72 text-center hover:shadow-xl transition">
+      <div className="text-blue-900 text-4xl mb-4">
+        🌐
+      </div>
+      <h3 className="font-semibold text-blue-900 mb-2">Global Support</h3>
+      <p className="text-gray-600">Multilingual support team ready to assist you 24/7 in your trading journey.</p>
+    </div>
+    
+    <div className="bg-white rounded-lg shadow-lg p-6 w-72 text-center hover:shadow-xl transition">
+      <div className="text-blue-900 text-4xl mb-4">
+        💰
+      </div>
+      <h3 className="font-semibold text-blue-900 mb-2">90% Profit Split</h3>
+      <p className="text-gray-600">Keep more of what you earn with our industry-leading profit share model.</p>
+    </div>
+
+  </div>
+</section>
+
+
 
 
 
