@@ -1,7 +1,6 @@
 {
-  "name": "alphavaultfx",
+  "name": "alphavaultfx-site",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,11 +12,8 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.3.2",
-    "typescript": "^5.0.4",
-    "@types/node": "^20.2.5",
-    "@types/react": "^18.2.6"
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
   }
 }
