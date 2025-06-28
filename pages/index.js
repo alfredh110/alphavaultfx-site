@@ -5,14 +5,15 @@ export default function Home() {
   const [isDark, setIsDark] = useState(false);
   const [symbol, setSymbol] = useState('US30');
 
+  // Load dark mode preference
   useEffect(() => {
-    // Load saved dark mode preference
     const saved = localStorage.getItem('theme');
     if (saved === 'dark') {
       setIsDark(true);
     }
   }, []);
 
+  // Apply dark mode class & save preference
   useEffect(() => {
     const root = document.documentElement;
     if (isDark) {
@@ -24,6 +25,7 @@ export default function Home() {
     }
   }, [isDark]);
 
+  // Load TradingView widget
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://s3.tradingview.com/tv.js';
@@ -46,12 +48,12 @@ export default function Home() {
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-500">
-      <header className="flex justify-between items-center p-4 shadow-md">
+      <header className="text-center py-6 shadow-md">
         <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">AlphaVaultFX</h1>
-        <div className="space-x-3">
+        <div className="space-x-2 mt-4">
           <button
-            className="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700 dark:hover:bg-blue-500 transition"
             onClick={() => setIsDark(!isDark)}
+            className="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700 dark:hover:bg-blue-500 transition"
           >
             {isDark ? 'Light' : 'Dark'} Mode
           </button>
@@ -68,10 +70,10 @@ export default function Home() {
       </header>
 
       <main className="flex-grow flex flex-col items-center justify-center space-y-6 p-4">
-        <p className="text-center">Your trusted proprietary trading firm. Instant funding. No hidden rules.</p>
-        <div id="tradingview_chart" className="w-full max-w-5xl h-96" />
+        <p>Your trusted proprietary trading firm. Instant funding. No hidden rules.</p>
+        <div id="tradingview_chart" className="w-full max-w-5xl h-96"></div>
 
-        <div className="flex space-x-4">
+        <div className="space-x-4">
           <Link href="/about">
             <a className="py-2 px-4 rounded shadow bg-blue-600 text-white hover:bg-blue-700 dark:hover:bg-blue-500 transition">Learn More</a>
           </Link>
@@ -81,7 +83,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="p-4 text-center text-sm text-gray-600 dark:text-gray-400">
+      <footer className="text-center text-sm text-gray-600 dark:text-gray-400 p-4">
         &copy; {new Date().getFullYear()} AlphaVaultFX
       </footer>
     </div>
