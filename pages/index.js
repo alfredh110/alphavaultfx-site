@@ -92,3 +92,75 @@ export default function Home() {
     </div>
   );
 }
+
+{/* Talent and Be Rewarded Section */}
+<section className="relative z-10 py-16 bg-blue-800/30">
+  <h2 className="text-3xl font-bold text-center mb-10 text-white">Show Us Your Talent and Be Rewarded</h2>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+    <div className="bg-blue-900 rounded-lg p-6 shadow hover:shadow-xl transition transform hover:scale-105">
+      <h3 className="text-white font-bold mb-2">Evaluation Process</h3>
+      <p className="text-blue-100 mb-4 text-sm">✔ FTMO Challenge<br />✔ Verification</p>
+      <button className="bg-white text-blue-900 font-semibold px-4 py-2 rounded hover:bg-blue-100 transition">Learn More</button>
+    </div>
+    <div className="bg-teal-700 rounded-lg p-6 shadow hover:shadow-xl transition transform hover:scale-105">
+      <h3 className="text-white font-bold mb-2">AlphaVaultFX Account</h3>
+      <p className="text-blue-100 mb-4 text-sm">✔ Funded account<br />✔ Performance coaching<br />✔ Premium trading tools</p>
+      <button className="bg-white text-blue-900 font-semibold px-4 py-2 rounded hover:bg-teal-100 transition">Learn More</button>
+    </div>
+    <div className="bg-orange-700 rounded-lg p-6 shadow hover:shadow-xl transition transform hover:scale-105">
+      <h3 className="text-white font-bold mb-2">Pro Trader</h3>
+      <p className="text-blue-100 mb-4 text-sm">✔ Direct funding<br />✔ Instant withdrawal<br />✔ Custom platform tools</p>
+      <button className="bg-white text-blue-900 font-semibold px-4 py-2 rounded hover:bg-orange-100 transition">Learn More</button>
+    </div>
+  </div>
+</section>
+
+{/* Trading Objectives */}
+<section className="relative z-10 py-16 bg-white text-blue-900">
+  <h2 className="text-3xl font-bold text-center mb-8">Trading Objectives</h2>
+  <div className="max-w-4xl mx-auto text-center mb-6">
+    <p className="text-gray-700">Meet our trading objectives to unlock funding. Choose your plan and show your trading discipline!</p>
+  </div>
+  <div className="overflow-auto">
+    <table className="w-full max-w-4xl mx-auto text-sm border-collapse">
+      <thead>
+        <tr className="bg-blue-900 text-white">
+          <th className="p-2 border">Objective</th>
+          <th className="p-2 border">Challenge</th>
+          <th className="p-2 border">Verification</th>
+          <th className="p-2 border">Trader</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className="bg-gray-50">
+          <td className="p-2 border">Trading Period</td>
+          <td className="p-2 border">30 days</td>
+          <td className="p-2 border">60 days</td>
+          <td className="p-2 border">Unlimited</td>
+        </tr>
+        <tr>
+          <td className="p-2 border">Profit Target</td>
+          <td className="p-2 border">10%</td>
+          <td className="p-2 border">5%</td>
+          <td className="p-2 border">N/A</td>
+        </tr>
+        <tr className="bg-gray-50">
+          <td className="p-2 border">Max Loss</td>
+          <td className="p-2 border">10%</td>
+          <td className="p-2 border">10%</td>
+          <td className="p-2 border">10%</td>
+        </tr>
+        <tr>
+          <td className="p-2 border">Daily Loss</td>
+          <td className="p-2 border">5%</td>
+          <td className="p-2 border">5%</td>
+          <td className="p-2 border">5%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div className="text-center mt-6">
+    <button className="bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Start Challenge</button>
+  </div>
+</section>
+
