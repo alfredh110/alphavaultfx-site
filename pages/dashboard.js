@@ -1,3 +1,4 @@
+import { getSession, useSession, signOut } from "next-auth/react";
 import AccountOverview from "../components/AccountOverview";
 import RiskMetricsCard from "../components/RiskMetricsCard";
 import ChallengeProgressCard from "../components/ChallengeProgressCard";
@@ -8,6 +9,8 @@ import NewsPanelCard from "../components/NewsPanelCard";
 import TradeAnalyticsCard from "../components/TradeAnalyticsCard";
 
 export default function Dashboard() {
+  const { data: session } = useSession();
+
   return (
     <div className="av-dashboard-wrap">
       <h1 className="av-dashboard-title">Welcome to AlphavaultFX Dashboard</h1>
@@ -25,6 +28,24 @@ export default function Dashboard() {
           <TradeAnalyticsCard />
         </div>
       </div>
+      <div style={{ marginTop: 40 }}>
+        {session && (
+          <button onClick={() => signOut()} style={{ background: "#2186eb", color: "#fff", padding: "8px 22px", borderRadius: 6, border: "none" }}>
+            Logout
+          </button>
+        )}
+      </div>
     </div>
   );
+}
+
+// Protect the dashboard route
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: { destination: "/auth/login", permanent: false }
+    };
+  }
+  return { props: { session } };
 }
