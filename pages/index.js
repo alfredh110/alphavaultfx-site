@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar';
 import Features from '../components/Features';
 import GetFunded from '../components/GetFunded';
+import HowToGetFunded from '../components/HowToGetFunded';
 
 export default function Home() {
   return (
@@ -48,6 +49,8 @@ export default function Home() {
       </main>
       {/* Features Section */}
       <Features />
+      {/* How To Get Funded Section (newly added here for best flow/visual) */}
+      <HowToGetFunded />
       {/* Get Funded Section */}
       <GetFunded />
       {/* Optional: Add a footer below */}
