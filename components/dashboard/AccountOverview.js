@@ -1,23 +1,30 @@
+import useSWR from "swr";
+
+const fetcher = url => fetch(url).then(res => res.json());
+
 export default function AccountOverview() {
+  const { data, error } = useSWR('/api/account', fetcher, { refreshInterval: 60000 });
+  if (error) return <div className="dash-card">Failed to load account data.</div>;
+  if (!data) return <div className="dash-card">Loading...</div>;
   return (
     <div className="dash-card account-overview">
       <div className="ao-title">Account Overview</div>
       <div className="ao-balance-row">
         <div className="ao-balance-label">Balance</div>
-        <div className="ao-balance-amt">$25,000.00</div>
+        <div className="ao-balance-amt">${data.balance.toLocaleString()}</div>
       </div>
       <div className="ao-row">
         <div>
           <div className="ao-label">Account Status</div>
-          <div className="ao-value active">Active</div>
+          <div className={`ao-value ${data.status === "Active" ? "active" : ""}`}>{data.status}</div>
         </div>
         <div>
           <div className="ao-label">Profit Split</div>
-          <div className="ao-value">90%</div>
+          <div className="ao-value">{data.profitSplit}%</div>
         </div>
         <div>
           <div className="ao-label">Next Payout</div>
-          <div className="ao-value">Jul 15, 2025</div>
+          <div className="ao-value">{data.nextPayout}</div>
         </div>
       </div>
       <style jsx>{`
