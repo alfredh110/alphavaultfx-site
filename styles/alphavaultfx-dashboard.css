@@ -1,0 +1,239 @@
+body {
+  background: #101722;
+  color: #e7eaf3;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.av-dashboard-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.av-dashboard-title {
+  color: #27f0d9;
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 2.2rem;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 12px #0ff2, 0 1px 0 #1a1f23;
+}
+
+.av-dashboard-grid {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.av-dashboard-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.av-card {
+  background: linear-gradient(135deg, #1a2332 80%, #23395d 100%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(40, 189, 255, 0.08);
+  padding: 2rem 2.5rem;
+  min-width: 320px;
+  transition: box-shadow 0.18s;
+  margin-bottom: 0.5rem;
+  border: 1px solid #232f45;
+}
+.av-card:hover {
+  box-shadow: 0 8px 36px 0 rgba(40, 189, 255, 0.18);
+}
+
+.av-card-title {
+  font-size: 1.13rem;
+  font-weight: 700;
+  color: #27f0d9;
+  margin-bottom: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.av-metrics {
+  display: flex;
+  gap: 2.6rem;
+  flex-wrap: wrap;
+}
+.av-metric-label {
+  font-size: 0.93rem;
+  color: #7fd3eb;
+}
+.av-metric-value {
+  font-size: 1.28rem;
+  font-weight: bold;
+  color: #27f0d9;
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.av-progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.av-progress-label {
+  font-size: 1.05rem;
+  color: #66e8f7;
+  font-weight: 500;
+}
+.av-progress-value {
+  font-size: 1.09rem;
+  color: #fff;
+  margin-left: 1rem;
+}
+.av-progress-status {
+  font-size: 0.95rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.av-compliant {
+  background: linear-gradient(90deg, #2ee59d 35%, #27f0d9 100%);
+  color: #101722;
+}
+.av-progress-bar-bg {
+  width: 100%;
+  height: 13px;
+  background: #1a263a;
+  border-radius: 8px;
+  margin-top: 0.8rem;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+.av-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #27f0d9 0%, #2ee59d 100%);
+  border-radius: 8px 0 0 8px;
+}
+
+.av-progress-footer {
+  margin-top: 0.4rem;
+  color: #8fd6e8;
+  font-size: 0.97rem;
+  text-align: right;
+}
+
+.av-curve-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.7rem;
+  color: #7fd3eb;
+  font-size: 0.97rem;
+}
+
+.av-green {
+  color: #2ee59d !important;
+}
+.av-red {
+  color: #f25b5b !important;
+}
+
+.av-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e7eaf3;
+}
+.av-table th,
+.av-table td {
+  padding: 0.55em 0.85em;
+  font-size: 1rem;
+  border-bottom: 1px solid #22304a;
+}
+.av-table th {
+  color: #27f0d9;
+  font-weight: 700;
+  background: #162033;
+}
+.av-table tr:last-child td {
+  border-bottom: none;
+}
+
+.av-risk-metrics-row {
+  display: flex;
+  gap: 1.9rem;
+  justify-content: space-between;
+}
+.av-risk-value {
+  display: block;
+  font-size: 1.13rem;
+  font-weight: 600;
+  margin-top: 0.21rem;
+  color: #27f0d9;
+}
+
+.av-card-small {
+  padding: 1.2rem 1.3rem;
+}
+
+.av-leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.av-leaderboard-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+.av-leaderboard-rank {
+  color: #27f0d9;
+  font-weight: 700;
+  font-size: 1.04rem;
+}
+.av-leaderboard-name {
+  flex: 1;
+}
+.av-leaderboard-profit {
+  color: #2ee59d;
+  font-weight: 600;
+}
+
+.av-news-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.av-news-date {
+  color: #27f0d9;
+  font-size: 0.99rem;
+}
+.av-news-title {
+  color: #e7eaf3;
+  font-size: 0.99rem;
+}
+
+.av-analytics-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.av-analytics-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.13rem 0;
+  font-size: 1.01rem;
+}
+
+@media (max-width: 900px) {
+  .av-dashboard-grid {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .av-dashboard-column {
+    gap: 1.5rem;
+  }
+  .av-card,
+  .av-card-small {
+    min-width: 0;
+  }
+}
