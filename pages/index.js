@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
-import Hero from '../components/Hero'; // if you have a separate hero component
-import Stats from '../components/Stats'; // your stats row, single instance only!
+import Hero from '../components/Hero';
+import Stats from '../components/Stats';
 import Features from '../components/Features';
 import HowToGetFunded from '../components/HowToGetFunded';
 import GetFunded from '../components/GetFunded';
@@ -10,11 +10,11 @@ export default function Home() {
     <div>
       <Navbar />
       <Hero />
-      <Stats /> {/* <- Place your stats section here, only ONCE */}
+      {/* Animated stats row under hero */}
+      <Stats />
       <Features />
-      <HowToGetFunded /> {/* <- Place the new futuristic version here */}
+      <HowToGetFunded />
       <GetFunded />
-      {/* ...footer or other sections */}
     </div>
   );
 }
