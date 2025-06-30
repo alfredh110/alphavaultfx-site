@@ -1,10 +1,12 @@
 import Navbar from '../components/Navbar';
 import Features from '../components/Features';
+import GetFunded from '../components/GetFunded';
 
 export default function Home() {
   return (
     <div>
       <Navbar />
+      {/* Hero Section */}
       <main className="fade-in" style={{
         display: 'flex',
         flexDirection: 'column',
@@ -44,7 +46,11 @@ export default function Home() {
           </button>
         </div>
       </main>
+      {/* Features Section */}
       <Features />
+      {/* Get Funded Section */}
+      <GetFunded />
+      {/* Optional: Add a footer below */}
       <style jsx global>{`
         .fade-in {
           opacity: 0;
