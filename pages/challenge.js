@@ -1,16 +1,15 @@
-import Navbar from '../components/Navbar';
+import ChallengeSelector from '../components/challenge/ChallengeSelector';
+import ChallengeProgress from '../components/challenge/ChallengeProgress';
+import ChallengeRules from '../components/challenge/ChallengeRules';
+import BuyChallenge from '../components/challenge/BuyChallenge';
 
 export default function Challenge() {
   return (
-    <>
-      <Navbar />
-      <main style={{ padding: '2rem' }}>
-        <h2>Trading Challenge</h2>
-        <p>
-          Join our evaluation challenge, prove your consistency, and get funded!
-        </p>
-        {/* Placeholder for challenge details and enrollment */}
-      </main>
-    </>
+    <div className="challenge-root">
+      <ChallengeSelector />
+      <ChallengeProgress />
+      <ChallengeRules />
+      <BuyChallenge />
+    </div>
   );
 }
