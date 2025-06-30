@@ -2,241 +2,182 @@ import React from "react";
 
 export default function HowToGetFunded() {
   return (
-    <section
-      style={{
-        background: "radial-gradient(ellipse at top left, #172132 60%, #131b26 100%)",
-        padding: "60px 0 80px",
-        position: "relative",
-        color: "white"
-      }}
-    >
-      {/* Stats Row */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "32px",
-          marginBottom: "56px",
-          flexWrap: "wrap"
-        }}
-      >
-        {[
-          { big: "$1M+", label: "In Funding" },
-          { big: "7 hrs", label: "Avg. Payout Time" },
-          { big: "90%", label: "Profit Split" },
-          { big: "5,000+", label: "Traders" },
-          {
-            big: (
-              <span>
-                <span style={{ color: "#22e06d", marginRight: 6, fontWeight: 700 }}>
-                  ★
-                </span>
-                Trustpilot
-              </span>
-            ),
-            label: (
-              <>
-                <img
-                  src="https://cdn.trustpilot.net/brand-assets/4.8-stars.svg"
-                  alt="4.8 stars"
-                  style={{ height: 18, verticalAlign: "middle", marginRight: 6 }}
-                />
-                TrustScore 4.8
-              </>
-            )
-          }
-        ].map((stat, i) => (
-          <div
-            key={i}
-            style={{
-              background: "rgba(33, 134, 235, 0.07)",
-              borderRadius: 18,
-              minWidth: 160,
-              minHeight: 80,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "24px 32px",
-              boxShadow: "0 2px 10px 0 rgba(33,134,235,0.09)",
-              fontSize: "1.2rem"
-            }}
-          >
-            <div style={{ fontWeight: 700, fontSize: "2.1rem", color: "#2186eb", marginBottom: 8 }}>
-              {stat.big}
-            </div>
-            <div style={{ color: "#e0e6ed", fontWeight: 500, fontSize: "1.06rem" }}>{stat.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Section Title */}
-      <div style={{ textAlign: "center", margin: "60px 0 0 0", position:"relative" }}>
-        <span
-          style={{
-            color: "#2186eb",
-            fontSize: "1.8rem",
-            position: "absolute",
-            left: "-42px",
-            top: "-12px"
-          }}
-        >
-          ✦
-        </span>
-        <span
-          style={{
-            color: "#2186eb",
-            fontSize: "1.8rem",
-            position: "absolute",
-            right: "-42px",
-            top: "-12px"
-          }}
-        >
-          ✦
-        </span>
-        <h2 style={{ color: "white", fontWeight: 700, fontSize: "2.4rem", marginBottom: 0, letterSpacing: "0.02em" }}>
-          How To Get Funded
-        </h2>
-      </div>
-
-      {/* How-to Steps */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-          gap: "32px",
-          maxWidth: 920,
-          margin: "50px auto 0 auto"
-        }}
-      >
+    <section className="how-fund-section">
+      <h2 className="how-fund-title">
+        <span className="oldmoney-gold">How To Get Funded</span>
+      </h2>
+      <div className="how-fund-cards">
         {/* Step 1 */}
-        <div
-          style={{
-            background: "#161f2c",
-            borderRadius: 15,
-            padding: "28px 22px 22px 22px",
-            boxShadow: "0 2px 12px 0 rgba(33,134,235,0.09)",
-            minHeight: 170
-          }}
-        >
-          <div style={{ marginBottom: 18 }}>
-            <img
-              src="/challenge-steps.png"
-              alt="Challenge Steps"
-              style={{
-                width: 120,
-                height: "auto",
-                filter: "drop-shadow(0 0 10px #2186eb44)",
-                marginBottom: 12
-              }}
-            />
-          </div>
-          <div style={{ fontWeight: 700, marginBottom: 8 }}>Select a Challenge</div>
-          <div style={{ color: "#c5d3eb" }}>
+        <div className="how-fund-card">
+          <div className="how-fund-card-title">Select a Challenge</div>
+          <div className="how-fund-card-desc">
             Choose a funding program that suits your goals and demonstrate your skills through our straightforward evaluation process.
           </div>
         </div>
-
         {/* Step 2 */}
-        <div
-          style={{
-            background: "#161f2c",
-            borderRadius: 15,
-            padding: "28px 22px 22px 22px",
-            boxShadow: "0 2px 12px 0 rgba(33,134,235,0.09)",
-            minHeight: 170
-          }}
-        >
-          <div style={{ marginBottom: 18 }}>
-            <div
-              style={{
-                background: "#131b26",
-                borderRadius: 10,
-                padding: 12,
-                width: 150,
-                margin: "0 auto 0 0"
-              }}
-            >
-              <div
-                style={{
-                  color: "#c5d3eb",
-                  fontWeight: 600,
-                  marginBottom: 6,
-                  fontSize: "0.95rem"
-                }}
-              >
-                Profit Target
-              </div>
-              <div style={{ width: "100%", background: "#283449", borderRadius: 8, height: 12, marginBottom: 4 }}>
-                <div style={{
-                  width: "50%",
-                  height: "100%",
-                  background: "linear-gradient(90deg, #2186eb 0, #4cc9ff 100%)",
-                  borderRadius: 8
-                }} />
-              </div>
-              <div style={{ color: "#fff", fontWeight: 700, fontSize: "1.07rem" }}>50%</div>
+        <div className="how-fund-card">
+          <div className="how-fund-card-title">Prove Your Skills</div>
+          <div className="how-fund-progressbar">
+            <span>Profit Target</span>
+            <div className="bar-bg">
+              <div className="bar-fill" />
             </div>
+            <span className="bar-val">50%</span>
           </div>
-          <div style={{ fontWeight: 700, marginBottom: 8 }}>Prove Your Skills</div>
-          <div style={{ color: "#c5d3eb" }}>
+          <div className="how-fund-card-desc">
             Trade consistently and achieve the profit target while adhering to risk management rules. Show your edge in the market.
           </div>
         </div>
-
         {/* Step 3 */}
-        <div
-          style={{
-            background: "#161f2c",
-            borderRadius: 15,
-            padding: "28px 22px 22px 22px",
-            boxShadow: "0 2px 12px 0 rgba(33,134,235,0.09)",
-            minHeight: 170
-          }}
-        >
-          <div style={{ marginBottom: 18 }}>
-            <div
-              style={{
-                background: "#131b26",
-                borderRadius: 10,
-                padding: 12,
-                width: 150,
-                margin: "0 auto 0 0"
-              }}
-            >
-              <div
-                style={{
-                  color: "#c5d3eb",
-                  fontWeight: 600,
-                  marginBottom: 6,
-                  fontSize: "0.95rem"
-                }}
-              >
-                Profit Balance
-              </div>
-              <div
-                style={{
-                  background: "linear-gradient(90deg, #2186eb 0, #ffd600 100%)",
-                  borderRadius: 8,
-                  height: 48,
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "0 12px",
-                  color: "#fff",
-                  fontWeight: 700,
-                  fontSize: "1.27rem"
-                }}
-              >
-                $1,670.20
-              </div>
-            </div>
+        <div className="how-fund-card">
+          <div className="how-fund-card-title">Get Funded</div>
+          <div className="how-fund-profitbox">
+            <span>Profit Balance</span>
+            <div className="how-fund-profit-amount">$1,670.20</div>
           </div>
-          <div style={{ fontWeight: 700, marginBottom: 8 }}>Get Funded</div>
-          <div style={{ color: "#c5d3eb" }}>
+          <div className="how-fund-card-desc">
             Once you pass the evaluation, AlphaVaultFX funds you immediately. Focus on trading while we handle the rest.
           </div>
         </div>
       </div>
+      <style jsx>{`
+        .how-fund-section {
+          background: linear-gradient(115deg, #101824 70%, #131a25 100%);
+          padding: 60px 0 70px 0;
+          max-width: 1100px;
+          margin: 0 auto;
+          border-radius: 28px;
+          border: 1px solid #b6a26644;
+          box-shadow: 0 4px 38px 0 #10182422;
+        }
+        .how-fund-title {
+          color: #e9e7dc;
+          font-family: 'Playfair Display', serif;
+          font-size: 2.7rem;
+          font-weight: 700;
+          text-align: center;
+          margin-bottom: 48px;
+          letter-spacing: 0.01em;
+        }
+        .oldmoney-gold {
+          color: #e8c372;
+          letter-spacing: 0.02em;
+          border-bottom: 2px solid #e8c372;
+          padding-bottom: 4px;
+        }
+        .how-fund-cards {
+          display: flex;
+          gap: 38px;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .how-fund-card {
+          background: #131a25;
+          border-radius: 17px;
+          border: 1px solid #e8c37244;
+          box-shadow: 0 2px 14px #e8c37222;
+          padding: 34px 24px 22px 24px;
+          max-width: 320px;
+          min-width: 240px;
+          flex: 1 1 260px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 12px;
+          transition: border 0.22s, box-shadow 0.24s, transform 0.19s;
+        }
+        .how-fund-card:hover {
+          border: 1.5px solid #e8c372cc;
+          box-shadow: 0 8px 34px #e8c37233, 0 2px 48px #2186eb11;
+          transform: translateY(-2px) scale(1.025);
+        }
+        .how-fund-card-title {
+          color: #e8c372;
+          font-family: 'Playfair Display', serif;
+          font-weight: 700;
+          font-size: 1.22rem;
+          margin-bottom: 13px;
+        }
+        .how-fund-card-desc {
+          color: #e0e6ed;
+          font-family: 'Merriweather', serif;
+          font-size: 1.04rem;
+          font-weight: 400;
+          margin-top: 10px;
+        }
+        .how-fund-progressbar {
+          margin: 10px 0 0 0;
+          width: 100%;
+        }
+        .how-fund-progressbar span {
+          color: #e8c372;
+          font-size: 0.99rem;
+          font-weight: 700;
+        }
+        .bar-bg {
+          margin-top: 7px;
+          background: #191e25;
+          border-radius: 8px;
+          width: 100%;
+          height: 13px;
+          border: 1px solid #e8c37244;
+        }
+        .bar-fill {
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(90deg, #b89b53 0, #e8c372 100%);
+          border-radius: 8px;
+          box-shadow: 0 2px 12px #e8c37244;
+          animation: barFillGrow 1.15s cubic-bezier(.17,.67,.83,.67);
+        }
+        .bar-val {
+          color: #e8c372;
+          font-size: 1.03rem;
+          font-weight: 700;
+          margin-left: 11px;
+        }
+        .how-fund-profitbox {
+          background: #181f2e;
+          border-radius: 10px;
+          margin: 18px 0 0 0;
+          padding: 10px 14px 10px 15px;
+          border: 1px solid #e8c37244;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .how-fund-profitbox span {
+          color: #e8c372;
+          font-size: 0.93rem;
+          font-weight: 700;
+          margin-bottom: 3px;
+        }
+        .how-fund-profit-amount {
+          color: #fff;
+          background: linear-gradient(90deg, #b89b53 0%, #e8c372 100%);
+          padding: 6px 18px 6px 18px;
+          border-radius: 7px;
+          font-size: 1.21rem;
+          font-weight: 800;
+          letter-spacing: 0.02em;
+          font-family: 'Merriweather', serif;
+        }
+        @media (max-width: 900px) {
+          .how-fund-cards {
+            flex-direction: column;
+            align-items: center;
+          }
+          .how-fund-card {
+            min-width: 200px;
+            max-width: 98vw;
+          }
+        }
+        @keyframes barFillGrow {
+          from { width: 0; }
+          to { width: 50%; }
+        }
+      `}</style>
+      <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Merriweather:400,700&display=swap" rel="stylesheet" />
     </section>
   );
 }
