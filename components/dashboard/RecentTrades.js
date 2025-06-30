@@ -1,11 +1,10 @@
+import useSWR from "swr";
+const fetcher = url => fetch(url).then(res => res.json());
+
 export default function RecentTrades() {
-  // Demo data
-  const trades = [
-    { id: 1, pair: 'EUR/USD', type: 'Buy', result: 320, date: '2025-06-29' },
-    { id: 2, pair: 'GBP/JPY', type: 'Sell', result: -150, date: '2025-06-28' },
-    { id: 3, pair: 'AUD/CAD', type: 'Buy', result: 210, date: '2025-06-27' },
-    { id: 4, pair: 'BTC/USD', type: 'Sell', result: 560, date: '2025-06-26' }
-  ];
+  const { data, error } = useSWR('/api/trades', fetcher, { refreshInterval: 60000 });
+  if (error) return <div className="dash-card">Failed to load trades.</div>;
+  if (!data) return <div className="dash-card">Loading...</div>;
   return (
     <div className="dash-card recent-trades">
       <div className="rt-title">Recent Trades</div>
@@ -19,7 +18,7 @@ export default function RecentTrades() {
           </tr>
         </thead>
         <tbody>
-          {trades.map(t => (
+          {data.trades.map(t => (
             <tr key={t.id}>
               <td>{t.pair}</td>
               <td>{t.type}</td>
