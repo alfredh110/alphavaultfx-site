@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
+  const { data: session } = useSession();
+
   return (
     <nav style={{
       display: "flex",
@@ -35,7 +38,25 @@ export default function Navbar() {
         <Link href="/" style={{ color: "white", margin: "0 12px", textDecoration: "none" }}>Home</Link>
         <Link href="/dashboard" style={{ color: "white", margin: "0 12px", textDecoration: "none" }}>Dashboard</Link>
         <Link href="/challenge" style={{ color: "white", margin: "0 12px", textDecoration: "none" }}>Challenge</Link>
-        <Link href="/auth/login" style={{ color: "white", margin: "0 12px", textDecoration: "none" }}>Login</Link>
+        {session ? (
+          <>
+            <span style={{ color: "white", margin: "0 12px" }}>
+              {session.user?.email}
+            </span>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                signOut();
+              }}
+              style={{ color: "white", margin: "0 12px", textDecoration: "none", cursor: "pointer" }}
+            >
+              Logout
+            </a>
+          </>
+        ) : (
+          <Link href="/auth/login" style={{ color: "white", margin: "0 12px", textDecoration: "none" }}>Login</Link>
+        )}
       </div>
     </nav>
   );
