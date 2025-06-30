@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <main style={{
+      <main className="fade-in" style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -21,7 +21,6 @@ export default function Home() {
             width: '100%',
             textAlign: 'left'
           }}
-          className="fade-in"
         >
           <h1 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: 'white', marginBottom: '16px' }}>
             Unlock Your Trading Potential with <span style={{ color: '#2186eb' }}>AlphaVaultFX</span>
