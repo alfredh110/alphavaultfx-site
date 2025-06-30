@@ -1,4 +1,3 @@
-import "../styles/alphavaultfx-dashboard.css";
 import AccountOverview from "../components/AccountOverview";
 import RiskMetricsCard from "../components/RiskMetricsCard";
 import ChallengeProgressCard from "../components/ChallengeProgressCard";
