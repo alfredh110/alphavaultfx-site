@@ -1,14 +1,26 @@
-import Navbar from '../components/Navbar';
+import AccountOverview from '../components/dashboard/AccountOverview';
+import EquityChart from '../components/dashboard/EquityChart';
+import RecentTrades from '../components/dashboard/RecentTrades';
+import ChallengeStatus from '../components/dashboard/ChallengeStatus';
+import PayoutsTimeline from '../components/dashboard/PayoutsTimeline';
+import RiskMetrics from '../components/dashboard/RiskMetrics';
+import Notifications from '../components/dashboard/Notifications';
 
 export default function Dashboard() {
   return (
-    <>
-      <Navbar />
-      <main style={{ padding: '2rem' }}>
-        <h2>Trader Dashboard</h2>
-        <p>Welcome to your dashboard. Track your challenge progress and stats here.</p>
-        {/* Placeholder for analytics/stats */}
-      </main>
-    </>
+    <div className="dashboard-root">
+      <Notifications />
+      <div className="dashboard-top">
+        <AccountOverview />
+        <RiskMetrics />
+      </div>
+      <EquityChart />
+      <div className="dashboard-bottom">
+        <RecentTrades />
+        <ChallengeStatus />
+        <PayoutsTimeline />
+      </div>
+      {/* Add responsive grid/flex styles */}
+    </div>
   );
 }
