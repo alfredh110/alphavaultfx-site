@@ -1,30 +1,80 @@
 import React, { useState } from "react";
 
 const accountTypes = [
-  { label: "1 Step Hero" },
-  { label: "2 Step Alpha" },
-  { label: "Fast Pass" }
+  { label: "1 Step Hero", key: "hero" },
+  { label: "2 Step Alpha", key: "alpha" },
+  { label: "Fast Pass", key: "fast" }
 ];
 
-const accountSizes = [
-  { label: "$5k", fee: 35 },
-  { label: "$10k", fee: 70 },
-  { label: "$25k", fee: 170 },
-  { label: "$50k", fee: 320 },
-  { label: "$100k", fee: 600 },
-  { label: "$200k", fee: 1100 },
-];
-
-const stats = [
-  { label: "Profit Target", values: ["8%", "5%", "-"] },
-  { label: "Daily Loss", values: ["6%", "6%", "5%"] },
-  { label: "Maximum Loss", values: ["12%", "12%", "10%"] },
-  { label: "Maximum Drawdown Type", values: ["Static", "Static", "Static"] }
-];
+// Pricing and rules data
+const data = {
+  hero: {
+    sizes: [
+      { label: "$5k", fee: 35 },
+      { label: "$10k", fee: 70 },
+      { label: "$25k", fee: 170 },
+      { label: "$50k", fee: 320 },
+      { label: "$100k", fee: 600 },
+      { label: "$200k", fee: 1100 }
+    ],
+    stats: [
+      { label: "Profit Target", values: ["8%", "", "-"] },
+      { label: "Daily Loss", values: ["6%", "", "5%"] },
+      { label: "Maximum Loss", values: ["12%", "", "10%"] },
+      { label: "Maximum Drawdown Type", values: ["Static", "", "Static"] }
+    ],
+    phases: ["Phase 1", "", "Funded"]
+  },
+  alpha: {
+    sizes: [
+      { label: "$5k", fee: 30 },
+      { label: "$10k", fee: 60 },
+      { label: "$25k", fee: 150 },
+      { label: "$50k", fee: 290 },
+      { label: "$100k", fee: 550 },
+      { label: "$200k", fee: 1000 }
+    ],
+    stats: [
+      { label: "Profit Target", values: ["8%", "5%", "-"] },
+      { label: "Daily Loss", values: ["6%", "6%", "5%"] },
+      { label: "Maximum Loss", values: ["12%", "12%", "10%"] },
+      { label: "Maximum Drawdown Type", values: ["Static", "Static", "Static"] }
+    ],
+    phases: ["Phase 1", "Phase 2", "Funded"]
+  },
+  fast: {
+    sizes: [
+      { label: "$5k", fee: 45 },
+      { label: "$10k", fee: 90 },
+      { label: "$25k", fee: 210 },
+      { label: "$50k", fee: 390 },
+      { label: "$100k", fee: 750 },
+      { label: "$200k", fee: 1400 }
+    ],
+    stats: [
+      { label: "Profit Target", values: ["6%", "-"] },
+      { label: "Daily Loss", values: ["5%", "3%"] },
+      { label: "Maximum Loss", values: ["8%", "7%"] },
+      { label: "Maximum Drawdown Type", values: ["Static", "Static"] },
+      { label: "Minimum Trading Period", values: ["5 days", "10 days"] },
+      { label: "Trading Period", values: ["No Time Limit", "No Time Limit"] }
+    ],
+    phases: ["Phase 1", "Funded"]
+  }
+};
 
 export default function GetFunded() {
-  const [selectedType, setSelectedType] = useState(0);
-  const [selectedSize, setSelectedSize] = useState(0);
+  const [selectedType, setSelectedType] = useState("hero");
+  const [selectedSize, setSelectedSize] = useState(2); // Default $25k
+
+  const typeData = data[selectedType];
+  const sizeObj = typeData.sizes[selectedSize];
+
+  // When account type changes, reset size to first option
+  function handleType(idx) {
+    setSelectedType(accountTypes[idx].key);
+    setSelectedSize(0);
+  }
 
   return (
     <section
@@ -33,7 +83,7 @@ export default function GetFunded() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        background: "radial-gradient(ellipse at top left, #172132 50%, rgba(19,27,38,0.9) 100%)",
+        background: "radial-gradient(ellipse at top left, #172132 60%, #131b26 100%)",
         padding: "60px 0 80px",
         position: "relative"
       }}
@@ -48,22 +98,10 @@ export default function GetFunded() {
         letterSpacing: "0.02em",
         position: "relative"
       }}>
-        <span style={{ color: "#2186eb" }}>Get Funded</span> Today
-        {/* Blue sparkle effect */}
-        <span style={{
-          position: "absolute",
-          left: "-50px",
-          top: "-18px",
-          color: "#2186eb",
-          fontSize: "2rem"
-        }}>✦</span>
-        <span style={{
-          position: "absolute",
-          right: "-50px",
-          top: "-18px",
-          color: "#2186eb",
-          fontSize: "2rem"
-        }}>✦</span>
+        <span style={{ color: "#2186eb" }}>✦</span>{" "}
+        <span style={{ color: "#2186eb" }}>Get Funded</span>{" "}
+        <span style={{ color: "white" }}>Today</span>{" "}
+        <span style={{ color: "#2186eb" }}>✦</span>
       </h2>
       {/* Card Row */}
       <div style={{
@@ -93,12 +131,12 @@ export default function GetFunded() {
           <div style={{ display: "flex", gap: "12px", marginBottom: "16px" }}>
             {accountTypes.map((type, idx) => (
               <button
-                key={type.label}
-                onClick={() => setSelectedType(idx)}
+                key={type.key}
+                onClick={() => handleType(idx)}
                 style={{
                   flex: 1,
-                  background: selectedType === idx ? "#2186eb" : "transparent",
-                  color: selectedType === idx ? "white" : "#c6d4e3",
+                  background: selectedType === type.key ? "#2186eb" : "transparent",
+                  color: selectedType === type.key ? "white" : "#c6d4e3",
                   border: "1.5px solid #2186eb",
                   borderRadius: "8px",
                   padding: "10px 0",
@@ -115,7 +153,7 @@ export default function GetFunded() {
           {/* Account Size */}
           <div style={{ color: "#c6d4e3", marginBottom: "6px", fontWeight: 500 }}>Account Size</div>
           <div style={{ display: "flex", gap: "12px", marginBottom: "18px", flexWrap: "wrap" }}>
-            {accountSizes.map((size, idx) => (
+            {typeData.sizes.map((size, idx) => (
               <button
                 key={size.label}
                 onClick={() => setSelectedSize(idx)}
@@ -148,10 +186,10 @@ export default function GetFunded() {
             <div style={{ color: "#a1b0c7", fontSize: "1rem", marginBottom: "6px" }}>One-Time Fee</div>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
               <span style={{ color: "white", fontSize: "2.2rem", fontWeight: 700 }}>
-                ${accountSizes[selectedSize].fee}
+                ${sizeObj.fee}
               </span>
               <span style={{ color: "#c6d4e3", fontSize: "1.1rem", marginLeft: "12px" }}>
-                For {accountSizes[selectedSize].label} Account
+                For {sizeObj.label} Account
               </span>
             </div>
             <button
@@ -189,13 +227,17 @@ export default function GetFunded() {
             <thead>
               <tr>
                 <th style={{ color: "#a1b0c7", fontWeight: 600, textAlign: "left", paddingBottom: "12px" }}></th>
-                <th style={{ color: "#2186eb", fontWeight: 700, textAlign: "center" }}>Phase 1</th>
-                <th style={{ color: "#2186eb", fontWeight: 700, textAlign: "center" }}>Phase 2</th>
-                <th style={{ color: "#2186eb", fontWeight: 700, textAlign: "center" }}>Funded</th>
+                {typeData.phases.map((phase, i) => (
+                  <th key={i} style={{
+                    color: "#2186eb",
+                    fontWeight: 700,
+                    textAlign: "center"
+                  }}>{phase}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {stats.map((row) => (
+              {typeData.stats.map((row, idx) => (
                 <tr key={row.label} style={{ borderBottom: "1px solid #202a3a" }}>
                   <td style={{ color: "#c6d4e3", padding: "8px 0", fontWeight: 500 }}>{row.label}</td>
                   {row.values.map((val, i) => (
