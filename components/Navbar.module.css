@@ -1,0 +1,38 @@
+.header {
+  background: #101520;
+  padding: 0;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 70px;
+}
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+.navlinks {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.navlinks li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+.navlinks li a:hover {
+  color: #2db7f5;
+}
+.divider {
+  border: none;
+  border-bottom: 1px solid #2db7f5;
+  margin: 0;
+}
