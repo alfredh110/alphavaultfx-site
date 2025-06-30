@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 
+// New prices after requested discounts
+// 2 Step Alpha: 50% off | 1 Step Alpha: 30% off & renamed
+
 const accountTypes = [
-  { label: "1 Step Hero", key: "hero" },
+  { label: "1 Step Alpha", key: "hero" },
   { label: "2 Step Alpha", key: "alpha" },
   { label: "Fast Pass", key: "fast" }
 ];
@@ -9,13 +12,14 @@ const accountTypes = [
 // Pricing and rules data
 const data = {
   hero: {
+    // 1 Step Alpha: 30% OFF
     sizes: [
-      { label: "$5k", fee: 35 },
-      { label: "$10k", fee: 70 },
-      { label: "$25k", fee: 170 },
-      { label: "$50k", fee: 320 },
-      { label: "$100k", fee: 600 },
-      { label: "$200k", fee: 1100 }
+      { label: "$5k", fee: Math.round(35 * 0.7) },      // $24.50 → $25
+      { label: "$10k", fee: Math.round(70 * 0.7) },     // $49
+      { label: "$25k", fee: Math.round(170 * 0.7) },    // $119
+      { label: "$50k", fee: Math.round(320 * 0.7) },    // $224
+      { label: "$100k", fee: Math.round(600 * 0.7) },   // $420
+      { label: "$200k", fee: Math.round(1100 * 0.7) }   // $770
     ],
     stats: [
       { label: "Profit Target", values: ["8%", "", "-"] },
@@ -26,13 +30,14 @@ const data = {
     phases: ["Phase 1", "", "Funded"]
   },
   alpha: {
+    // 2 Step Alpha: 50% OFF
     sizes: [
-      { label: "$5k", fee: 30 },
-      { label: "$10k", fee: 60 },
-      { label: "$25k", fee: 150 },
-      { label: "$50k", fee: 290 },
-      { label: "$100k", fee: 550 },
-      { label: "$200k", fee: 1000 }
+      { label: "$5k", fee: Math.round(30 * 0.5) },      // $15
+      { label: "$10k", fee: Math.round(60 * 0.5) },     // $30
+      { label: "$25k", fee: Math.round(150 * 0.5) },    // $75
+      { label: "$50k", fee: Math.round(290 * 0.5) },    // $145
+      { label: "$100k", fee: Math.round(550 * 0.5) },   // $275
+      { label: "$200k", fee: Math.round(1000 * 0.5) }   // $500
     ],
     stats: [
       { label: "Profit Target", values: ["8%", "5%", "-"] },
