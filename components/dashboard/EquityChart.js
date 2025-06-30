@@ -1,22 +1,26 @@
-// You can use a library like recharts, chart.js, or apexcharts for a real chart.
-// Here is a placeholder with SVG for demo.
+import useSWR from "swr";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+
+const fetcher = url => fetch(url).then(res => res.json());
 
 export default function EquityChart() {
+  const { data, error } = useSWR('/api/equity', fetcher, { refreshInterval: 60000 });
+  if (error) return <div className="dash-card">Failed to load chart.</div>;
+  if (!data) return <div className="dash-card">Loading...</div>;
   return (
     <div className="dash-card equity-chart">
       <div className="eq-title">Equity Curve</div>
-      <svg width="100%" height="88" viewBox="0 0 340 88">
-        <polyline
-          fill="none"
-          stroke="#2186eb"
-          strokeWidth="4"
-          points="0,80 20,70 60,72 80,54 110,58 150,22 190,38 220,18 270,54 340,12"
-        />
-        <circle cx="340" cy="12" r="5" fill="#22e06d" />
-      </svg>
+      <ResponsiveContainer width="100%" height={100}>
+        <LineChart data={data.equity}>
+          <XAxis dataKey="date" hide />
+          <YAxis domain={['dataMin', 'dataMax']} hide />
+          <Tooltip />
+          <Line type="monotone" dataKey="balance" stroke="#2186eb" strokeWidth={3} dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
       <div className="eq-labels">
         <span>Last 30 Days</span>
-        <span style={{color: "#22e06d"}}>+12.3%</span>
+        <span style={{color: "#22e06d"}}>{data.change >= 0 ? '+' : ''}{data.change}%</span>
       </div>
       <style jsx>{`
         .equity-chart {
