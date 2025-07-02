@@ -76,9 +76,9 @@ export default function Challenge() {
           fontSize: 40,
           letterSpacing: 1,
           marginBottom: 36,
-          textShadow: `0 4px 24px ${COLORS.primary}55`
+          textShadow: `0 4px 24px ${COLORS.primary}22`
         }}>
-          <span style={{ color: COLORS.primary, filter: "drop-shadow(0 0 6px #2186eb88)" }}>✦ Get Funded <span style={{ color: COLORS.text }}>Today</span> ✦</span>
+          Get Funded Today
         </h1>
         <div style={{
           display: "flex",
