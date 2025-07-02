@@ -8,7 +8,7 @@ const PRICING = {
     { size: "25k", price: "$99" },
     { size: "50k", price: "$199" },
     { size: "100k", price: "$349" },
-    { size: "200k", price: "$599" }
+    { size: "200k", price: "$599" },
   ],
   "1step": [
     { size: "5k", price: "$49" },
@@ -16,7 +16,7 @@ const PRICING = {
     { size: "25k", price: "$119" },
     { size: "50k", price: "$229" },
     { size: "100k", price: "$399" },
-    { size: "200k", price: "$699" }
+    { size: "200k", price: "$699" },
   ],
   "fastpass": [
     { size: "5k", price: "$79" },
@@ -24,8 +24,8 @@ const PRICING = {
     { size: "25k", price: "$179" },
     { size: "50k", price: "$299" },
     { size: "100k", price: "$499" },
-    { size: "200k", price: "$899" }
-  ]
+    { size: "200k", price: "$899" },
+  ],
 };
 
 const RULES_2STEP = [
@@ -34,6 +34,7 @@ const RULES_2STEP = [
   { label: "Maximum Loss", values: ["12%", "12%", "10%"] },
   { label: "Maximum Drawdown Type", values: ["Static", "Static", "Static"] },
 ];
+
 const RULES_1STEP = [
   { label: "Profit Target", values: ["10%", "-"] },
   { label: "Daily Loss", values: ["4%", "4%"] },
@@ -41,6 +42,7 @@ const RULES_1STEP = [
   { label: "Maximum Drawdown Type", values: ["Static", "Static"] },
   { label: "Inactivity", values: ["15 days", "15 days"] },
 ];
+
 const RULES_FASTPASS = [
   { label: "Profit Target", values: ["6%", "-"] },
   { label: "Daily Loss", values: ["5%", "3%"] },
@@ -54,236 +56,329 @@ const PHASES_2STEP = ["Phase 1", "Phase 2", "Funded"];
 const PHASES_1STEP = ["Phase 1", "Funded"];
 const PHASES_FASTPASS = ["Phase 1", "Funded"];
 
+const SIZES = [
+  { key: "5k", label: "$5k" },
+  { key: "10k", label: "$10k" },
+  { key: "25k", label: "$25k" },
+  { key: "50k", label: "$50k" },
+  { key: "100k", label: "$100k" },
+  { key: "200k", label: "$200k" },
+];
+
+const TYPE_LABELS = {
+  "1step": "1 Step Hero",
+  "2step": "2 Step Villain",
+  "fastpass": "Fast Pass",
+};
+
+// Use your dashboard background here:
+const DASHBOARD_BG =
+  "radial-gradient(circle at 60% 30%, #161e2e 50%, #0d1117 100%)";
+
 const COLORS = {
-  card: "rgba(24,35,58,0.90)", // semi-transparent glassy card
+  card: "#18233a",
   border: "#34bfff",
   text: "#fff",
   textSecondary: "#b4c7e7",
+  bg: DASHBOARD_BG,
   accent: "#34bfff",
   accentHover: "#86dbff",
-  bg: "radial-gradient(ellipse 80% 80% at 50% 40%, #17213a 80%, #10182a 100%)", // Sample, replace with dashboard.js
-  tableRow: "rgba(26,41,67, 0.9)"
+  yellow: "#ffd43b",
+  darkYellow: "#e6c200",
 };
 
 export default function Challenge() {
   const [challengeType, setChallengeType] = useState("2step");
+  const [accountSize, setAccountSize] = useState("200k");
 
-  let rules, phases, pricing;
+  let rules, phases, pricingArr;
   if (challengeType === "2step") {
     rules = RULES_2STEP;
     phases = PHASES_2STEP;
-    pricing = PRICING["2step"];
+    pricingArr = PRICING["2step"];
   } else if (challengeType === "1step") {
     rules = RULES_1STEP;
     phases = PHASES_1STEP;
-    pricing = PRICING["1step"];
+    pricingArr = PRICING["1step"];
   } else {
     rules = RULES_FASTPASS;
     phases = PHASES_FASTPASS;
-    pricing = PRICING["fastpass"];
+    pricingArr = PRICING["fastpass"];
   }
 
-  const getChallengeLabel = () => {
-    if (challengeType === "2step") return "2 Step Alpha";
-    if (challengeType === "1step") return "1 Step Alpha";
-    if (challengeType === "fastpass") return "Fast Pass";
-    return "";
-  };
+  // Find the pricing for the selected size
+  const activePricing = pricingArr.find(
+    (p) => p.size.replace("k", "") === accountSize.replace("k", "")
+  );
+  const price = activePricing ? activePricing.price : "$0";
+  const sizeLabel = SIZES.find((s) => s.key === accountSize)?.label || "$0";
 
   return (
-    <div className="challenge-bg" style={{
-      minHeight: "100vh",
-      background: COLORS.bg,
-      padding: "60px 16px",
-      fontFamily: "Inter, Roboto, sans-serif",
-      transition: "background 0.5s"
-    }}>
-      {/* Animate in */}
+    <div
+      className="challenge-bg"
+      style={{
+        minHeight: "100vh",
+        background: COLORS.bg,
+        fontFamily: "Inter, Roboto, sans-serif",
+        padding: "60px 16px",
+      }}
+    >
       <style>{`
-        .glass-card {
-          animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
-          backdrop-filter: blur(16px);
-          transition: box-shadow 0.2s, border-color 0.15s;
+        .challenge-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 32px;
+          align-items: flex-start;
+          margin-top: 32px;
         }
-        .glass-card:hover {
-          box-shadow: 0 8px 48px 0 #34bfff22;
-          border-color: #86dbff;
+        .challenge-col {
+          flex: 1 1 400px;
+          min-width: 370px;
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
         }
-        @keyframes fadeInUp {
-          0% { opacity: 0; transform: translateY(32px);}
-          100% { opacity: 1; transform: translateY(0);}
+        .challenge-controls {
+          margin-bottom: 18px;
         }
-        .pricing-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        .pricing-card, .rules-card {
+          margin: 0;
+        }
+        .account-type-group {
+          display: flex;
           gap: 18px;
         }
-        .pricing-box {
-          background: rgba(26, 41, 67, 0.93);
-          border-radius: 14px;
-          text-align: center;
-          color: ${COLORS.text};
-          box-shadow: 0 2px 14px #34bfff0a;
-          border: 2px solid transparent;
-          transition: border 0.18s, transform 0.14s;
+        .account-type-btn {
+          flex: 1 1 0;
+          padding: 18px 0;
+          font-size: 18px;
+          font-weight: 700;
+          border: 2px solid #363c4e;
+          border-radius: 12px;
+          background: transparent;
+          color: ${COLORS.textSecondary};
           cursor: pointer;
-          animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
+          transition: background 0.13s, color 0.13s, border 0.13s;
         }
-        .pricing-box:hover {
-          border: 2px solid #34bfff;
-          transform: translateY(-4px) scale(1.03);
+        .account-type-btn.active {
+          background: ${COLORS.yellow};
+          color: #23252B;
+          border-color: ${COLORS.yellow};
         }
-        .challenge-toggle button {
-          transition: background .14s, color .14s, box-shadow .14s;
+        .account-size-group {
+          display: flex;
+          gap: 18px;
         }
-        .challenge-toggle button:focus {
-          outline: 2px solid #34bfff;
+        .account-size-btn {
+          flex: 1 1 0;
+          padding: 18px 0;
+          font-size: 18px;
+          font-weight: 700;
+          border: 2px solid #363c4e;
+          border-radius: 12px;
+          background: transparent;
+          color: ${COLORS.textSecondary};
+          cursor: pointer;
+          transition: background 0.13s, color 0.13s, border 0.13s;
         }
-        .rules-table th, .rules-table td {
+        .account-size-btn.active {
+          background: ${COLORS.yellow};
+          color: #23252B;
+          border-color: ${COLORS.yellow};
+        }
+        .pricing-card {
+          background: ${COLORS.card};
+          border-radius: 18px;
+          box-shadow: 0 4px 36px #0005;
+          border: 2px solid ${COLORS.yellow};
+          padding: 38px 34px 32px 34px;
+          min-width: 340px;
+          margin-bottom: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: stretch;
+        }
+        .pricing-card .one-time-label {
+          color: ${COLORS.textSecondary};
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 16px;
+        }
+        .pricing-card .price {
+          color: #fff;
+          font-size: 48px;
+          font-weight: 900;
+          letter-spacing: 2px;
+          margin-bottom: 8px;
+        }
+        .pricing-card .for-label {
+          color: ${COLORS.textSecondary};
+          font-size: 20px;
+          margin-bottom: 28px;
+        }
+        .pricing-card .buy-btn {
+          background: ${COLORS.yellow};
+          color: #23252B;
+          border: none;
+          border-radius: 12px;
+          width: 100%;
+          padding: 22px 0;
+          font-size: 26px;
+          font-weight: 900;
+          cursor: pointer;
+          margin-top: 6px;
+          margin-bottom: 0;
+          transition: background 0.13s;
+          box-shadow: 0 2px 12px #ffd43b22;
+        }
+        .pricing-card .buy-btn:hover {
+          background: ${COLORS.darkYellow};
+        }
+        .rules-card {
+          background: ${COLORS.card};
+          border-radius: 18px;
+          box-shadow: 0 4px 36px #0005;
+          border: 2px solid ${COLORS.yellow};
+          min-width: 340px;
+          max-width: 700px;
+          overflow: hidden;
+          padding-bottom: 6px;
+        }
+        .rules-card table {
+          width: 100%;
+          color: ${COLORS.text};
+          border-collapse: collapse;
+          font-size: 17px;
+        }
+        .rules-card th, .rules-card td {
           transition: color .16s, background .16s;
         }
+        .rules-card th {
+          text-align: center;
+          font-weight: 700;
+          color: ${COLORS.textSecondary};
+          font-size: 17px;
+          padding: 24px 20px;
+          letter-spacing: 1px;
+        }
+        .rules-card th:first-child, .rules-card td:first-child {
+          text-align: left;
+        }
+        .rules-card tbody tr {
+          border-top: 1.5px solid #223150;
+        }
+        .rules-card td {
+          text-align: center;
+          padding: 18px;
+          font-weight: 900;
+          color: ${COLORS.text};
+        }
+        .rules-card td:first-child {
+          font-weight: 700;
+          color: ${COLORS.textSecondary};
+        }
+        .rules-card tbody tr:first-child {
+          border-top: none;
+        }
+        @media (max-width: 1100px) {
+          .challenge-row { flex-direction: column; }
+          .rules-card, .pricing-card { max-width: 100% !important; }
+        }
       `}</style>
-      {/* Toggle Challenge Type */}
-      <div className="challenge-toggle" style={{textAlign: "center", marginBottom: 36}}>
-        <button
-          onClick={() => setChallengeType("2step")}
-          style={{
-            background: challengeType === "2step" ? COLORS.accent : COLORS.card,
-            color: challengeType === "2step" ? COLORS.card : COLORS.textSecondary,
-            border: "none",
-            borderRadius: 10,
-            padding: "10px 28px",
-            marginRight: 16,
-            fontWeight: 800,
-            cursor: "pointer",
-            fontSize: 18,
-            boxShadow: challengeType === "2step" ? "0 2px 14px #34bfff22" : "none"
-          }}
-        >2 Step Alpha</button>
-        <button
-          onClick={() => setChallengeType("1step")}
-          style={{
-            background: challengeType === "1step" ? COLORS.accent : COLORS.card,
-            color: challengeType === "1step" ? COLORS.card : COLORS.textSecondary,
-            border: "none",
-            borderRadius: 10,
-            padding: "10px 28px",
-            marginRight: 16,
-            fontWeight: 800,
-            cursor: "pointer",
-            fontSize: 18,
-            boxShadow: challengeType === "1step" ? "0 2px 14px #34bfff22" : "none"
-          }}
-        >1 Step Alpha</button>
-        <button
-          onClick={() => setChallengeType("fastpass")}
-          style={{
-            background: challengeType === "fastpass" ? COLORS.accent : COLORS.card,
-            color: challengeType === "fastpass" ? COLORS.card : COLORS.textSecondary,
-            border: "none",
-            borderRadius: 10,
-            padding: "10px 28px",
-            fontWeight: 800,
-            cursor: "pointer",
-            fontSize: 18,
-            boxShadow: challengeType === "fastpass" ? "0 2px 14px #34bfff22" : "none"
-          }}
-        >Fast Pass</button>
-      </div>
 
-      {/* Pricing Card */}
-      <div className="glass-card" style={{
-        maxWidth: 670,
-        margin: "0 auto 40px auto",
-        borderRadius: 22,
-        background: COLORS.card,
-        boxShadow: "0 4px 36px #0005",
-        border: `2.5px solid ${COLORS.border}`,
-        overflow: "hidden",
-        padding: "40px 30px 32px 30px"
-      }}>
-        <div style={{fontSize: 28, fontWeight: 900, color: COLORS.text, marginBottom: 24, letterSpacing: 0.2}}>
-          {getChallengeLabel()} Pricing
+      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+        {/* Account Type */}
+        <div className="challenge-controls">
+          <div
+            style={{
+              marginBottom: 14,
+              color: COLORS.textSecondary,
+              fontWeight: 600,
+              fontSize: 18,
+            }}
+          >
+            Account Type
+          </div>
+          <div className="account-type-group">
+            <button
+              className={`account-type-btn${challengeType === "1step" ? " active" : ""}`}
+              onClick={() => setChallengeType("1step")}
+            >
+              {TYPE_LABELS["1step"]}
+            </button>
+            <button
+              className={`account-type-btn${challengeType === "2step" ? " active" : ""}`}
+              onClick={() => setChallengeType("2step")}
+            >
+              {TYPE_LABELS["2step"]}
+            </button>
+            <button
+              className={`account-type-btn${challengeType === "fastpass" ? " active" : ""}`}
+              onClick={() => setChallengeType("fastpass")}
+            >
+              {TYPE_LABELS["fastpass"]}
+            </button>
+          </div>
         </div>
-        <div className="pricing-grid">
-          {pricing.map(({size, price}) => (
-            <div key={size} className="pricing-box">
-              <div style={{fontWeight: 800, fontSize: 18, marginBottom: 7, color: COLORS.accent}}>{size.toUpperCase()}</div>
-              <div style={{fontWeight: 900, fontSize: 22, color: COLORS.text}}>{price}</div>
-            </div>
-          ))}
+        {/* Account Size */}
+        <div className="challenge-controls">
+          <div
+            style={{
+              marginBottom: 14,
+              color: COLORS.textSecondary,
+              fontWeight: 600,
+              fontSize: 18,
+            }}
+          >
+            Account Size
+          </div>
+          <div className="account-size-group">
+            {SIZES.map((s) => (
+              <button
+                key={s.key}
+                className={`account-size-btn${accountSize === s.key ? " active" : ""}`}
+                onClick={() => setAccountSize(s.key)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Rules Table */}
-      <div className="glass-card" style={{
-        maxWidth: 670,
-        margin: "0 auto",
-        borderRadius: 22,
-        background: COLORS.card,
-        boxShadow: "0 4px 36px #0005",
-        border: `2.5px solid ${COLORS.border}`,
-        overflow: "hidden",
-        paddingBottom: 6
-      }}>
-        <table className="rules-table" style={{
-          width: "100%",
-          color: COLORS.text,
-          borderCollapse: "collapse",
-          fontSize: 17
-        }}>
-          <thead>
-            <tr>
-              <th style={{ textAlign: "left", padding: "24px 20px", fontWeight: 700, color: COLORS.textSecondary, fontSize: 17 }}> </th>
-              {phases.map(phase => (
-                <th key={phase} style={{ textAlign: "center", fontWeight: 700, color: COLORS.accent, fontSize: 17 }}>{phase}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rules.map((rule, idx) => (
-              <tr key={rule.label} style={{
-                borderTop: idx === 0 ? "none" : `1.5px solid #223150`,
-                background: idx % 2 === 1 ? COLORS.tableRow : "transparent",
-                transition: "background 0.16s"
-              }}>
-                <td style={{
-                  padding: "18px",
-                  color: (
-                    rule.label === "Maximum Drawdown Type" ||
-                    rule.label === "Trading Period"
-                  ) ? COLORS.textSecondary : COLORS.text,
-                  fontWeight: (
-                    rule.label === "Maximum Drawdown Type" ||
-                    rule.label === "Trading Period"
-                  ) ? 600 : 700,
-                  minWidth: 180,
-                  letterSpacing: 0.1
-                }}>
-                  {rule.label}
-                </td>
-                {rule.values.map((v, i) => (
-                  <td key={i} style={{
-                    textAlign: "center",
-                    padding: "18px",
-                    color: (
-                      rule.label === "Maximum Drawdown Type" ||
-                      rule.label === "Trading Period"
-                    ) ? COLORS.textSecondary : COLORS.accent,
-                    fontWeight: (
-                      rule.label === "Maximum Drawdown Type" ||
-                      rule.label === "Trading Period"
-                    ) ? 600 : 900,
-                    fontSize: 17,
-                    letterSpacing: 0.1
-                  }}>
-                    {v}
-                  </td>
+      {/* PRICING + RULES GRID */}
+      <div className="challenge-row" style={{ maxWidth: 1400, margin: "32px auto 0 auto" }}>
+        {/* Pricing Card */}
+        <div className="pricing-card">
+          <div className="one-time-label">One-Time Fee</div>
+          <div className="price">{price}</div>
+          <div className="for-label">For {sizeLabel} Account</div>
+          <button className="buy-btn">Buy Challenge</button>
+        </div>
+        {/* Rules Table */}
+        <div className="rules-card">
+          <table>
+            <thead>
+              <tr>
+                <th> </th>
+                {phases.map((phase) => (
+                  <th key={phase}>{phase}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rules.map((rule, idx) => (
+                <tr key={rule.label}>
+                  <td>{rule.label}</td>
+                  {rule.values.map((v, i) => (
+                    <td key={i}>{v}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
