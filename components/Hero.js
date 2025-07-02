@@ -1,8 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // If you use React Router v6+
+import { useRouter } from "next/router"; // Use Next.js router
 
 export default function Hero() {
-  const navigate = useNavigate(); // React Router v6+
+  const router = useRouter();
 
   return (
     <section
@@ -78,7 +78,7 @@ export default function Hero() {
             cursor: "pointer",
             transition: "background 0.18s",
           }}
-          onClick={() => navigate("/challenge")}
+          onClick={() => router.push("/challenge")}
         >
           Get Funded Today
         </button>
