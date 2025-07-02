@@ -1,4 +1,8 @@
+import { useSession } from "next-auth/react";
+
 export default function Register() {
+  const { data } = useSession() || {};
+
   return (
     <main style={{ padding: '2rem' }}>
       <h2>Register</h2>
@@ -12,3 +16,5 @@ export default function Register() {
     </main>
   );
 }
+
+export const getServerSideProps = () => ({ props: {} });
