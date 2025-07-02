@@ -54,15 +54,15 @@ const PHASES_2STEP = ["Phase 1", "Phase 2", "Funded"];
 const PHASES_1STEP = ["Phase 1", "Funded"];
 const PHASES_FASTPASS = ["Phase 1", "Funded"];
 
-// Navy/white/light blue theme
 const COLORS = {
-  card: "#18233a",
-  border: "#34bfff", // Light blue border
+  card: "rgba(24,35,58,0.90)", // semi-transparent glassy card
+  border: "#34bfff",
   text: "#fff",
   textSecondary: "#b4c7e7",
-  bg: "#111c2e",
   accent: "#34bfff",
-  tableRow: "#1a2943"
+  accentHover: "#86dbff",
+  bg: "radial-gradient(ellipse 80% 80% at 50% 40%, #17213a 80%, #10182a 100%)", // Sample, replace with dashboard.js
+  tableRow: "rgba(26,41,67, 0.9)"
 };
 
 export default function Challenge() {
@@ -91,27 +91,73 @@ export default function Challenge() {
   };
 
   return (
-    <div style={{
+    <div className="challenge-bg" style={{
       minHeight: "100vh",
       background: COLORS.bg,
       padding: "60px 16px",
-      fontFamily: "Inter, Roboto, sans-serif"
+      fontFamily: "Inter, Roboto, sans-serif",
+      transition: "background 0.5s"
     }}>
+      {/* Animate in */}
+      <style>{`
+        .glass-card {
+          animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
+          backdrop-filter: blur(16px);
+          transition: box-shadow 0.2s, border-color 0.15s;
+        }
+        .glass-card:hover {
+          box-shadow: 0 8px 48px 0 #34bfff22;
+          border-color: #86dbff;
+        }
+        @keyframes fadeInUp {
+          0% { opacity: 0; transform: translateY(32px);}
+          100% { opacity: 1; transform: translateY(0);}
+        }
+        .pricing-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 18px;
+        }
+        .pricing-box {
+          background: rgba(26, 41, 67, 0.93);
+          border-radius: 14px;
+          text-align: center;
+          color: ${COLORS.text};
+          box-shadow: 0 2px 14px #34bfff0a;
+          border: 2px solid transparent;
+          transition: border 0.18s, transform 0.14s;
+          cursor: pointer;
+          animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
+        }
+        .pricing-box:hover {
+          border: 2px solid #34bfff;
+          transform: translateY(-4px) scale(1.03);
+        }
+        .challenge-toggle button {
+          transition: background .14s, color .14s, box-shadow .14s;
+        }
+        .challenge-toggle button:focus {
+          outline: 2px solid #34bfff;
+        }
+        .rules-table th, .rules-table td {
+          transition: color .16s, background .16s;
+        }
+      `}</style>
       {/* Toggle Challenge Type */}
-      <div style={{textAlign: "center", marginBottom: 32}}>
+      <div className="challenge-toggle" style={{textAlign: "center", marginBottom: 36}}>
         <button
           onClick={() => setChallengeType("2step")}
           style={{
             background: challengeType === "2step" ? COLORS.accent : COLORS.card,
             color: challengeType === "2step" ? COLORS.card : COLORS.textSecondary,
             border: "none",
-            borderRadius: 8,
-            padding: "8px 20px",
-            marginRight: 12,
-            fontWeight: 700,
+            borderRadius: 10,
+            padding: "10px 28px",
+            marginRight: 16,
+            fontWeight: 800,
             cursor: "pointer",
-            fontSize: 15,
-            transition: "background 0.12s"
+            fontSize: 18,
+            boxShadow: challengeType === "2step" ? "0 2px 14px #34bfff22" : "none"
           }}
         >2 Step Alpha</button>
         <button
@@ -120,13 +166,13 @@ export default function Challenge() {
             background: challengeType === "1step" ? COLORS.accent : COLORS.card,
             color: challengeType === "1step" ? COLORS.card : COLORS.textSecondary,
             border: "none",
-            borderRadius: 8,
-            padding: "8px 20px",
-            marginRight: 12,
-            fontWeight: 700,
+            borderRadius: 10,
+            padding: "10px 28px",
+            marginRight: 16,
+            fontWeight: 800,
             cursor: "pointer",
-            fontSize: 15,
-            transition: "background 0.12s"
+            fontSize: 18,
+            boxShadow: challengeType === "1step" ? "0 2px 14px #34bfff22" : "none"
           }}
         >1 Step Alpha</button>
         <button
@@ -135,77 +181,72 @@ export default function Challenge() {
             background: challengeType === "fastpass" ? COLORS.accent : COLORS.card,
             color: challengeType === "fastpass" ? COLORS.card : COLORS.textSecondary,
             border: "none",
-            borderRadius: 8,
-            padding: "8px 20px",
-            fontWeight: 700,
+            borderRadius: 10,
+            padding: "10px 28px",
+            fontWeight: 800,
             cursor: "pointer",
-            fontSize: 15,
-            transition: "background 0.12s"
+            fontSize: 18,
+            boxShadow: challengeType === "fastpass" ? "0 2px 14px #34bfff22" : "none"
           }}
         >Fast Pass</button>
       </div>
 
       {/* Pricing Card */}
-      <div style={{
-        maxWidth: 640,
-        margin: "0 auto 34px auto",
-        borderRadius: 16,
+      <div className="glass-card" style={{
+        maxWidth: 670,
+        margin: "0 auto 40px auto",
+        borderRadius: 22,
         background: COLORS.card,
-        boxShadow: "0 4px 36px #0003",
-        borderBottom: `2px solid ${COLORS.border}`,
-        overflow: "hidden"
+        boxShadow: "0 4px 36px #0005",
+        border: `2.5px solid ${COLORS.border}`,
+        overflow: "hidden",
+        padding: "40px 30px 32px 30px"
       }}>
-        <div style={{padding: "32px 24px"}}>
-          <div style={{fontSize: 24, fontWeight: 800, color: COLORS.text, marginBottom: 16}}>
-            {getChallengeLabel()} Pricing
-          </div>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-            gap: 16
-          }}>
-            {pricing.map(({size, price}) => (
-              <div key={size} style={{
-                padding: "16px 12px",
-                background: COLORS.tableRow,
-                borderRadius: 10,
-                textAlign: "center",
-                color: COLORS.text
-              }}>
-                <div style={{fontWeight: 700, fontSize: 16, marginBottom: 4}}>{size.toUpperCase()}</div>
-                <div style={{fontWeight: 900, fontSize: 20}}>{price}</div>
-              </div>
-            ))}
-          </div>
+        <div style={{fontSize: 28, fontWeight: 900, color: COLORS.text, marginBottom: 24, letterSpacing: 0.2}}>
+          {getChallengeLabel()} Pricing
+        </div>
+        <div className="pricing-grid">
+          {pricing.map(({size, price}) => (
+            <div key={size} className="pricing-box">
+              <div style={{fontWeight: 800, fontSize: 18, marginBottom: 7, color: COLORS.accent}}>{size.toUpperCase()}</div>
+              <div style={{fontWeight: 900, fontSize: 22, color: COLORS.text}}>{price}</div>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Rules Table */}
-      <div style={{
-        maxWidth: 640,
+      <div className="glass-card" style={{
+        maxWidth: 670,
         margin: "0 auto",
-        borderRadius: 16,
+        borderRadius: 22,
         background: COLORS.card,
-        boxShadow: "0 4px 36px #0003",
-        borderBottom: `2px solid ${COLORS.border}`,
-        overflow: "hidden"
+        boxShadow: "0 4px 36px #0005",
+        border: `2.5px solid ${COLORS.border}`,
+        overflow: "hidden",
+        paddingBottom: 6
       }}>
-        <table style={{
+        <table className="rules-table" style={{
           width: "100%",
           color: COLORS.text,
-          borderCollapse: "collapse"
+          borderCollapse: "collapse",
+          fontSize: 17
         }}>
           <thead>
             <tr>
-              <th style={{ textAlign: "left", padding: "22px 18px", fontWeight: 600, color: COLORS.textSecondary, letterSpacing: 1 }}> </th>
+              <th style={{ textAlign: "left", padding: "24px 20px", fontWeight: 700, color: COLORS.textSecondary, fontSize: 17 }}> </th>
               {phases.map(phase => (
-                <th key={phase} style={{ textAlign: "center", fontWeight: 600, color: COLORS.textSecondary, letterSpacing: 1 }}>{phase}</th>
+                <th key={phase} style={{ textAlign: "center", fontWeight: 700, color: COLORS.accent, fontSize: 17 }}>{phase}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rules.map((rule, idx) => (
-              <tr key={rule.label} style={{ borderTop: idx === 0 ? "none" : `1px solid #223150`, background: idx % 2 === 1 ? COLORS.tableRow : "transparent" }}>
+              <tr key={rule.label} style={{
+                borderTop: idx === 0 ? "none" : `1.5px solid #223150`,
+                background: idx % 2 === 1 ? COLORS.tableRow : "transparent",
+                transition: "background 0.16s"
+              }}>
                 <td style={{
                   padding: "18px",
                   color: (
@@ -215,8 +256,9 @@ export default function Challenge() {
                   fontWeight: (
                     rule.label === "Maximum Drawdown Type" ||
                     rule.label === "Trading Period"
-                  ) ? 500 : 600,
-                  minWidth: 180
+                  ) ? 600 : 700,
+                  minWidth: 180,
+                  letterSpacing: 0.1
                 }}>
                   {rule.label}
                 </td>
@@ -227,11 +269,13 @@ export default function Challenge() {
                     color: (
                       rule.label === "Maximum Drawdown Type" ||
                       rule.label === "Trading Period"
-                    ) ? COLORS.textSecondary : COLORS.text,
+                    ) ? COLORS.textSecondary : COLORS.accent,
                     fontWeight: (
                       rule.label === "Maximum Drawdown Type" ||
                       rule.label === "Trading Period"
-                    ) ? 500 : 700
+                    ) ? 600 : 900,
+                    fontSize: 17,
+                    letterSpacing: 0.1
                   }}>
                     {v}
                   </td>
