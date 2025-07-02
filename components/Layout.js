@@ -19,7 +19,7 @@ export default function Layout({ children }) {
           <a href="/">Home</a>
           <a href="/dashboard">Dashboard</a>
           <a href="/challenge">Challenge</a>
-          <a href="/login" className="blue-link">Login</a>
+          {/* Removed Login button */}
         </nav>
       </header>
       <main className="site-main">{children}</main>
