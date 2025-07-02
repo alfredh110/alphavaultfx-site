@@ -1,262 +1,177 @@
 import React, { useState } from "react";
 
-// New prices after requested discounts
-// 2 Step Alpha: 50% off | 1 Step Alpha: 30% off & renamed
+const COLORS = {
+  background: "linear-gradient(120deg, #141925 60%, #1e2533 100%)",
+  card: "rgba(22, 27, 38, 0.94)",
+  cardBorder: "1.5px solid #232a3a",
+  text: "#fff",
+  textSecondary: "#bfc9da",
+  accent: "#57c1f6",
+  accent2: "#3c9cff",
+};
 
-const accountTypes = [
-  { label: "1 Step Alpha", key: "hero" },
-  { label: "2 Step Alpha", key: "alpha" },
-  { label: "Fast Pass", key: "fast" }
+const CHALLENGE_TYPES = [
+  { label: "1 Step Hero", value: "1step" },
+  { label: "2 Step Alpha", value: "2step" },
+  { label: "Instant Alpha", value: "instant" }
 ];
 
-// Pricing and rules data
-const data = {
-  hero: {
-    // 1 Step Alpha: 30% OFF
-    sizes: [
-      { label: "$5k", fee: Math.round(35 * 0.7) },      // $24.50 → $25
-      { label: "$10k", fee: Math.round(70 * 0.7) },     // $49
-      { label: "$25k", fee: Math.round(170 * 0.7) },    // $119
-      { label: "$50k", fee: Math.round(320 * 0.7) },    // $224
-      { label: "$100k", fee: Math.round(600 * 0.7) },   // $420
-      { label: "$200k", fee: Math.round(1100 * 0.7) }   // $770
-    ],
-    stats: [
-      { label: "Profit Target", values: ["8%", "", "-"] },
-      { label: "Daily Loss", values: ["6%", "", "5%"] },
-      { label: "Maximum Loss", values: ["12%", "", "10%"] },
-      { label: "Maximum Drawdown Type", values: ["Static", "", "Static"] }
-    ],
-    phases: ["Phase 1", "", "Funded"]
-  },
-  alpha: {
-    // 2 Step Alpha: 50% OFF
-    sizes: [
-      { label: "$5k", fee: Math.round(30 * 0.5) },      // $15
-      { label: "$10k", fee: Math.round(60 * 0.5) },     // $30
-      { label: "$25k", fee: Math.round(150 * 0.5) },    // $75
-      { label: "$50k", fee: Math.round(290 * 0.5) },    // $145
-      { label: "$100k", fee: Math.round(550 * 0.5) },   // $275
-      { label: "$200k", fee: Math.round(1000 * 0.5) }   // $500
-    ],
-    stats: [
-      { label: "Profit Target", values: ["8%", "5%", "-"] },
-      { label: "Daily Loss", values: ["6%", "6%", "5%"] },
-      { label: "Maximum Loss", values: ["12%", "12%", "10%"] },
-      { label: "Maximum Drawdown Type", values: ["Static", "Static", "Static"] }
-    ],
-    phases: ["Phase 1", "Phase 2", "Funded"]
-  },
-  fast: {
-    sizes: [
-      { label: "$5k", fee: 45 },
-      { label: "$10k", fee: 90 },
-      { label: "$25k", fee: 210 },
-      { label: "$50k", fee: 390 },
-      { label: "$100k", fee: 750 },
-      { label: "$200k", fee: 1400 }
-    ],
-    stats: [
-      { label: "Profit Target", values: ["6%", "-"] },
-      { label: "Daily Loss", values: ["5%", "3%"] },
-      { label: "Maximum Loss", values: ["8%", "7%"] },
-      { label: "Maximum Drawdown Type", values: ["Static", "Static"] },
-      { label: "Minimum Trading Period", values: ["5 days", "10 days"] },
-      { label: "Trading Period", values: ["No Time Limit", "No Time Limit"] }
-    ],
-    phases: ["Phase 1", "Funded"]
-  }
+const ACCOUNT_SIZES = [
+  { label: "$5k", value: "5k" },
+  { label: "$10k", value: "10k" },
+  { label: "$25k", value: "25k" },
+  { label: "$50k", value: "50k" },
+  { label: "$100k", value: "100k" },
+  { label: "$200k", value: "200k" }
+];
+
+// PRICING should match Challenge.js
+const PRICING = {
+  "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
+  "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
+  "instant": { "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
 };
 
 export default function GetFunded() {
-  const [selectedType, setSelectedType] = useState("hero");
-  const [selectedSize, setSelectedSize] = useState(2); // Default $25k
-
-  const typeData = data[selectedType];
-  const sizeObj = typeData.sizes[selectedSize];
-
-  // When account type changes, reset size to first option
-  function handleType(idx) {
-    setSelectedType(accountTypes[idx].key);
-    setSelectedSize(0);
-  }
+  const [selectedType, setSelectedType] = useState("1step");
 
   return (
     <section
       style={{
-        marginTop: "80px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        background: "radial-gradient(ellipse at top left, #172132 60%, #131b26 100%)",
-        padding: "60px 0 80px",
-        position: "relative"
+        width: "100%",
+        background: COLORS.background,
+        padding: "56px 0 40px 0",
+        minHeight: "80vh",
       }}
     >
-      {/* Title */}
-      <h2 style={{
-        color: "white",
-        fontSize: "2.5rem",
-        fontWeight: 700,
-        marginBottom: "36px",
-        textAlign: "center",
-        letterSpacing: "0.02em",
-        position: "relative"
-      }}>
-        <span style={{ color: "#2186eb" }}>✦</span>{" "}
-        <span style={{ color: "#2186eb" }}>Get Funded</span>{" "}
-        <span style={{ color: "white" }}>Today</span>{" "}
-        <span style={{ color: "#2186eb" }}>✦</span>
-      </h2>
-      {/* Card Row */}
-      <div style={{
-        display: "flex",
-        gap: "32px",
-        maxWidth: "1100px",
-        width: "100%",
-        justifyContent: "center",
-        flexWrap: "wrap"
-      }}>
-        {/* Left Card */}
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "0 16px",
+        }}
+      >
+        <h2
+          style={{
+            color: COLORS.text,
+            fontWeight: 800,
+            fontSize: 40,
+            letterSpacing: 0.5,
+            textAlign: "center",
+            marginBottom: 38,
+            lineHeight: 1.1,
+          }}
+        >
+          Get Funded Today
+        </h2>
+        {/* Challenge Type Selector */}
         <div style={{
-          background: "#131b26",
-          borderRadius: "20px",
-          boxShadow: "0 4px 32px 0 rgba(31,38,135,0.14)",
-          border: "1.5px solid #2186eb",
-          minWidth: "320px",
-          maxWidth: "370px",
-          padding: "36px 28px 28px 28px",
           display: "flex",
-          flexDirection: "column",
-          gap: "18px",
-          flex: 1
+          justifyContent: "center",
+          gap: 18,
+          marginBottom: 38,
         }}>
-          {/* Account Type */}
-          <div style={{ color: "#c6d4e3", marginBottom: "6px", fontWeight: 500 }}>Account Type</div>
-          <div style={{ display: "flex", gap: "12px", marginBottom: "16px" }}>
-            {accountTypes.map((type, idx) => (
-              <button
-                key={type.key}
-                onClick={() => handleType(idx)}
+          {CHALLENGE_TYPES.map(type => (
+            <button
+              key={type.value}
+              style={{
+                background: selectedType === type.value ? COLORS.accent2 : COLORS.card,
+                color: selectedType === type.value ? "#fff" : COLORS.textSecondary,
+                border: "none",
+                borderRadius: 8,
+                fontWeight: 700,
+                fontSize: 18,
+                padding: "11px 28px",
+                cursor: "pointer",
+                boxShadow: selectedType === type.value ? "0 2px 10px #3c9cff33" : "none",
+                transition: "background 0.17s, color 0.17s",
+              }}
+              onClick={() => setSelectedType(type.value)}
+            >
+              {type.label}
+            </button>
+          ))}
+        </div>
+        {/* Pricing Cards - SAME AS Challenge.js */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 30,
+          }}
+        >
+          {ACCOUNT_SIZES.map(size => (
+            <div
+              key={size.value}
+              style={{
+                background: COLORS.card,
+                border: COLORS.cardBorder,
+                borderRadius: 18,
+                padding: "34px 32px 28px 32px",
+                color: COLORS.text,
+                width: 220,
+                minHeight: 180,
+                textAlign: "center",
+                boxShadow: "0 4px 32px 0 #1a376633",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                transition: "transform 0.17s, box-shadow 0.17s",
+              }}
+            >
+              <div
                 style={{
-                  flex: 1,
-                  background: selectedType === type.key ? "#2186eb" : "transparent",
-                  color: selectedType === type.key ? "white" : "#c6d4e3",
-                  border: "1.5px solid #2186eb",
-                  borderRadius: "8px",
-                  padding: "10px 0",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                  transition: "0.2s"
+                  fontWeight: 800,
+                  color: COLORS.accent2,
+                  fontSize: 34,
+                  marginBottom: 10,
+                  letterSpacing: 1,
                 }}
               >
-                {type.label}
-              </button>
-            ))}
-          </div>
-          {/* Account Size */}
-          <div style={{ color: "#c6d4e3", marginBottom: "6px", fontWeight: 500 }}>Account Size</div>
-          <div style={{ display: "flex", gap: "12px", marginBottom: "18px", flexWrap: "wrap" }}>
-            {typeData.sizes.map((size, idx) => (
-              <button
-                key={size.label}
-                onClick={() => setSelectedSize(idx)}
+                ${PRICING[selectedType][size.value]}
+              </div>
+              <div
                 style={{
-                  background: selectedSize === idx ? "#2186eb" : "transparent",
-                  color: selectedSize === idx ? "white" : "#c6d4e3",
-                  border: "1.5px solid #2186eb",
-                  borderRadius: "8px",
-                  padding: "10px 18px",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                  marginBottom: "6px",
-                  transition: "0.2s"
+                  color: "#fff",
+                  fontWeight: 700,
+                  fontSize: 20,
+                  marginBottom: 5,
+                  letterSpacing: 0.5,
                 }}
               >
                 {size.label}
+              </div>
+              <div
+                style={{
+                  color: COLORS.textSecondary,
+                  fontSize: 15,
+                  marginBottom: 8,
+                }}
+              >
+                One-Time Fee
+              </div>
+              <button
+                style={{
+                  background: COLORS.accent2,
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "11px 0",
+                  width: "100%",
+                  fontWeight: 700,
+                  fontSize: 18,
+                  cursor: "pointer",
+                  boxShadow: "0 2px 8px #3c9cff33",
+                  marginTop: 10,
+                }}
+              >
+                Start Challenge
               </button>
-            ))}
-          </div>
-          {/* Fee Box */}
-          <div style={{
-            background: "#172132",
-            border: "1.5px solid #2186eb",
-            borderRadius: "16px",
-            padding: "22px 18px 12px 18px",
-            marginTop: "8px",
-            marginBottom: "6px"
-          }}>
-            <div style={{ color: "#a1b0c7", fontSize: "1rem", marginBottom: "6px" }}>One-Time Fee</div>
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
-              <span style={{ color: "white", fontSize: "2.2rem", fontWeight: 700 }}>
-                ${sizeObj.fee}
-              </span>
-              <span style={{ color: "#c6d4e3", fontSize: "1.1rem", marginLeft: "12px" }}>
-                For {sizeObj.label} Account
-              </span>
             </div>
-            <button
-              style={{
-                width: "100%",
-                marginTop: "18px",
-                background: "#2186eb",
-                color: "white",
-                padding: "16px 0",
-                border: "none",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                fontSize: "1.2rem",
-                cursor: "pointer",
-                letterSpacing: "0.02em",
-                boxShadow: "0 1px 6px #2186eb66"
-              }}
-            >
-              Buy Challenge
-            </button>
-          </div>
-        </div>
-        {/* Right Card: Stats Table */}
-        <div style={{
-          background: "#131b26",
-          borderRadius: "20px",
-          boxShadow: "0 4px 32px 0 rgba(31,38,135,0.11)",
-          border: "1.5px solid #2186eb",
-          minWidth: "350px",
-          maxWidth: "470px",
-          padding: "36px 28px 28px 28px",
-          flex: 1
-        }}>
-          <table style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th style={{ color: "#a1b0c7", fontWeight: 600, textAlign: "left", paddingBottom: "12px" }}></th>
-                {typeData.phases.map((phase, i) => (
-                  <th key={i} style={{
-                    color: "#2186eb",
-                    fontWeight: 700,
-                    textAlign: "center"
-                  }}>{phase}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {typeData.stats.map((row, idx) => (
-                <tr key={row.label} style={{ borderBottom: "1px solid #202a3a" }}>
-                  <td style={{ color: "#c6d4e3", padding: "8px 0", fontWeight: 500 }}>{row.label}</td>
-                  {row.values.map((val, i) => (
-                    <td key={i} style={{
-                      color: "white",
-                      textAlign: "center",
-                      padding: "8px 0",
-                      fontWeight: 500
-                    }}>{val}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          ))}
         </div>
       </div>
     </section>
