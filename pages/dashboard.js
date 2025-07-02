@@ -11,7 +11,7 @@ function ChartBackground() {
         width: "100vw",
         height: "100vh",
         zIndex: 0,
-        opacity: 0.23,
+        opacity: 0.19,
         pointerEvents: "none",
       }}
       viewBox="0 0 1440 900"
@@ -26,11 +26,11 @@ function ChartBackground() {
           x2={1440}
           y2={i * 60}
           stroke="#2196f3"
-          strokeOpacity="0.10"
+          strokeOpacity="0.08"
           strokeWidth="2"
         />
       ))}
-      {[...Array(24)].map((_, i) => (
+      {[...Array(25)].map((_, i) => (
         <line
           key={"v"+i}
           x1={i * 60}
@@ -38,37 +38,37 @@ function ChartBackground() {
           x2={i * 60}
           y2={900}
           stroke="#ffe066"
-          strokeOpacity="0.07"
+          strokeOpacity="0.04"
           strokeWidth="2"
         />
       ))}
-      {/* Animated trading price line */}
+      {/* Animated trading price line in blue */}
       <polyline
         id="priceLine"
         fill="none"
         stroke="#2196f3"
         strokeWidth="4"
-        strokeDasharray="12 8"
+        strokeDasharray="15 8"
         strokeLinejoin="round"
         points="0,820 120,700 240,750 360,650 480,670 600,480 720,540 840,400 960,460 1080,320 1200,420 1320,180 1440,260"
       >
         <animate
           attributeName="stroke-dashoffset"
-          values="100;0;100"
+          values="180;0;180"
           dur="7s"
           repeatCount="indefinite"
         />
       </polyline>
-      {/* Candlestick-like bars (blue & yellow) */}
+      {/* Candlestick-like bars in blue/yellow */}
       {[...Array(12)].map((_, i) => (
         <rect
           key={i}
           x={120 * i + 60}
           y={Math.random() * 300 + 300}
           width="12"
-          height={Math.random() * 130 + 40}
+          height={Math.random() * 110 + 40}
           fill={i % 2 === 0 ? "#2196f3" : "#ffe066"}
-          opacity="0.18"
+          opacity="0.16"
           rx="5"
         />
       ))}
@@ -86,9 +86,9 @@ function Bubble({ color, size, top, left, delay }) {
       width: size,
       height: size,
       background: color,
-      opacity: 0.15,
+      opacity: 0.11,
       borderRadius: "50%",
-      filter: "blur(2px)",
+      filter: "blur(3px)",
       animation: `bubbleFloat 7.5s ease-in-out infinite`,
       animationDelay: delay,
       zIndex: 1,
@@ -131,7 +131,7 @@ export default function Dashboard() {
       minHeight: "100vh",
       width: "100vw",
       overflow: "hidden",
-      background: "linear-gradient(135deg, #fff 0%, #ffe066 25%, #2196f3 100%)",
+      background: "linear-gradient(135deg, #131e23 0%, #1a2231 60%, #2196f3 120%)",
       position: "relative",
       display: "flex",
       alignItems: "center",
@@ -140,24 +140,24 @@ export default function Dashboard() {
       {/* TRADING THEME BACKGROUND */}
       <ChartBackground />
       {/* Bubbles in logo colors */}
-      <Bubble color="#2196f3" size="120px" top="10%" left="8%" delay="0s" />
-      <Bubble color="#fff" size="60px" top="80%" left="20%" delay="2s" />
-      <Bubble color="#ffe066" size="100px" top="50%" left="85%" delay="1s" />
-      <Bubble color="#2196f3" size="70px" top="75%" left="70%" delay="3s" />
-      <Bubble color="#fff" size="40px" top="15%" left="70%" delay="1.5s" />
-      <Bubble color="#ffe066" size="50px" top="30%" left="30%" delay="2.2s" />
+      <Bubble color="#2196f3" size="140px" top="8%" left="6%" delay="0s" />
+      <Bubble color="#ffe066" size="90px" top="80%" left="20%" delay="2s" />
+      <Bubble color="#2196f3" size="65px" top="50%" left="85%" delay="1s" />
+      <Bubble color="#ffe066" size="60px" top="75%" left="70%" delay="3s" />
+      <Bubble color="#fff" size="40px" top="18%" left="70%" delay="1.5s" />
+      <Bubble color="#2196f3" size="35px" top="30%" left="30%" delay="2.2s" />
 
       {/* LOGIN CARD */}
       <form
         onSubmit={handleLogin}
         style={{
           zIndex: 2,
-          background: "rgba(255,255,255,0.92)",
-          borderRadius: "36px",
-          boxShadow: "0 8px 60px 0 #2196f366, 0 8px 80px 0 #ffe06655",
-          padding: "48px 32px 38px 32px",
+          background: "rgba(19,30,35,0.98)",
+          borderRadius: "34px",
+          boxShadow: "0 8px 60px 0 #2196f366, 0 8px 80px 0 #ffe06644",
+          padding: "52px 34px 42px 34px",
           width: "100%",
-          maxWidth: "390px",
+          maxWidth: "400px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -166,17 +166,40 @@ export default function Dashboard() {
           transition: "all 0.7s cubic-bezier(.77,0,.18,1.03)",
         }}
       >
-        <h2 style={{
-          color: "#2196f3",
-          fontWeight: 900,
-          fontSize: "2.2rem",
-          textAlign: "center",
-          marginBottom: "18px",
-          letterSpacing: 1,
-          textShadow: "0 2px 20px #16213e22",
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: 18,
+          gap: 8
         }}>
-          Login to Dashboard
-        </h2>
+          {/* Logo Icon Circle */}
+          <div style={{
+            width: 38,
+            height: 38,
+            background: "#131e23",
+            border: "3px solid #2196f3",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontWeight: 700,
+            color: "#ffe066",
+            fontSize: 18,
+            boxShadow: "0 2px 10px #2196f322"
+          }}>
+            AV
+          </div>
+          {/* Brand Name */}
+          <span style={{
+            fontWeight: 900,
+            fontSize: 27,
+            color: "#fff",
+            letterSpacing: 1
+          }}>
+            AlphaVault
+            <span style={{ color: "#2196f3" }}>FX</span>
+          </span>
+        </div>
         <div style={{height: 4, width: 60, background: "#ffe066", borderRadius: 8, marginBottom: 26}} />
         <input
           type="email"
@@ -190,8 +213,8 @@ export default function Dashboard() {
             marginBottom: "18px",
             fontSize: "1rem",
             outline: "none",
-            background: "#fff",
-            color: "#16213e",
+            background: "#192233",
+            color: "#fff",
             boxShadow: "0 2px 18px 0 #2196f322",
             width: "100%",
             transition: "box-shadow 0.2s, border 0.2s",
@@ -209,8 +232,8 @@ export default function Dashboard() {
             marginBottom: "18px",
             fontSize: "1rem",
             outline: "none",
-            background: "#fff",
-            color: "#16213e",
+            background: "#192233",
+            color: "#fff",
             boxShadow: "0 2px 18px 0 #ffe06622",
             width: "100%",
             transition: "box-shadow 0.2s, border 0.2s",
@@ -231,7 +254,7 @@ export default function Dashboard() {
           type="submit"
           style={{
             background: "linear-gradient(90deg,#2196f3 20%,#ffe066 80%)",
-            color: "#16213e",
+            color: "#131e23",
             fontWeight: 900,
             border: "none",
             borderRadius: "18px",
@@ -248,9 +271,9 @@ export default function Dashboard() {
         >
           Login
         </button>
-        <div style={{textAlign: "center", fontSize: ".97rem", color: "#16213e", marginTop: 12}}>
+        <div style={{textAlign: "center", fontSize: ".97rem", color: "#fff", marginTop: 12}}>
           Don&apos;t have an account?{" "}
-          <a href="/register" style={{color: "#2196f3", fontWeight: 700, textDecoration: "none"}}>
+          <a href="/register" style={{color: "#ffe066", fontWeight: 700, textDecoration: "none"}}>
             Register
           </a>
         </div>
