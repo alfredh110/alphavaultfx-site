@@ -1,13 +1,5 @@
 import React from "react";
 
-const COLORS = {
-  card: "#151d29",
-  cardBorder: "1.5px solid #232a3a",
-  accent: "#3c9cff",
-  accentLine: "#b0bac7",
-  text: "#fff",
-};
-
 export default function Hero() {
   return (
     <section
@@ -86,56 +78,7 @@ export default function Hero() {
         >
           Get Funded Today
         </button>
-        {/* Chart Card (without "Profit Balance" label) */}
-        <div
-          style={{
-            position: "absolute",
-            left: 42,
-            bottom: -85,
-            zIndex: 3,
-            background: COLORS.card,
-            border: COLORS.cardBorder,
-            borderRadius: 20,
-            padding: 30,
-            width: 310,
-            textAlign: "left",
-            boxShadow: "0 4px 32px 0 #1a376633",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
-          <div
-            style={{
-              fontWeight: 900,
-              color: "#fff",
-              fontSize: 32,
-              letterSpacing: "1px",
-              marginBottom: 0,
-              textShadow: "0 2px 10px #0004",
-            }}
-          >
-            $1,670.20
-          </div>
-          {/* Blue line chart mock */}
-          <svg width="242" height="60" style={{ marginTop: 14 }}>
-            <polyline
-              fill="none"
-              stroke={COLORS.accent}
-              strokeWidth="4"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              points="0,55 30,48 60,50 90,35 120,54 150,28 180,41 210,12 242,37"
-            />
-            <polyline
-              fill="none"
-              stroke={COLORS.accentLine}
-              strokeWidth="1"
-              strokeDasharray="4"
-              points="0,55 242,55"
-            />
-          </svg>
-        </div>
+        {/* The chart card has been completely removed */}
       </div>
     </section>
   );
