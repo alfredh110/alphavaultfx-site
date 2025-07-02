@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // If you use React Router v6+
 
 export default function Hero() {
+  const navigate = useNavigate(); // React Router v6+
+
   return (
     <section
       style={{
@@ -75,10 +78,10 @@ export default function Hero() {
             cursor: "pointer",
             transition: "background 0.18s",
           }}
+          onClick={() => navigate("/challenge")}
         >
           Get Funded Today
         </button>
-        {/* The chart card has been completely removed */}
       </div>
     </section>
   );
