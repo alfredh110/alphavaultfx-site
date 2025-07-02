@@ -8,8 +8,13 @@ import LeaderboardCard from "../components/LeaderboardCard";
 import NewsPanelCard from "../components/NewsPanelCard";
 import TradeAnalyticsCard from "../components/TradeAnalyticsCard";
 
-export default function Dashboard() {
-  const { data: session } = useSession();
+export default function Dashboard({ session: ssrSession }) {
+  // ssrSession comes from getServerSideProps, useSession handles client navigation
+  const { data: session, status } = useSession({ required: true, initialData: ssrSession });
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="av-dashboard-wrap">
