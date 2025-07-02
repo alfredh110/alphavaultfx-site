@@ -1,10 +1,22 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
+// Replace with your actual colors if you want to match your logo exactly
+const COLORS = {
+  primary: "#00E0FF",      // Electric blue/teal
+  secondary: "#081A2B",    // Dark navy
+  accent: "#6CFFF8",       // Accent teal
+  card: "rgba(20,40,60,0.75)", // Glassy card
+  border: "rgba(0,224,255,0.35)", // Primary border with alpha
+  text: "#fff",
+  textSecondary: "#A3B4C6",
+  buttonHover: "#00bbbb"
+};
+
 const accountTypes = [
   { label: "1 Step Alpha", value: "1step" },
   { label: "2 Step Alpha", value: "2step" },
-  { label: "Fast Pass", value: "fastpass" },
+  { label: "Fast Pass", value: "fastpass" }
 ];
 
 const accountSizes = [
@@ -13,14 +25,13 @@ const accountSizes = [
   { label: "$25k", value: "25k" },
   { label: "$50k", value: "50k" },
   { label: "$100k", value: "100k" },
-  { label: "$200k", value: "200k" },
+  { label: "$200k", value: "200k" }
 ];
 
-// These are example configs. Update to match your actual pricing/rules!
 const pricing = {
   "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
   "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
-  "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 },
+  "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
 };
 
 const rules = {
@@ -47,47 +58,70 @@ export default function Challenge() {
   const rule = rules[selectedType];
 
   return (
-    <div style={{ background: "#161e2e", minHeight: "100vh", padding: "0 0 60px 0" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", paddingTop: 40, paddingBottom: 40 }}>
+    <div style={{
+      minHeight: "100vh",
+      background: `linear-gradient(120deg, ${COLORS.secondary} 60%, #0C2B3A 100%)`,
+      fontFamily: "Inter, Roboto, sans-serif",
+      padding: "0 0 60px 0"
+    }}>
+      {/* Main container */}
+      <div style={{
+        maxWidth: 1100,
+        margin: "0 auto",
+        paddingTop: 48,
+        paddingBottom: 48
+      }}>
+        {/* Header */}
         <h1 style={{
           textAlign: "center",
-          color: "#2186eb",
-          fontWeight: 700,
-          fontSize: 36,
+          color: COLORS.text,
+          fontWeight: 800,
+          fontSize: 40,
           letterSpacing: 1,
-          marginBottom: 32
+          marginBottom: 36,
+          textShadow: `0 4px 24px ${COLORS.primary}55`
         }}>
-          <span style={{ color: "#2186eb" }}>✨ Get Funded <span style={{ color: "#fff" }}>Today</span> ✨</span>
+          <span style={{ color: COLORS.primary, filter: "drop-shadow(0 0 6px #00e0ff88)" }}>✦ Get Funded <span style={{ color: COLORS.text }}>Today</span> ✦</span>
         </h1>
-        <div style={{ display: "flex", gap: 32, justifyContent: "center" }}>
+        {/* Flex Panels */}
+        <div style={{
+          display: "flex",
+          gap: 36,
+          justifyContent: "center",
+          flexWrap: "wrap"
+        }}>
           {/* LEFT PANEL */}
           <div style={{
-            background: "#192136",
-            border: "1.5px solid #2186eb",
-            borderRadius: 16,
-            padding: 32,
-            minWidth: 320,
-            maxWidth: 360,
-            boxShadow: "0 2px 16px 0 rgba(33,134,235,0.07)",
+            background: COLORS.card,
+            border: `2px solid ${COLORS.border}`,
+            borderRadius: 22,
+            padding: 36,
+            minWidth: 330,
+            maxWidth: 400,
+            boxShadow: `0 6px 40px 0 ${COLORS.primary}18`,
             display: "flex",
             flexDirection: "column",
-            gap: 24
+            gap: 28,
+            backdropFilter: "blur(8px)"
           }}>
+            {/* Account Type */}
             <div>
-              <div style={{ fontWeight: 700, color: "#b8cfff", marginBottom: 10 }}>Account Type</div>
-              <div style={{ display: "flex", gap: 10 }}>
+              <div style={{ fontWeight: 700, color: COLORS.textSecondary, marginBottom: 12, fontSize: 18 }}>Account Type</div>
+              <div style={{ display: "flex", gap: 12 }}>
                 {accountTypes.map((type) => (
                   <button
                     key={type.value}
                     style={{
-                      background: selectedType === type.value ? "#2186eb" : "none",
-                      color: selectedType === type.value ? "#fff" : "#b8cfff",
-                      border: "1.5px solid #2186eb",
-                      borderRadius: 8,
-                      padding: "8px 18px",
-                      fontWeight: 600,
-                      fontSize: 15,
-                      cursor: "pointer"
+                      background: selectedType === type.value ? COLORS.primary : "transparent",
+                      color: selectedType === type.value ? "#191c24" : COLORS.textSecondary,
+                      border: `2px solid ${COLORS.primary}`,
+                      borderRadius: 10,
+                      padding: "10px 22px",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      cursor: "pointer",
+                      transition: "all 0.18s",
+                      boxShadow: selectedType === type.value ? `0 0 8px 1px ${COLORS.primary}88` : "none"
                     }}
                     onClick={() => setSelectedType(type.value)}
                   >
@@ -96,21 +130,25 @@ export default function Challenge() {
                 ))}
               </div>
             </div>
+            {/* Account Size */}
             <div>
-              <div style={{ fontWeight: 700, color: "#b8cfff", marginBottom: 10, marginTop: 10 }}>Account Size</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              <div style={{ fontWeight: 700, color: COLORS.textSecondary, marginBottom: 12, marginTop: 6, fontSize: 18 }}>Account Size</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                 {accountSizes.map((size) => (
                   <button
                     key={size.value}
                     style={{
-                      background: selectedSize === size.value ? "#2186eb" : "none",
-                      color: selectedSize === size.value ? "#fff" : "#b8cfff",
-                      border: "1.5px solid #2186eb",
-                      borderRadius: 8,
-                      padding: "8px 18px",
-                      fontWeight: 600,
-                      fontSize: 15,
-                      cursor: "pointer"
+                      background: selectedSize === size.value ? COLORS.primary : "transparent",
+                      color: selectedSize === size.value ? "#191c24" : COLORS.textSecondary,
+                      border: `2px solid ${COLORS.primary}`,
+                      borderRadius: 10,
+                      padding: "10px 22px",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      cursor: "pointer",
+                      marginBottom: 4,
+                      transition: "all 0.18s",
+                      boxShadow: selectedSize === size.value ? `0 0 8px 1px ${COLORS.primary}88` : "none"
                     }}
                     onClick={() => setSelectedSize(size.value)}
                   >
@@ -119,73 +157,79 @@ export default function Challenge() {
                 ))}
               </div>
             </div>
+            {/* Pricing box */}
             <div style={{
-              background: "#13192a",
-              border: "1.5px solid #2186eb",
-              borderRadius: 12,
-              padding: 22,
-              marginTop: 8,
-              textAlign: "center"
+              background: "rgba(0, 224, 255, 0.10)",
+              border: `2px solid ${COLORS.primary}`,
+              borderRadius: 18,
+              padding: 30,
+              marginTop: 10,
+              textAlign: "center",
+              boxShadow: `0 2px 12px 0 ${COLORS.primary}30`
             }}>
-              <div style={{ color: "#b8cfff", fontWeight: 500, marginBottom: 8 }}>One-Time Fee</div>
-              <div style={{ fontWeight: 900, color: "#fff", fontSize: 32 }}>${price}</div>
-              <div style={{ color: "#b8cfff", fontSize: 15, marginBottom: 16 }}>For {accountSizes.find(s => s.value === selectedSize).label} Account</div>
+              <div style={{ color: COLORS.textSecondary, fontWeight: 600, marginBottom: 7, fontSize: 16 }}>One-Time Fee</div>
+              <div style={{ fontWeight: 900, color: COLORS.primary, fontSize: 38, letterSpacing: "1px", lineHeight: 1.1, textShadow: `0 0 8px ${COLORS.primary}55` }}>${price}</div>
+              <div style={{ color: COLORS.textSecondary, fontSize: 16, marginBottom: 20 }}>For {accountSizes.find(s => s.value === selectedSize).label} Account</div>
               <button style={{
-                background: "#2186eb",
-                color: "#fff",
+                background: COLORS.primary,
+                color: "#191c24",
                 border: "none",
-                borderRadius: 8,
-                padding: "12px 0",
+                borderRadius: 10,
+                padding: "14px 0",
                 width: "100%",
-                fontWeight: 700,
-                fontSize: 18,
+                fontWeight: 800,
+                fontSize: 20,
                 cursor: "pointer",
-                boxShadow: "0 2px 6px 0 rgba(33,134,235,0.09)"
-              }}>Buy Challenge</button>
+                transition: "background 0.18s",
+                boxShadow: `0 2px 16px 0 ${COLORS.primary}66`
+              }} onMouseOver={e => e.currentTarget.style.background = COLORS.buttonHover}
+                 onMouseOut={e => e.currentTarget.style.background = COLORS.primary}
+              >Buy Challenge</button>
             </div>
           </div>
           {/* RIGHT PANEL */}
           <div style={{
-            background: "#192136",
-            border: "1.5px solid #2186eb",
-            borderRadius: 16,
-            padding: 32,
-            minWidth: 320,
-            maxWidth: 360,
-            boxShadow: "0 2px 16px 0 rgba(33,134,235,0.07)",
-            color: "#fff",
+            background: COLORS.card,
+            border: `2px solid ${COLORS.border}`,
+            borderRadius: 22,
+            padding: 36,
+            minWidth: 330,
+            maxWidth: 400,
+            boxShadow: `0 6px 40px 0 ${COLORS.primary}18`,
+            color: COLORS.text,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center"
+            justifyContent: "center",
+            backdropFilter: "blur(8px)"
           }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 17 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 19 }}>
               <thead>
                 <tr>
-                  <th style={{ textAlign: "left", color: "#b8cfff", fontWeight: 600 }}></th>
-                  <th style={{ color: "#2186eb", fontWeight: 700, textAlign: "center" }}>Phase 1</th>
-                  <th style={{ color: "#2186eb", fontWeight: 700, textAlign: "center" }}>Funded</th>
+                  <th style={{ textAlign: "left", color: COLORS.textSecondary, fontWeight: 700 }}></th>
+                  <th style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center" }}>Phase 1</th>
+                  <th style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center" }}>Funded</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Profit Target</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.profitTarget}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.profitTarget}</td>
+                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Profit Target</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.profitTarget}</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.profitTarget}</td>
                 </tr>
                 <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Daily Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.dailyLoss}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.dailyLoss}</td>
+                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Daily Loss</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.dailyLoss}</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.dailyLoss}</td>
                 </tr>
                 <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Maximum Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.maxLoss}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.maxLoss}</td>
+                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Maximum Loss</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.maxLoss}</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.maxLoss}</td>
                 </tr>
                 <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Maximum Drawdown Type</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.drawdown}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.drawdown}</td>
+                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Maximum Drawdown Type</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.drawdown}</td>
+                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.drawdown}</td>
                 </tr>
               </tbody>
             </table>
