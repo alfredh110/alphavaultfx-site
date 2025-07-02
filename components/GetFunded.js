@@ -10,10 +10,11 @@ const COLORS = {
   accent2: "#3c9cff",
 };
 
+// Updated challenge types to match Challenge.js exactly
 const CHALLENGE_TYPES = [
-  { label: "1 Step Hero", value: "1step" },
+  { label: "1 Step Alpha", value: "1step" },
   { label: "2 Step Alpha", value: "2step" },
-  { label: "Instant Alpha", value: "instant" }
+  { label: "Fast Pass", value: "fastpass" }
 ];
 
 const ACCOUNT_SIZES = [
@@ -25,11 +26,11 @@ const ACCOUNT_SIZES = [
   { label: "$200k", value: "200k" }
 ];
 
-// PRICING should match Challenge.js
+// Update PRICING: fastpass replaces instant
 const PRICING = {
   "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
   "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
-  "instant": { "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
+  "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
 };
 
 export default function GetFunded() {
@@ -92,7 +93,7 @@ export default function GetFunded() {
             </button>
           ))}
         </div>
-        {/* Pricing Cards - SAME AS Challenge.js */}
+        {/* Pricing Cards */}
         <div
           style={{
             display: "flex",
