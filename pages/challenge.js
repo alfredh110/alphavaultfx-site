@@ -1,9 +1,12 @@
+import { useSession } from "next-auth/react";
 import ChallengeSelector from '../components/challenge/ChallengeSelector';
 import ChallengeProgress from '../components/challenge/ChallengeProgress';
 import ChallengeRules from '../components/challenge/ChallengeRules';
 import BuyChallenge from '../components/challenge/BuyChallenge';
 
 export default function Challenge() {
+  const { data } = useSession() || {};
+
   return (
     <div className="challenge-root">
       <ChallengeSelector />
@@ -13,3 +16,5 @@ export default function Challenge() {
     </div>
   );
 }
+
+export const getServerSideProps = () => ({ props: {} });
