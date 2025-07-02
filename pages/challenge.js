@@ -200,37 +200,37 @@ export default function Challenge() {
             justifyContent: "center",
             backdropFilter: "blur(8px)"
           }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 19 }}>
-              <thead>
-                <tr>
-                  <th style={{ textAlign: "left", color: COLORS.textSecondary, fontWeight: 700 }}></th>
-                  <th style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center" }}>Phase 1</th>
-                  <th style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center" }}>Funded</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Profit Target</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.profitTarget}</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.profitTarget}</td>
-                </tr>
-                <tr>
-                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Daily Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.dailyLoss}</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.dailyLoss}</td>
-                </tr>
-                <tr>
-                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Maximum Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.maxLoss}</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.maxLoss}</td>
-                </tr>
-                <tr>
-                  <td style={{ color: COLORS.textSecondary, fontWeight: 700, padding: "12px 0" }}>Maximum Drawdown Type</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.phase1.drawdown}</td>
-                  <td style={{ textAlign: "center", fontWeight: 800 }}>{rule.funded.drawdown}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div
+              style={{
+                width: "100%",
+                display: "grid",
+                gridTemplateColumns: "1.5fr 1fr 1fr",
+                rowGap: "1.2rem",
+                alignItems: "center"
+              }}
+            >
+              <div></div>
+              <div style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center", fontSize: 18 }}>
+                Phase 1
+              </div>
+              <div style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center", fontSize: 18 }}>
+                Funded
+              </div>
+              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16 }}>Profit Target</div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.profitTarget}</div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.profitTarget}</div>
+              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16 }}>Daily Loss</div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.dailyLoss}</div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.dailyLoss}</div>
+              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16 }}>Maximum Loss</div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.maxLoss}</div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.maxLoss}</div>
+              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16, lineHeight: 1.1 }}>
+                Maximum Drawdown<br />Type
+              </div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.drawdown}</div>
+              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.drawdown}</div>
+            </div>
           </div>
         </div>
       </div>
