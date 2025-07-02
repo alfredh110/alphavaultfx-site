@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-// AlphaVaultFX theme colors
 const COLORS = {
-  bg: "#181C26",
-  card: "rgba(22, 27, 38, 0.96)",
-  border: "1.5px solid #232a3a",
-  accent: "#2186eb",
-  accent2: "#3c9cff",
-  gold: "#ffd34e",
-  text: "#fff",
-  textSecondary: "#bfc9da",
+  bg: "#111c2e",         // Deep navy blue
+  card: "#18233a",       // Slightly lighter navy for cards
+  border: "#23365e",     // Muted blue border
+  accent: "#34bfff",     // Light blue accent
+  accentHover: "#86dbff",// Lighter blue for hover
+  text: "#fff",          // White text
+  textSecondary: "#b4c7e7", // Soft light blue/white
+  inputBg: "#13203b",    // Very deep blue input background
+  inputBorder: "#2a4065",// Subtle blue border for inputs
 };
 
 const PRODUCT_NAMES = {
@@ -27,7 +27,7 @@ const PRICING = {
 
 export default function Payment() {
   const router = useRouter();
-  const { type = "2step", size = "5k" } = router.query;
+  const { type = "1step", size = "5k" } = router.query;
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(0);
   const [billing, setBilling] = useState({
@@ -67,28 +67,31 @@ export default function Payment() {
   function handleOrder(e) {
     e.preventDefault();
     setStatus("success");
-    setTimeout(() => setStatus(""), 2500);
+    setTimeout(() => setStatus(""), 2000);
   }
 
   return (
     <div style={{
       minHeight: "100vh",
-      background: COLORS.bg + " url('/bg_alpha.png') center/cover no-repeat",
+      background: COLORS.bg,
+      fontFamily: "Inter, Roboto, sans-serif",
       padding: 0,
     }}>
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "44px 10px 44px 10px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "44px 10px 44px 10px" }}>
         <button
           onClick={() => router.back()}
           style={{
             background: "transparent",
-            color: COLORS.textSecondary,
+            color: COLORS.accent,
             border: "none",
             fontSize: 16,
             marginBottom: 28,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            gap: 8
+            gap: 8,
+            fontWeight: 600,
+            letterSpacing: 0.1,
           }}
         >
           <span style={{fontSize: 24, lineHeight: "18px"}}>&larr;</span> Go Back
@@ -96,7 +99,7 @@ export default function Payment() {
         <div style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: 38,
+          gap: 36,
           alignItems: "flex-start",
         }}>
           {/* Checkout (Left) */}
@@ -104,21 +107,33 @@ export default function Payment() {
             flex: "1 1 370px",
             minWidth: 340,
             background: COLORS.card,
-            border: COLORS.border,
-            borderRadius: 18,
+            border: `1.5px solid ${COLORS.border}`,
+            borderRadius: 20,
             padding: "38px 28px 28px 28px",
-            boxShadow: "0 6px 36px 0 #2186eb22",
             marginBottom: 18,
+            boxShadow: "0 2px 16px 0 #0002",
           }}>
-            <h2 style={{ color: COLORS.text, fontWeight: 800, fontSize: 28, marginBottom: 18 }}>
+            <h2 style={{
+              color: COLORS.text,
+              fontWeight: 900,
+              fontSize: 30,
+              marginBottom: 24,
+              letterSpacing: 0.2
+            }}>
               Checkout
             </h2>
             {/* Coupon */}
-            <form onSubmit={handleCouponApply} style={{ marginBottom: 28 }}>
-              <label style={{ color: COLORS.textSecondary, fontSize: 15, fontWeight: 600 }}>
+            <form onSubmit={handleCouponApply} style={{ marginBottom: 32 }}>
+              <label style={{
+                color: COLORS.textSecondary,
+                fontSize: 16,
+                fontWeight: 600,
+                marginBottom: 6,
+                display: "block"
+              }}>
                 Apply Coupon
               </label>
-              <div style={{ display: "flex", gap: 0, marginTop: 6 }}>
+              <div style={{ display: "flex", gap: 0 }}>
                 <input
                   type="text"
                   value={coupon}
@@ -127,43 +142,47 @@ export default function Payment() {
                   style={{
                     flex: 1,
                     padding: "10px 14px",
-                    borderRadius: "6px 0 0 6px",
-                    border: "1px solid #22293d",
-                    background: "#191e2b",
+                    borderRadius: "8px 0 0 8px",
+                    border: `1.5px solid ${COLORS.inputBorder}`,
+                    background: COLORS.inputBg,
                     color: COLORS.text,
                     fontSize: 16,
+                    outline: "none"
                   }}
                 />
                 <button
                   type="submit"
                   style={{
-                    background: COLORS.gold,
-                    color: "#000",
+                    background: COLORS.accent,
+                    color: "#022140",
                     border: "none",
-                    borderRadius: "0 6px 6px 0",
-                    fontWeight: 700,
+                    borderRadius: "0 8px 8px 0",
+                    fontWeight: 800,
                     fontSize: 16,
-                    padding: "0 18px",
+                    padding: "0 20px",
                     cursor: "pointer",
+                    transition: "background 0.15s"
                   }}
+                  onMouseOver={e => e.currentTarget.style.background = COLORS.accentHover}
+                  onMouseOut={e => e.currentTarget.style.background = COLORS.accent}
                 >
                   Apply coupon
                 </button>
               </div>
               {validCoupon && discount > 0 && (
-                <div style={{ color: COLORS.accent, fontSize: 13, marginTop: 4 }}>30% OFF applied!</div>
+                <div style={{ color: COLORS.accent, fontSize: 13, marginTop: 6 }}>30% OFF applied!</div>
               )}
             </form>
 
             {/* Order Summary */}
             <div style={{
-              background: "#181e2a",
-              borderRadius: 12,
-              padding: 22,
+              background: "#15213a",
+              borderRadius: 18,
+              padding: 20,
               marginBottom: 22,
-              boxShadow: "0 2px 10px #3c9cff09",
+              boxShadow: "0 2px 10px #0001",
             }}>
-              <div style={{ color: COLORS.text, fontSize: 17, fontWeight: 700, marginBottom: 12 }}>
+              <div style={{ color: COLORS.text, fontSize: 18, fontWeight: 700, marginBottom: 12 }}>
                 Order Summary
               </div>
               <table style={{ width: "100%", color: COLORS.text, fontSize: 15, marginBottom: 10 }}>
@@ -180,13 +199,19 @@ export default function Payment() {
                   </tr>
                   {discount > 0 && (
                     <tr>
-                      <td style={{ color: COLORS.accent2 }}>DISCOUNT 30% OFF</td>
-                      <td style={{ textAlign: "right", color: COLORS.accent2 }}>- ${discount.toFixed(2)}</td>
+                      <td style={{ color: COLORS.accent }}>DISCOUNT 30% OFF</td>
+                      <td style={{ textAlign: "right", color: COLORS.accent }}>- ${discount.toFixed(2)}</td>
                     </tr>
                   )}
-                  <tr style={{ borderTop: "1.5px solid #232a3a" }}>
-                    <td style={{ fontWeight: 600, paddingTop: 6 }}>Total</td>
-                    <td style={{ textAlign: "right", fontWeight: 700, color: COLORS.gold, paddingTop: 6 }}>
+                  <tr style={{ borderTop: `1.5px solid ${COLORS.border}` }}>
+                    <td style={{ fontWeight: 700, paddingTop: 8 }}>Total</td>
+                    <td style={{
+                      textAlign: "right",
+                      fontWeight: 900,
+                      color: COLORS.accent,
+                      paddingTop: 8,
+                      fontSize: 18
+                    }}>
                       ${total.toFixed(2)}
                     </td>
                   </tr>
@@ -195,13 +220,14 @@ export default function Payment() {
               <button
                 style={{
                   width: "100%",
-                  background: "#fff",
-                  color: "#232a3a",
-                  borderRadius: 6,
-                  padding: "10px 0",
-                  marginTop: 12,
+                  background: COLORS.text,
+                  color: COLORS.card,
+                  borderRadius: 8,
+                  padding: "11px 0",
+                  marginTop: 14,
                   fontWeight: 700,
                   border: "none",
+                  fontSize: 15,
                   cursor: "pointer"
                 }}
                 disabled
@@ -218,13 +244,19 @@ export default function Payment() {
               flex: "2 1 480px",
               minWidth: 340,
               background: COLORS.card,
-              border: COLORS.border,
-              borderRadius: 18,
+              border: `1.5px solid ${COLORS.border}`,
+              borderRadius: 20,
               padding: "38px 28px 28px 28px",
-              boxShadow: "0 6px 36px 0 #2186eb22",
               marginBottom: 18,
+              boxShadow: "0 2px 16px 0 #0002",
             }}>
-            <h2 style={{ color: COLORS.text, fontWeight: 800, fontSize: 23, marginBottom: 18 }}>
+            <h2 style={{
+              color: COLORS.text,
+              fontWeight: 900,
+              fontSize: 26,
+              marginBottom: 22,
+              letterSpacing: 0.1
+            }}>
               Billing Information
             </h2>
             <div style={{ display: "flex", gap: 18, marginBottom: 12 }}>
@@ -238,12 +270,11 @@ export default function Payment() {
                 style={{
                   flex: 1,
                   padding: "11px 14px",
-                  borderRadius: 6,
-                  border: "1px solid #22293d",
-                  background: "#191e2b",
+                  borderRadius: 8,
+                  border: `1.5px solid ${COLORS.inputBorder}`,
+                  background: COLORS.inputBg,
                   color: COLORS.text,
-                  fontSize: 16,
-                  marginBottom: 0
+                  fontSize: 16
                 }}
               />
               <input
@@ -256,12 +287,11 @@ export default function Payment() {
                 style={{
                   flex: 1,
                   padding: "11px 14px",
-                  borderRadius: 6,
-                  border: "1px solid #22293d",
-                  background: "#191e2b",
+                  borderRadius: 8,
+                  border: `1.5px solid ${COLORS.inputBorder}`,
+                  background: COLORS.inputBg,
                   color: COLORS.text,
-                  fontSize: 16,
-                  marginBottom: 0
+                  fontSize: 16
                 }}
               />
             </div>
@@ -275,9 +305,9 @@ export default function Payment() {
               style={{
                 width: "100%",
                 padding: "11px 14px",
-                borderRadius: 6,
-                border: "1px solid #22293d",
-                background: "#191e2b",
+                borderRadius: 8,
+                border: `1.5px solid ${COLORS.inputBorder}`,
+                background: COLORS.inputBg,
                 color: COLORS.text,
                 fontSize: 16,
                 marginBottom: 12
@@ -293,9 +323,9 @@ export default function Payment() {
               style={{
                 width: "100%",
                 padding: "11px 14px",
-                borderRadius: 6,
-                border: "1px solid #22293d",
-                background: "#191e2b",
+                borderRadius: 8,
+                border: `1.5px solid ${COLORS.inputBorder}`,
+                background: COLORS.inputBg,
                 color: COLORS.text,
                 fontSize: 16,
                 marginBottom: 12
@@ -312,11 +342,11 @@ export default function Payment() {
                 style={{
                   flex: 1,
                   padding: "11px 14px",
-                  borderRadius: 6,
-                  border: "1px solid #22293d",
-                  background: "#191e2b",
+                  borderRadius: 8,
+                  border: `1.5px solid ${COLORS.inputBorder}`,
+                  background: COLORS.inputBg,
                   color: COLORS.text,
-                  fontSize: 16,
+                  fontSize: 16
                 }}
               />
               <input
@@ -329,11 +359,11 @@ export default function Payment() {
                 style={{
                   flex: 1,
                   padding: "11px 14px",
-                  borderRadius: 6,
-                  border: "1px solid #22293d",
-                  background: "#191e2b",
+                  borderRadius: 8,
+                  border: `1.5px solid ${COLORS.inputBorder}`,
+                  background: COLORS.inputBg,
                   color: COLORS.text,
-                  fontSize: 16,
+                  fontSize: 16
                 }}
               />
             </div>
@@ -348,11 +378,11 @@ export default function Payment() {
                 style={{
                   flex: 1,
                   padding: "11px 14px",
-                  borderRadius: 6,
-                  border: "1px solid #22293d",
-                  background: "#191e2b",
+                  borderRadius: 8,
+                  border: `1.5px solid ${COLORS.inputBorder}`,
+                  background: COLORS.inputBg,
                   color: COLORS.text,
-                  fontSize: 16,
+                  fontSize: 16
                 }}
               />
               <input
@@ -365,15 +395,15 @@ export default function Payment() {
                 style={{
                   flex: 1,
                   padding: "11px 14px",
-                  borderRadius: 6,
-                  border: "1px solid #22293d",
-                  background: "#191e2b",
+                  borderRadius: 8,
+                  border: `1.5px solid ${COLORS.inputBorder}`,
+                  background: COLORS.inputBg,
                   color: COLORS.text,
-                  fontSize: 16,
+                  fontSize: 16
                 }}
               />
             </div>
-            <label style={{ display: "flex", alignItems: "center", fontSize: 15, color: COLORS.textSecondary, marginBottom: 18 }}>
+            <label style={{ display: "flex", alignItems: "center", fontSize: 15, color: COLORS.textSecondary, marginBottom: 20 }}>
               <input
                 type="checkbox"
                 name="createAccount"
@@ -386,25 +416,29 @@ export default function Payment() {
 
             {/* Banner */}
             <div style={{
-              background: "linear-gradient(90deg,#b58f00 0%,#ffd34e 100%)",
-              color: "#232a3a",
+              background: COLORS.accent,
+              color: COLORS.card,
               fontWeight: 700,
-              borderRadius: 8,
-              padding: "10px 18px",
-              margin: "18px 0 18px 0",
+              borderRadius: 10,
+              padding: "12px 18px",
+              margin: "10px 0 22px 0",
               fontSize: 15,
-              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               letterSpacing: 0.2,
-              boxShadow: "0 2px 8px #ffd34e33"
+              boxShadow: "0 1px 8px #34bfff33"
             }}>
-              CELEBRATE FREEDOM: 30% OFF WITH FUNDED HERO &nbsp;
+              CELEBRATE FREEDOM: 30% OFF WITH FUNDED HERO
               <span style={{
-                background: "#232a3a",
-                color: COLORS.gold,
-                borderRadius: 5,
-                padding: "2px 10px",
+                background: COLORS.card,
+                color: COLORS.accent,
+                borderRadius: 6,
+                padding: "5px 15px",
                 fontWeight: 800,
                 fontSize: 15,
+                marginLeft: 10,
+                display: "inline-block"
               }}>Code: 40FF</span>
             </div>
 
@@ -413,32 +447,68 @@ export default function Payment() {
               <div style={{ fontWeight: 700, fontSize: 18, color: COLORS.text, marginBottom: 8 }}>
                 Payment Details
               </div>
-              <label style={{ display: "block", fontWeight: 600, marginBottom: 6 }}>
+              <label style={{
+                display: "flex",
+                alignItems: "center",
+                fontWeight: 700,
+                color: COLORS.text,
+                marginBottom: 7,
+                fontSize: 16
+              }}>
                 <input
                   type="radio"
                   name="paymentMethod"
                   value="crypto"
                   checked={paymentMethod === "crypto"}
                   onChange={() => setPaymentMethod("crypto")}
-                  style={{ marginRight: 9 }}
+                  style={{
+                    marginRight: 10,
+                    appearance: "none",
+                    width: 18,
+                    height: 18,
+                    borderRadius: "100%",
+                    border: `2.5px solid ${COLORS.accent}`,
+                    outline: "none",
+                    boxShadow: "0 0 0 2px #18233a",
+                    background: paymentMethod === "crypto" ? COLORS.accent : "#fff",
+                    transition: "background 0.15s"
+                  }}
                 />
                 CryptoCloud Payment System
-                <div style={{ color: COLORS.textSecondary, fontWeight: 400, fontSize: 13, marginTop: 2, marginLeft: 27 }}>
-                  Accepting payment via cryptocurrency. It is possible to pay the bill using a bank card.
-                </div>
               </label>
-              <label style={{ display: "block", fontWeight: 600, margin: "13px 0 0 0" }}>
+              <div style={{ color: COLORS.textSecondary, fontWeight: 400, fontSize: 13, marginLeft: 28, marginBottom: 9 }}>
+                Accepting payment via cryptocurrency. It is possible to pay the bill using a bank card.
+              </div>
+              <label style={{
+                display: "flex",
+                alignItems: "center",
+                fontWeight: 700,
+                color: COLORS.text,
+                marginBottom: 2,
+                fontSize: 16
+              }}>
                 <input
                   type="radio"
                   name="paymentMethod"
                   value="credit"
                   checked={paymentMethod === "credit"}
                   onChange={() => setPaymentMethod("credit")}
-                  style={{ marginRight: 9 }}
+                  style={{
+                    marginRight: 10,
+                    appearance: "none",
+                    width: 18,
+                    height: 18,
+                    borderRadius: "100%",
+                    border: `2.5px solid ${COLORS.accent}`,
+                    outline: "none",
+                    boxShadow: "0 0 0 2px #18233a",
+                    background: paymentMethod === "credit" ? COLORS.accent : "#fff",
+                    transition: "background 0.15s"
+                  }}
                 />
                 Credit Card Payment
               </label>
-              <div style={{ color: COLORS.textSecondary, fontSize: 13, marginTop: 7, marginLeft: 27 }}>
+              <div style={{ color: COLORS.textSecondary, fontSize: 13, marginLeft: 28, marginBottom: 10 }}>
                 Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.
               </div>
             </div>
@@ -449,7 +519,7 @@ export default function Payment() {
                 margin: "15px 0",
                 padding: "12px",
                 background: "#143d24",
-                color: "#51db7a",
+                color: "#34bfff",
                 borderRadius: 6,
                 textAlign: "center",
                 fontWeight: 700,
@@ -460,17 +530,22 @@ export default function Payment() {
             <button
               type="submit"
               style={{
-                background: COLORS.gold,
-                color: "#232a3a",
+                background: COLORS.accent,
+                color: COLORS.card,
                 border: "none",
-                borderRadius: 8,
-                padding: "14px 0",
+                borderRadius: 12,
+                padding: "15px 0",
                 width: "100%",
-                fontWeight: 700,
-                fontSize: 18,
+                fontWeight: 900,
+                fontSize: 20,
                 cursor: "pointer",
-                marginTop: 10
+                marginTop: 10,
+                marginBottom: 5,
+                boxShadow: "0 2px 8px #34bfff66",
+                transition: "background 0.13s"
               }}
+              onMouseOver={e => e.currentTarget.style.background = COLORS.accentHover}
+              onMouseOut={e => e.currentTarget.style.background = COLORS.accent}
             >
               Place order
             </button>
