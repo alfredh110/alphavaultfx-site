@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
 // Pricing for each challenge type and size (update as needed)
 const PRICING = {
@@ -71,7 +72,6 @@ const TYPE_LABELS = {
   "fastpass": "Fast Pass",
 };
 
-// Navy blue / White / Light blue theme, blended and animated!
 const COLORS = {
   card: "rgba(24,35,58,0.85)",
   border: "rgba(72,207,255,0.20)",
@@ -90,6 +90,7 @@ const COLORS = {
 export default function Challenge() {
   const [challengeType, setChallengeType] = useState("2step");
   const [accountSize, setAccountSize] = useState("200k");
+  const router = useRouter();
 
   let rules, phases, pricingArr;
   if (challengeType === "2step") {
@@ -111,6 +112,10 @@ export default function Challenge() {
   );
   const price = activePricing ? activePricing.price : "$0";
   const sizeLabel = SIZES.find((s) => s.key === accountSize)?.label || "$0";
+
+  const handleBuyChallenge = () => {
+    router.push("/payment");
+  };
 
   return (
     <div style={{ position: "relative", minHeight: "100vh" }}>
@@ -372,7 +377,9 @@ export default function Challenge() {
             <div className="one-time-label">One-Time Fee</div>
             <div className="price">{price}</div>
             <div className="for-label">For {sizeLabel} Account</div>
-            <button className="buy-btn">Buy Challenge</button>
+            <button className="buy-btn" onClick={handleBuyChallenge}>
+              Buy Challenge
+            </button>
           </div>
           <div className="rules-card card-blur">
             <table>
