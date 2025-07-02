@@ -10,7 +10,6 @@ export default function Layout({ children }) {
       </Head>
       <header className="site-header">
         <div className="brand">
-          {/* Replace src with your actual logo path if needed */}
           <div className="logo-circle">AV</div>
           <span className="brand-text">
             AlphaVault<span className="brand-blue">FX</span>
