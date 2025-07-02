@@ -71,9 +71,12 @@ const TYPE_LABELS = {
   "fastpass": "Fast Pass",
 };
 
-// Navy blue / White / Light blue theme
-const DASHBOARD_BG =
-  "radial-gradient(circle at 60% 30%, #18233a 60%, #10182a 100%)";
+// Navy blue / White / Light blue theme, vibrant animated!
+const DASHBOARD_BG = `
+  linear-gradient(120deg, #283e63 0%, #20304a 40%, #102046 100%),
+  radial-gradient(circle at 60% 30%, #1b7fd9 0%, transparent 50%),
+  linear-gradient(-45deg, #48cfff22 0%, transparent 70%)
+`;
 
 const COLORS = {
   card: "#1a2943", // navy blue card
@@ -117,276 +120,325 @@ export default function Challenge() {
   const sizeLabel = SIZES.find((s) => s.key === accountSize)?.label || "$0";
 
   return (
-    <div
-      className="challenge-bg"
-      style={{
-        minHeight: "100vh",
-        background: COLORS.bg,
-        fontFamily: "Inter, Roboto, sans-serif",
-        padding: "60px 16px",
-      }}
-    >
-      <style>{`
-        .challenge-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 32px;
-          align-items: flex-start;
-          margin-top: 32px;
-        }
-        .challenge-col {
-          flex: 1 1 400px;
-          min-width: 370px;
-          display: flex;
-          flex-direction: column;
-          gap: 32px;
-        }
-        .challenge-controls {
-          margin-bottom: 18px;
-        }
-        .pricing-card, .rules-card {
-          margin: 0;
-        }
-        .account-type-group {
-          display: flex;
-          gap: 18px;
-        }
-        .account-type-btn {
-          flex: 1 1 0;
-          padding: 18px 0;
-          font-size: 18px;
-          font-weight: 700;
-          border: 2px solid ${COLORS.buttonBorder};
-          border-radius: 12px;
-          background: ${COLORS.buttonInactive};
-          color: ${COLORS.buttonInactiveText};
-          cursor: pointer;
-          transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
-        }
-        .account-type-btn.active {
-          background: ${COLORS.buttonActive};
-          color: ${COLORS.buttonActiveText};
-          border-color: ${COLORS.buttonActive};
-          box-shadow: 0 2px 14px #48cfff15;
-        }
-        .account-size-group {
-          display: flex;
-          gap: 18px;
-        }
-        .account-size-btn {
-          flex: 1 1 0;
-          padding: 18px 0;
-          font-size: 18px;
-          font-weight: 700;
-          border: 2px solid ${COLORS.buttonBorder};
-          border-radius: 12px;
-          background: ${COLORS.buttonInactive};
-          color: ${COLORS.buttonInactiveText};
-          cursor: pointer;
-          transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
-        }
-        .account-size-btn.active {
-          background: ${COLORS.buttonActive};
-          color: ${COLORS.buttonActiveText};
-          border-color: ${COLORS.buttonActive};
-          box-shadow: 0 2px 14px #48cfff15;
-        }
-        .pricing-card {
-          background: ${COLORS.card};
-          border-radius: 18px;
-          box-shadow: 0 4px 36px #0007;
-          border: 2px solid ${COLORS.border};
-          padding: 38px 34px 32px 34px;
-          min-width: 340px;
-          margin-bottom: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: stretch;
-        }
-        .pricing-card .one-time-label {
-          color: ${COLORS.textSecondary};
-          font-size: 20px;
-          font-weight: 700;
-          margin-bottom: 16px;
-        }
-        .pricing-card .price {
-          color: #fff;
-          font-size: 48px;
-          font-weight: 900;
-          letter-spacing: 2px;
-          margin-bottom: 8px;
-        }
-        .pricing-card .for-label {
-          color: ${COLORS.textSecondary};
-          font-size: 20px;
-          margin-bottom: 28px;
-        }
-        .pricing-card .buy-btn {
-          background: ${COLORS.accent};
-          color: ${COLORS.card};
-          border: none;
-          border-radius: 12px;
-          width: 100%;
-          padding: 22px 0;
-          font-size: 26px;
-          font-weight: 900;
-          cursor: pointer;
-          margin-top: 6px;
-          margin-bottom: 0;
-          transition: background 0.13s;
-          box-shadow: 0 2px 12px #48cfff22;
-        }
-        .pricing-card .buy-btn:hover {
-          background: ${COLORS.accentHover};
-        }
-        .rules-card {
-          background: ${COLORS.card};
-          border-radius: 18px;
-          box-shadow: 0 4px 36px #0007;
-          border: 2px solid ${COLORS.border};
-          min-width: 340px;
-          max-width: 700px;
-          overflow: hidden;
-          padding-bottom: 6px;
-        }
-        .rules-card table {
-          width: 100%;
-          color: ${COLORS.text};
-          border-collapse: collapse;
-          font-size: 17px;
-        }
-        .rules-card th, .rules-card td {
-          transition: color .16s, background .16s;
-        }
-        .rules-card th {
-          text-align: center;
-          font-weight: 700;
-          color: ${COLORS.accent};
-          font-size: 17px;
-          padding: 24px 20px;
-          letter-spacing: 1px;
-          background: #22345a60;
-        }
-        .rules-card th:first-child, .rules-card td:first-child {
-          text-align: left;
-        }
-        .rules-card tbody tr {
-          border-top: 1.5px solid #284366;
-        }
-        .rules-card td {
-          text-align: center;
-          padding: 18px;
-          font-weight: 900;
-          color: ${COLORS.text};
-          background: transparent;
-        }
-        .rules-card td:first-child {
-          font-weight: 700;
-          color: ${COLORS.textSecondary};
-        }
-        .rules-card tbody tr:first-child {
-          border-top: none;
-        }
-        @media (max-width: 1100px) {
-          .challenge-row { flex-direction: column; }
-          .rules-card, .pricing-card { max-width: 100% !important; }
-        }
-      `}</style>
+    <div style={{position:"relative", minHeight:"100vh"}}>
+      {/* Animated background and overlays */}
+      <div className="challenge-bg"
+        style={{
+          minHeight: "100vh",
+          background: COLORS.bg,
+          backgroundBlendMode: "overlay",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          position: "relative",
+          zIndex: 1,
+          padding: "60px 16px",
+          fontFamily: "Inter, Roboto, sans-serif",
+          overflow:"hidden"
+        }}>
+        {/* Main content */}
+        <style>{`
+          .challenge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            align-items: flex-start;
+            margin-top: 32px;
+          }
+          .challenge-col {
+            flex: 1 1 400px;
+            min-width: 370px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+          }
+          .challenge-controls {
+            margin-bottom: 18px;
+          }
+          .pricing-card, .rules-card {
+            margin: 0;
+          }
+          .account-type-group {
+            display: flex;
+            gap: 18px;
+          }
+          .account-type-btn {
+            flex: 1 1 0;
+            padding: 18px 0;
+            font-size: 18px;
+            font-weight: 700;
+            border: 2px solid ${COLORS.buttonBorder};
+            border-radius: 12px;
+            background: ${COLORS.buttonInactive};
+            color: ${COLORS.buttonInactiveText};
+            cursor: pointer;
+            transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
+          }
+          .account-type-btn.active {
+            background: ${COLORS.buttonActive};
+            color: ${COLORS.buttonActiveText};
+            border-color: ${COLORS.buttonActive};
+            box-shadow: 0 2px 14px #48cfff15;
+          }
+          .account-size-group {
+            display: flex;
+            gap: 18px;
+          }
+          .account-size-btn {
+            flex: 1 1 0;
+            padding: 18px 0;
+            font-size: 18px;
+            font-weight: 700;
+            border: 2px solid ${COLORS.buttonBorder};
+            border-radius: 12px;
+            background: ${COLORS.buttonInactive};
+            color: ${COLORS.buttonInactiveText};
+            cursor: pointer;
+            transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
+          }
+          .account-size-btn.active {
+            background: ${COLORS.buttonActive};
+            color: ${COLORS.buttonActiveText};
+            border-color: ${COLORS.buttonActive};
+            box-shadow: 0 2px 14px #48cfff15;
+          }
+          .pricing-card {
+            background: ${COLORS.card};
+            border-radius: 18px;
+            box-shadow: 0 4px 36px #0af3;
+            border: 2px solid ${COLORS.border};
+            padding: 38px 34px 32px 34px;
+            min-width: 340px;
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: stretch;
+          }
+          .pricing-card .one-time-label {
+            color: ${COLORS.textSecondary};
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+          }
+          .pricing-card .price {
+            color: #fff;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+          }
+          .pricing-card .for-label {
+            color: ${COLORS.textSecondary};
+            font-size: 20px;
+            margin-bottom: 28px;
+          }
+          .pricing-card .buy-btn {
+            background: ${COLORS.accent};
+            color: ${COLORS.card};
+            border: none;
+            border-radius: 12px;
+            width: 100%;
+            padding: 22px 0;
+            font-size: 26px;
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 6px;
+            margin-bottom: 0;
+            transition: background 0.13s;
+            box-shadow: 0 2px 12px #48cfff22;
+          }
+          .pricing-card .buy-btn:hover {
+            background: ${COLORS.accentHover};
+          }
+          .rules-card {
+            background: ${COLORS.card};
+            border-radius: 18px;
+            box-shadow: 0 4px 36px #0af3;
+            border: 2px solid ${COLORS.border};
+            min-width: 340px;
+            max-width: 700px;
+            overflow: hidden;
+            padding-bottom: 6px;
+          }
+          .rules-card table {
+            width: 100%;
+            color: ${COLORS.text};
+            border-collapse: collapse;
+            font-size: 17px;
+          }
+          .rules-card th, .rules-card td {
+            transition: color .16s, background .16s;
+          }
+          .rules-card th {
+            text-align: center;
+            font-weight: 700;
+            color: ${COLORS.accent};
+            font-size: 17px;
+            padding: 24px 20px;
+            letter-spacing: 1px;
+            background: #22345a60;
+          }
+          .rules-card th:first-child, .rules-card td:first-child {
+            text-align: left;
+          }
+          .rules-card tbody tr {
+            border-top: 1.5px solid #284366;
+          }
+          .rules-card td {
+            text-align: center;
+            padding: 18px;
+            font-weight: 900;
+            color: ${COLORS.text};
+            background: transparent;
+          }
+          .rules-card td:first-child {
+            font-weight: 700;
+            color: ${COLORS.textSecondary};
+          }
+          .rules-card tbody tr:first-child {
+            border-top: none;
+          }
+          @media (max-width: 1100px) {
+            .challenge-row { flex-direction: column; }
+            .rules-card, .pricing-card { max-width: 100% !important; }
+          }
+          /* Animated bg, grid lines */
+          .bg-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(72,207,255,0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(72,207,255,0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            animation: gridfade 2s ease-in;
+          }
+          @keyframes gridfade {
+            0% {opacity:0;}
+            100% {opacity:1;}
+          }
+          /* Animated candles */
+          .candle {
+            position: fixed;
+            bottom: 0;
+            width: 5px;
+            height: 28px;
+            background: #48cfff;
+            opacity: 0.22;
+            border-radius: 2px;
+            animation: candlemove 5s linear infinite;
+            z-index: 2;
+          }
+          @keyframes candlemove {
+            0% {transform: translateY(100vh);}
+            100% {transform: translateY(-40px);}
+          }
+        `}</style>
 
-      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-        {/* Account Type */}
-        <div className="challenge-controls">
-          <div
-            style={{
-              marginBottom: 14,
-              color: COLORS.textSecondary,
-              fontWeight: 600,
-              fontSize: 18,
-            }}
-          >
-            Account Type
-          </div>
-          <div className="account-type-group">
-            <button
-              className={`account-type-btn${challengeType === "1step" ? " active" : ""}`}
-              onClick={() => setChallengeType("1step")}
+        {/* Account Type & Size Controls */}
+        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+          {/* Account Type */}
+          <div className="challenge-controls">
+            <div
+              style={{
+                marginBottom: 14,
+                color: COLORS.textSecondary,
+                fontWeight: 600,
+                fontSize: 18,
+              }}
             >
-              {TYPE_LABELS["1step"]}
-            </button>
-            <button
-              className={`account-type-btn${challengeType === "2step" ? " active" : ""}`}
-              onClick={() => setChallengeType("2step")}
-            >
-              {TYPE_LABELS["2step"]}
-            </button>
-            <button
-              className={`account-type-btn${challengeType === "fastpass" ? " active" : ""}`}
-              onClick={() => setChallengeType("fastpass")}
-            >
-              {TYPE_LABELS["fastpass"]}
-            </button>
-          </div>
-        </div>
-        {/* Account Size */}
-        <div className="challenge-controls">
-          <div
-            style={{
-              marginBottom: 14,
-              color: COLORS.textSecondary,
-              fontWeight: 600,
-              fontSize: 18,
-            }}
-          >
-            Account Size
-          </div>
-          <div className="account-size-group">
-            {SIZES.map((s) => (
+              Account Type
+            </div>
+            <div className="account-type-group">
               <button
-                key={s.key}
-                className={`account-size-btn${accountSize === s.key ? " active" : ""}`}
-                onClick={() => setAccountSize(s.key)}
+                className={`account-type-btn${challengeType === "1step" ? " active" : ""}`}
+                onClick={() => setChallengeType("1step")}
               >
-                {s.label}
+                {TYPE_LABELS["1step"]}
               </button>
-            ))}
+              <button
+                className={`account-type-btn${challengeType === "2step" ? " active" : ""}`}
+                onClick={() => setChallengeType("2step")}
+              >
+                {TYPE_LABELS["2step"]}
+              </button>
+              <button
+                className={`account-type-btn${challengeType === "fastpass" ? " active" : ""}`}
+                onClick={() => setChallengeType("fastpass")}
+              >
+                {TYPE_LABELS["fastpass"]}
+              </button>
+            </div>
+          </div>
+          {/* Account Size */}
+          <div className="challenge-controls">
+            <div
+              style={{
+                marginBottom: 14,
+                color: COLORS.textSecondary,
+                fontWeight: 600,
+                fontSize: 18,
+              }}
+            >
+              Account Size
+            </div>
+            <div className="account-size-group">
+              {SIZES.map((s) => (
+                <button
+                  key={s.key}
+                  className={`account-size-btn${accountSize === s.key ? " active" : ""}`}
+                  onClick={() => setAccountSize(s.key)}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* PRICING + RULES GRID */}
-      <div className="challenge-row" style={{ maxWidth: 1400, margin: "32px auto 0 auto" }}>
-        {/* Pricing Card */}
-        <div className="pricing-card">
-          <div className="one-time-label">One-Time Fee</div>
-          <div className="price">{price}</div>
-          <div className="for-label">For {sizeLabel} Account</div>
-          <button className="buy-btn">Buy Challenge</button>
-        </div>
-        {/* Rules Table */}
-        <div className="rules-card">
-          <table>
-            <thead>
-              <tr>
-                <th> </th>
-                {phases.map((phase) => (
-                  <th key={phase}>{phase}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rules.map((rule, idx) => (
-                <tr key={rule.label}>
-                  <td>{rule.label}</td>
-                  {rule.values.map((v, i) => (
-                    <td key={i}>{v}</td>
+        {/* PRICING + RULES GRID */}
+        <div className="challenge-row" style={{ maxWidth: 1400, margin: "32px auto 0 auto" }}>
+          {/* Pricing Card */}
+          <div className="pricing-card">
+            <div className="one-time-label">One-Time Fee</div>
+            <div className="price">{price}</div>
+            <div className="for-label">For {sizeLabel} Account</div>
+            <button className="buy-btn">Buy Challenge</button>
+          </div>
+          {/* Rules Table */}
+          <div className="rules-card">
+            <table>
+              <thead>
+                <tr>
+                  <th> </th>
+                  {phases.map((phase) => (
+                    <th key={phase}>{phase}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rules.map((rule, idx) => (
+                  <tr key={rule.label}>
+                    <td>{rule.label}</td>
+                    {rule.values.map((v, i) => (
+                      <td key={i}>{v}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
+      {/* Animated overlays */}
+      <div className="bg-grid" />
+      {/* Example animated candles (random lefts, animationDelay for realism) */}
+      <div className="candle" style={{ left: "18%", animationDelay: "0s" }} />
+      <div className="candle" style={{ left: "32%", animationDelay: "2s" }} />
+      <div className="candle" style={{ left: "55%", animationDelay: "1s" }} />
+      <div className="candle" style={{ left: "71%", animationDelay: "2.5s" }} />
+      <div className="candle" style={{ left: "81%", animationDelay: "3s" }} />
     </div>
   );
 }
