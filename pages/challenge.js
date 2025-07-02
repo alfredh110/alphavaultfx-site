@@ -1,241 +1,158 @@
-import { useState } from "react";
-import { useSession } from "next-auth/react";
+import React, { useState } from "react";
+
+// Rules for 2 Step Alpha
+const RULES_2STEP = [
+  { label: "Profit Target", values: ["8%", "5%", "-"] },
+  { label: "Daily Loss", values: ["6%", "6%", "5%"] },
+  { label: "Maximum Loss", values: ["12%", "12%", "10%"] },
+  { label: "Maximum Drawdown Type", values: ["Static", "Static", "Static"] },
+];
+
+// Rules for 1 Step Alpha
+const RULES_1STEP = [
+  { label: "Profit Target", values: ["10%", "-"] },
+  { label: "Daily Loss", values: ["4%", "4%"] },
+  { label: "Maximum Loss", values: ["8%", "7%"] },
+  { label: "Maximum Drawdown Type", values: ["Static", "Static"] },
+  { label: "Inactivity", values: ["15 days", "15 days"] },
+];
+
+// Rules for Fast Pass
+const RULES_FASTPASS = [
+  { label: "Profit Target", values: ["6%", "-"] },
+  { label: "Daily Loss", values: ["5%", "3%"] },
+  { label: "Maximum Loss", values: ["8%", "7%"] },
+  { label: "Maximum Drawdown Type", values: ["Static", "Static"] },
+  { label: "Minimum Trading Period", values: ["5 days", "10 days"] },
+  { label: "Trading Period", values: ["No Time Limit", "No Time Limit"] },
+];
+
+const PHASES_2STEP = ["Phase 1", "Phase 2", "Funded"];
+const PHASES_1STEP = ["Phase 1", "Funded"];
+const PHASES_FASTPASS = ["Phase 1", "Funded"];
 
 const COLORS = {
-  primary: "#2186eb", // Your homepage blue!
-  secondary: "#081A2B",
-  accent: "#6CFFF8",
-  card: "rgba(20,40,60,0.75)",
-  border: "rgba(33,134,235,0.35)",
+  card: "#23252B",
+  border: "#FFD43B", // Or change to a blue if you want blue border.
   text: "#fff",
-  textSecondary: "#A3B4C6",
-  buttonHover: "#1761b5"
-};
-
-const accountTypes = [
-  { label: "1 Step Alpha", value: "1step" },
-  { label: "2 Step Alpha", value: "2step" },
-  { label: "Fast Pass", value: "fastpass" }
-];
-
-const accountSizes = [
-  { label: "$5k", value: "5k" },
-  { label: "$10k", value: "10k" },
-  { label: "$25k", value: "25k" },
-  { label: "$50k", value: "50k" },
-  { label: "$100k", value: "100k" },
-  { label: "$200k", value: "200k" }
-];
-
-const pricing = {
-  "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
-  "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
-  "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
-};
-
-const rules = {
-  "1step": {
-    phase1: { profitTarget: "8%", dailyLoss: "6%", maxLoss: "12%", drawdown: "Static" },
-    funded: { profitTarget: "-", dailyLoss: "5%", maxLoss: "10%", drawdown: "Static" }
-  },
-  "2step": {
-    phase1: { profitTarget: "8%", dailyLoss: "5%", maxLoss: "10%", drawdown: "Static" },
-    funded: { profitTarget: "-", dailyLoss: "4%", maxLoss: "8%", drawdown: "Static" }
-  },
-  "fastpass": {
-    phase1: { profitTarget: "10%", dailyLoss: "8%", maxLoss: "16%", drawdown: "Static" },
-    funded: { profitTarget: "-", dailyLoss: "6%", maxLoss: "12%", drawdown: "Static" }
-  }
+  textSecondary: "#8d929b"
 };
 
 export default function Challenge() {
-  const { data } = useSession() || {};
-  const [selectedType, setSelectedType] = useState("1step");
-  const [selectedSize, setSelectedSize] = useState("25k");
+  // Toggle between 2 Step, 1 Step, and Fast Pass for demo; replace with your logic.
+  const [challengeType, setChallengeType] = useState("2step");
 
-  const price = pricing[selectedType][selectedSize];
-  const rule = rules[selectedType];
+  let rules, phases;
+  if (challengeType === "2step") {
+    rules = RULES_2STEP;
+    phases = PHASES_2STEP;
+  } else if (challengeType === "1step") {
+    rules = RULES_1STEP;
+    phases = PHASES_1STEP;
+  } else {
+    rules = RULES_FASTPASS;
+    phases = PHASES_FASTPASS;
+  }
 
   return (
     <div style={{
       minHeight: "100vh",
-      background: `linear-gradient(120deg, ${COLORS.secondary} 60%, #0C2B3A 100%)`,
-      fontFamily: "Inter, Roboto, sans-serif",
-      padding: "0 0 60px 0"
+      background: "#111c2e",
+      padding: "60px 16px",
+      fontFamily: "Inter, Roboto, sans-serif"
     }}>
+      {/* Demo toggle */}
+      <div style={{textAlign: "center", marginBottom: 32}}>
+        <button
+          onClick={() => setChallengeType("2step")}
+          style={{
+            background: challengeType === "2step" ? COLORS.border : COLORS.card,
+            color: challengeType === "2step" ? "#23252B" : COLORS.textSecondary,
+            border: "none",
+            borderRadius: 8,
+            padding: "8px 20px",
+            marginRight: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+            fontSize: 15,
+          }}
+        >2 Step Alpha</button>
+        <button
+          onClick={() => setChallengeType("1step")}
+          style={{
+            background: challengeType === "1step" ? COLORS.border : COLORS.card,
+            color: challengeType === "1step" ? "#23252B" : COLORS.textSecondary,
+            border: "none",
+            borderRadius: 8,
+            padding: "8px 20px",
+            marginRight: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+            fontSize: 15,
+          }}
+        >1 Step Alpha</button>
+        <button
+          onClick={() => setChallengeType("fastpass")}
+          style={{
+            background: challengeType === "fastpass" ? COLORS.border : COLORS.card,
+            color: challengeType === "fastpass" ? "#23252B" : COLORS.textSecondary,
+            border: "none",
+            borderRadius: 8,
+            padding: "8px 20px",
+            fontWeight: 700,
+            cursor: "pointer",
+            fontSize: 15,
+          }}
+        >Fast Pass</button>
+      </div>
       <div style={{
-        maxWidth: 1100,
+        maxWidth: 640,
         margin: "0 auto",
-        paddingTop: 48,
-        paddingBottom: 48
+        borderRadius: 16,
+        background: COLORS.card,
+        boxShadow: "0 4px 36px #0003",
+        borderBottom: `2px solid ${COLORS.border}`,
+        overflow: "hidden"
       }}>
-        <h1 style={{
-          textAlign: "center",
+        <table style={{
+          width: "100%",
           color: COLORS.text,
-          fontWeight: 800,
-          fontSize: 40,
-          letterSpacing: 1,
-          marginBottom: 36,
-          textShadow: `0 4px 24px ${COLORS.primary}22`
+          borderCollapse: "collapse"
         }}>
-          Get Funded Today
-        </h1>
-        <div style={{
-          display: "flex",
-          gap: 36,
-          justifyContent: "center",
-          flexWrap: "wrap"
-        }}>
-          {/* LEFT PANEL */}
-          <div style={{
-            background: COLORS.card,
-            border: `2px solid ${COLORS.border}`,
-            borderRadius: 22,
-            padding: 36,
-            minWidth: 330,
-            maxWidth: 400,
-            boxShadow: `0 6px 40px 0 ${COLORS.primary}18`,
-            display: "flex",
-            flexDirection: "column",
-            gap: 28,
-            backdropFilter: "blur(8px)"
-          }}>
-            {/* Account Type */}
-            <div>
-              <div style={{ fontWeight: 700, color: COLORS.textSecondary, marginBottom: 12, fontSize: 18 }}>Account Type</div>
-              <div style={{ display: "flex", gap: 12 }}>
-                {accountTypes.map((type) => (
-                  <button
-                    key={type.value}
-                    style={{
-                      background: selectedType === type.value ? COLORS.primary : "transparent",
-                      color: selectedType === type.value ? "#191c24" : COLORS.textSecondary,
-                      border: `2px solid ${COLORS.primary}`,
-                      borderRadius: 10,
-                      padding: "10px 22px",
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: "pointer",
-                      transition: "all 0.18s",
-                      boxShadow: selectedType === type.value ? `0 0 8px 1px ${COLORS.primary}88` : "none"
-                    }}
-                    onClick={() => setSelectedType(type.value)}
-                  >
-                    {type.label}
-                  </button>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "left", padding: "22px 18px", fontWeight: 600, color: COLORS.textSecondary }}> </th>
+              {phases.map(phase => (
+                <th key={phase} style={{ textAlign: "center", fontWeight: 600, color: COLORS.textSecondary }}>{phase}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rules.map((rule, idx) => (
+              <tr key={rule.label} style={{ borderTop: idx === 0 ? "none" : "1px solid #32343A" }}>
+                <td style={{
+                  padding: "18px",
+                  color: (rule.label === "Maximum Drawdown Type" || rule.label === "Trading Period") ? COLORS.textSecondary : COLORS.text,
+                  fontWeight: (rule.label === "Maximum Drawdown Type" || rule.label === "Trading Period") ? 500 : 600,
+                  minWidth: 180
+                }}>
+                  {rule.label}
+                </td>
+                {rule.values.map((v, i) => (
+                  <td key={i} style={{
+                    textAlign: "center",
+                    padding: "18px",
+                    color: (rule.label === "Maximum Drawdown Type" || rule.label === "Trading Period") ? COLORS.textSecondary : COLORS.text,
+                    fontWeight: (rule.label === "Maximum Drawdown Type" || rule.label === "Trading Period") ? 500 : 700
+                  }}>
+                    {v}
+                  </td>
                 ))}
-              </div>
-            </div>
-            {/* Account Size */}
-            <div>
-              <div style={{ fontWeight: 700, color: COLORS.textSecondary, marginBottom: 12, marginTop: 6, fontSize: 18 }}>Account Size</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-                {accountSizes.map((size) => (
-                  <button
-                    key={size.value}
-                    style={{
-                      background: selectedSize === size.value ? COLORS.primary : "transparent",
-                      color: selectedSize === size.value ? "#191c24" : COLORS.textSecondary,
-                      border: `2px solid ${COLORS.primary}`,
-                      borderRadius: 10,
-                      padding: "10px 22px",
-                      fontWeight: 700,
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginBottom: 4,
-                      transition: "all 0.18s",
-                      boxShadow: selectedSize === size.value ? `0 0 8px 1px ${COLORS.primary}88` : "none"
-                    }}
-                    onClick={() => setSelectedSize(size.value)}
-                  >
-                    {size.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            {/* Pricing box */}
-            <div style={{
-              background: "rgba(33,134,235, 0.10)",
-              border: `2px solid ${COLORS.primary}`,
-              borderRadius: 18,
-              padding: 30,
-              marginTop: 10,
-              textAlign: "center",
-              boxShadow: `0 2px 12px 0 ${COLORS.primary}30`
-            }}>
-              <div style={{ color: COLORS.textSecondary, fontWeight: 600, marginBottom: 7, fontSize: 16 }}>One-Time Fee</div>
-              <div style={{ fontWeight: 900, color: COLORS.primary, fontSize: 38, letterSpacing: "1px", lineHeight: 1.1, textShadow: `0 0 8px ${COLORS.primary}55` }}>${price}</div>
-              <div style={{ color: COLORS.textSecondary, fontSize: 16, marginBottom: 20 }}>For {accountSizes.find(s => s.value === selectedSize).label} Account</div>
-              <button
-                style={{
-                  background: COLORS.primary,
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 10,
-                  padding: "14px 0",
-                  width: "100%",
-                  fontWeight: 800,
-                  fontSize: 20,
-                  cursor: "pointer",
-                  transition: "background 0.18s",
-                  boxShadow: `0 2px 16px 0 ${COLORS.primary}66`
-                }}
-                onMouseOver={e => e.currentTarget.style.background = COLORS.buttonHover}
-                onMouseOut={e => e.currentTarget.style.background = COLORS.primary}
-              >Buy Challenge</button>
-            </div>
-          </div>
-          {/* RIGHT PANEL */}
-          <div style={{
-            background: COLORS.card,
-            border: `2px solid ${COLORS.border}`,
-            borderRadius: 22,
-            padding: 36,
-            minWidth: 330,
-            maxWidth: 400,
-            boxShadow: `0 6px 40px 0 ${COLORS.primary}18`,
-            color: COLORS.text,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            backdropFilter: "blur(8px)"
-          }}>
-            <div
-              style={{
-                width: "100%",
-                display: "grid",
-                gridTemplateColumns: "1.5fr 1fr 1fr",
-                rowGap: "1.2rem",
-                alignItems: "center"
-              }}
-            >
-              <div></div>
-              <div style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center", fontSize: 18 }}>
-                Phase 1
-              </div>
-              <div style={{ color: COLORS.primary, fontWeight: 800, textAlign: "center", fontSize: 18 }}>
-                Funded
-              </div>
-              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16 }}>Profit Target</div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.profitTarget}</div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.profitTarget}</div>
-              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16 }}>Daily Loss</div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.dailyLoss}</div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.dailyLoss}</div>
-              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16 }}>Maximum Loss</div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.maxLoss}</div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.maxLoss}</div>
-              <div style={{ color: COLORS.textSecondary, fontWeight: 700, fontSize: 16, lineHeight: 1.1 }}>
-                Maximum Drawdown<br />Type
-              </div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.phase1.drawdown}</div>
-              <div style={{ color: "#fff", textAlign: "center", fontWeight: 800, fontSize: 16 }}>{rule.funded.drawdown}</div>
-            </div>
-          </div>
-        </div>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
-
-export const getServerSideProps = () => ({ props: {} });
