@@ -1,12 +1,13 @@
-import { SessionProvider } from "next-auth/react";
-import '../styles/alphavaultfx-dashboard.css';
-import Navbar from '../components/Navbar';
+import '../styles/globals.css'
+import Head from 'next/head'
 
-export default function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   return (
-    <SessionProvider session={pageProps.session}>
-      <Navbar />
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <Component {...pageProps} />
-    </SessionProvider>
-  );
+    </>
+  )
 }
