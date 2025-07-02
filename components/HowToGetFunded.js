@@ -1,200 +1,228 @@
-import { useState } from "react";
+import React from "react";
 
-const accountTypes = [
-  { label: "1 Step Alpha", value: "1step" },
-  { label: "2 Step Alpha", value: "2step" },
-  { label: "Fast Pass", value: "fastpass" }
-];
-
-const accountSizes = [
-  { label: "$5k", value: "5k" },
-  { label: "$10k", value: "10k" },
-  { label: "$25k", value: "25k" },
-  { label: "$50k", value: "50k" },
-  { label: "$100k", value: "100k" },
-  { label: "$200k", value: "200k" }
-];
-
-const pricing = {
-  "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
-  "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
-  "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
+// ALPHAVAULTFX THEME COLORS
+const COLORS = {
+  background: "linear-gradient(120deg, #101624 60%, #17253a 100%)",
+  card: "rgba(18, 30, 51, 0.85)",
+  cardBorder: "1.5px solid rgba(33, 134, 235, 0.21)", // electric blue border with alpha
+  text: "#fff",
+  textSecondary: "#97b6da",
+  accent: "#00e0ff", // electric blue/teal
+  accent2: "#2186eb", // strong blue
+  accentGlow: "0 0 16px #00e0ff99",
+  accentTealGlow: "0 0 32px #00e0ff33",
 };
 
-const rules = {
-  "1step": {
-    phase1: { profitTarget: "8%", dailyLoss: "6%", maxLoss: "12%", drawdown: "Static" },
-    funded: { profitTarget: "-", dailyLoss: "5%", maxLoss: "10%", drawdown: "Static" }
-  },
-  "2step": {
-    phase1: { profitTarget: "8%", dailyLoss: "5%", maxLoss: "10%", drawdown: "Static" },
-    funded: { profitTarget: "-", dailyLoss: "4%", maxLoss: "8%", drawdown: "Static" }
-  },
-  "fastpass": {
-    phase1: { profitTarget: "10%", dailyLoss: "8%", maxLoss: "16%", drawdown: "Static" },
-    funded: { profitTarget: "-", dailyLoss: "6%", maxLoss: "12%", drawdown: "Static" }
-  }
-};
+// Simple SVG star for accent
+const Star = ({ style = {} }) => (
+  <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style={style}>
+    <path d="M10 1l2.39 6.94h7.29l-5.89 4.28 2.32 7.18-5.89-4.28-5.89 4.28 2.32-7.18-5.89-4.28h7.29z"
+      fill={COLORS.accent} opacity="0.8"/>
+  </svg>
+);
 
 export default function HowToGetFunded() {
-  const [selectedType, setSelectedType] = useState("1step");
-  const [selectedSize, setSelectedSize] = useState("25k");
-
-  const price = pricing[selectedType][selectedSize];
-  const rule = rules[selectedType];
-
   return (
     <section style={{
       width: "100%",
-      background: "#20283a",
-      padding: "48px 0 48px 0"
+      background: COLORS.background,
+      padding: "64px 0 48px 0",
     }}>
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 16px" }}>
-        <h2 style={{
-          textAlign: "center",
-          color: "#fff",
-          fontWeight: 700,
-          fontSize: 32,
-          marginBottom: 32,
-          letterSpacing: 0.2
-        }}>
-          How To Get Funded
-        </h2>
-        <div style={{
-          display: "flex",
-          gap: 22,
-          justifyContent: "center",
-          flexWrap: "wrap"
-        }}>
-          {/* LEFT PANEL */}
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
+        {/* Header with AlphaVaultFX stars */}
+        <div style={{ textAlign: "center", marginBottom: 30, position: "relative" }}>
           <div style={{
-            background: "#232e43",
-            borderRadius: 10,
-            padding: 20,
-            minWidth: 270,
-            maxWidth: 330,
-            boxShadow: "0 4px 16px 0 #0001",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 12,
+            marginBottom: 8,
+          }}>
+            <Star style={{ marginBottom: 8 }} />
+            <Star style={{ marginTop: 10 }} />
+            <Star style={{ marginBottom: 8 }} />
+          </div>
+          <h2 style={{
+            color: COLORS.text,
+            fontWeight: 800,
+            fontSize: 44,
+            letterSpacing: 1,
+            lineHeight: 1.1,
+            margin: 0,
+            textShadow: COLORS.accentGlow,
+          }}>
+            How To Get Funded
+          </h2>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 12,
+            marginTop: 8,
+          }}>
+            <Star style={{ marginTop: 8 }} />
+            <Star style={{ marginBottom: 8 }} />
+            <Star style={{ marginTop: 8 }} />
+          </div>
+        </div>
+
+        {/* Card grid */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gridTemplateRows: "1fr 1fr",
+          gap: 26,
+        }}>
+          {/* Card 1 */}
+          <div style={{
+            gridColumn: "1 / span 1",
+            gridRow: "1 / span 1",
+            background: COLORS.card,
+            border: COLORS.cardBorder,
+            borderRadius: 20,
+            padding: 30,
+            color: COLORS.text,
             display: "flex",
             flexDirection: "column",
-            gap: 16
+            justifyContent: "space-between",
+            boxShadow: COLORS.accentTealGlow,
+            minHeight: 250,
           }}>
-            <div>
-              <div style={{ fontWeight: 600, color: "#b8cfff", marginBottom: 7 }}>Account Type</div>
-              <div style={{ display: "flex", gap: 7 }}>
-                {accountTypes.map((type) => (
-                  <button
-                    key={type.value}
-                    style={{
-                      background: selectedType === type.value ? "#2186eb" : "#20283a",
-                      color: selectedType === type.value ? "#fff" : "#b8cfff",
-                      border: "none",
-                      borderRadius: 6,
-                      padding: "6px 15px",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      cursor: "pointer",
-                      boxShadow: selectedType === type.value ? "0 0 2px #2186eb88" : "none"
-                    }}
-                    onClick={() => setSelectedType(type.value)}
-                  >
-                    {type.label}
-                  </button>
-                ))}
-              </div>
+            {/* Hero Steps SVG or Image */}
+            <div style={{ marginBottom: 20 }}>
+              {/* Example: replace with your own SVG if desired */}
+              <svg width="190" height="55" viewBox="0 0 190 55" fill="none">
+                <rect x="0" y="15" width="70" height="30" rx="6" fill="#1b2c4b" />
+                <rect x="60" y="10" width="70" height="35" rx="6" fill="#17253a" />
+                <rect x="120" y="5" width="70" height="45" rx="9"
+                  fill={COLORS.accent2} style={{ filter: "drop-shadow(0 0 12px #00e0ff66)" }} />
+                <text x="15" y="34" fill="#fff" fontSize="14" fontWeight="bold">1 Step Hero</text>
+                <text x="75" y="29" fill="#b2e6fa" fontSize="14" fontWeight="bold">2 Step Alpha</text>
+                <text x="135" y="32" fill="#fff" fontSize="14" fontWeight="bold">Instant Alpha</text>
+              </svg>
             </div>
             <div>
-              <div style={{ fontWeight: 600, color: "#b8cfff", marginBottom: 7, marginTop: 7 }}>Account Size</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-                {accountSizes.map((size) => (
-                  <button
-                    key={size.value}
-                    style={{
-                      background: selectedSize === size.value ? "#2186eb" : "#20283a",
-                      color: selectedSize === size.value ? "#fff" : "#b8cfff",
-                      border: "none",
-                      borderRadius: 6,
-                      padding: "6px 15px",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      cursor: "pointer",
-                      marginBottom: 2,
-                      boxShadow: selectedSize === size.value ? "0 0 2px #2186eb88" : "none"
-                    }}
-                    onClick={() => setSelectedSize(size.value)}
-                  >
-                    {size.label}
-                  </button>
-                ))}
+              <div style={{ fontWeight: 700, fontSize: 19, color: "#fff", marginBottom: 7 }}>
+                Select a Challenge AlphaVaultFX.
               </div>
-            </div>
-            {/* Pricing box */}
-            <div style={{
-              background: "#20283a",
-              borderRadius: 8,
-              padding: 15,
-              marginTop: 8,
-              textAlign: "center"
-            }}>
-              <div style={{ color: "#b8cfff", fontWeight: 500, marginBottom: 4 }}>One-Time Fee</div>
-              <div style={{ fontWeight: 800, color: "#fff", fontSize: 24 }}>${price}</div>
-              <div style={{ color: "#b8cfff", fontSize: 13, marginBottom: 9 }}>For {accountSizes.find(s => s.value === selectedSize).label} Account</div>
-              <button style={{
-                background: "#2186eb",
-                color: "#fff",
-                border: "none",
-                borderRadius: 6,
-                padding: "10px 0",
-                width: "100%",
-                fontWeight: 700,
-                fontSize: 15,
-                cursor: "pointer"
-              }}>Buy Challenge</button>
+              <div style={{ fontWeight: 400, color: COLORS.textSecondary, fontSize: 16 }}>
+                Choose a funding program that suits your goals and demonstrate your skills through our straightforward evaluation process AlphaVaultFX.
+              </div>
             </div>
           </div>
-          {/* RIGHT PANEL */}
+
+          {/* Card 2 - Chart */}
           <div style={{
-            background: "#232e43",
-            borderRadius: 10,
-            padding: 20,
-            minWidth: 270,
-            maxWidth: 330,
-            boxShadow: "0 4px 16px 0 #0001",
-            color: "#fff",
+            gridColumn: "2 / span 1",
+            gridRow: "1 / span 2",
+            background: COLORS.card,
+            border: COLORS.cardBorder,
+            borderRadius: 20,
+            padding: 30,
+            color: COLORS.text,
+            boxShadow: COLORS.accentTealGlow,
+            minHeight: 350,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center"
           }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 15 }}>
-              <thead>
-                <tr>
-                  <th style={{ textAlign: "left", color: "#b8cfff", fontWeight: 600 }}></th>
-                  <th style={{ color: "#2186eb", fontWeight: 700, textAlign: "center" }}>Phase 1</th>
-                  <th style={{ color: "#2186eb", fontWeight: 700, textAlign: "center" }}>Funded</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "6px 0" }}>Profit Target</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.profitTarget}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.profitTarget}</td>
-                </tr>
-                <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "6px 0" }}>Daily Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.dailyLoss}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.dailyLoss}</td>
-                </tr>
-                <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "6px 0" }}>Maximum Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.maxLoss}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.maxLoss}</td>
-                </tr>
-                <tr>
-                  <td style={{ color: "#b8cfff", fontWeight: 500, padding: "6px 0" }}>Maximum Drawdown Type</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.drawdown}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.drawdown}</td>
-                </tr>
-              </tbody>
-            </table>
+            {/* Chart Card */}
+            <div style={{
+              background: "linear-gradient(120deg, #15243b 60%, #1b3a48 100%)",
+              borderRadius: 18,
+              padding: 28,
+              margin: "0 auto",
+              width: 320,
+              boxShadow: "0 2px 24px 0 #00e0ff22",
+              position: "relative",
+              marginBottom: 18
+            }}>
+              <div style={{ color: COLORS.textSecondary, fontWeight: 500, fontSize: 15, marginBottom: 10 }}>
+                Profit Balance <span style={{ color: COLORS.accent, fontWeight: 900, fontSize: 13 }}>ⓘ</span>
+              </div>
+              <div style={{ fontWeight: 900, color: COLORS.accent, fontSize: 32, letterSpacing: "1px", marginBottom: 0 }}>
+                $1,670.20
+              </div>
+              {/* Blue/teal line chart mock */}
+              <svg width="270" height="80" style={{ marginTop: 12 }}>
+                <polyline
+                  fill="none"
+                  stroke="#00e0ff"
+                  strokeWidth="4"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  points="0,65 30,60 60,62 90,50 120,67 150,35 180,53 210,18 240,76 270,10"
+                  style={{ filter: "drop-shadow(0 0 6px #00e0ff88)" }}
+                />
+              </svg>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 19, color: "#fff", marginBottom: 7 }}>
+                Get Funded.
+              </div>
+              <div style={{ fontWeight: 400, color: COLORS.textSecondary, fontSize: 16 }}>
+                Once you pass the evaluation, AlphaVaultFX funds you immediately. Focus on trading while we handle the rest.
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3 - Progress */}
+          <div style={{
+            gridColumn: "1 / span 1",
+            gridRow: "2 / span 1",
+            background: COLORS.card,
+            border: COLORS.cardBorder,
+            borderRadius: 20,
+            padding: 30,
+            color: COLORS.text,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            boxShadow: COLORS.accentTealGlow,
+            minHeight: 250,
+          }}>
+            {/* Progress Bar */}
+            <div style={{ marginBottom: 22 }}>
+              <div style={{
+                color: COLORS.textSecondary,
+                fontWeight: 500,
+                fontSize: 16,
+                marginBottom: 9
+              }}>Profit Target <span style={{ color: COLORS.accent, fontWeight: 900, fontSize: 13 }}>ⓘ</span></div>
+              <div style={{
+                background: "#17253a",
+                borderRadius: 10,
+                height: 32,
+                width: "100%",
+                display: "flex",
+                alignItems: "center"
+              }}>
+                <div style={{
+                  background: "linear-gradient(90deg, #00e0ff 0%, #2186eb 100%)",
+                  borderRadius: 10,
+                  height: 22,
+                  width: "50%",
+                  margin: "0 0 0 5px",
+                  boxShadow: COLORS.accentGlow,
+                  display: "flex",
+                  alignItems: "center"
+                }} />
+                <span style={{
+                  color: COLORS.textSecondary,
+                  fontWeight: 600,
+                  fontSize: 15,
+                  marginLeft: 12
+                }}>50%</span>
+              </div>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 19, color: "#fff", marginBottom: 7 }}>
+                AlphaVaultFX Prove Your Skills.
+              </div>
+              <div style={{ fontWeight: 400, color: COLORS.textSecondary, fontSize: 16 }}>
+                Trade consistently and achieve the profit target while adhering to risk management rules. Show us your edge in the market.
+              </div>
+            </div>
           </div>
         </div>
       </div>
