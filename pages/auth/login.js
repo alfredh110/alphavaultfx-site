@@ -1,8 +1,10 @@
+import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function Login() {
+  const { data } = useSession() || {};
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -36,3 +38,5 @@ export default function Login() {
     </main>
   );
 }
+
+export const getServerSideProps = () => ({ props: {} });
