@@ -57,16 +57,43 @@ export default function HowToGetFunded() {
             boxShadow: "0 0 0 0 transparent",
             alignItems: "flex-start"
           }}>
-            {/* Hero Steps SVG */}
-            <div style={{ marginBottom: 20 }}>
-              <svg width="190" height="55" viewBox="0 0 190 55" fill="none">
-                <rect x="0" y="15" width="70" height="30" rx="6" fill="#232a3a" />
-                <rect x="60" y="10" width="70" height="35" rx="6" fill="#283145" />
-                <rect x="120" y="5" width="70" height="45" rx="9" fill={COLORS.accent2} />
-                <text x="15" y="34" fill="#fff" fontSize="14" fontWeight="bold">1 Step Hero</text>
-                <text x="75" y="29" fill="#bfc9da" fontSize="14" fontWeight="bold">2 Step Alpha</text>
-                <text x="135" y="32" fill="#fff" fontSize="14" fontWeight="bold">Instant Alpha</text>
-              </svg>
+            {/* FIXED: Button steps, not overlapping */}
+            <div style={{ marginBottom: 20, display: "flex", gap: 12 }}>
+              <span style={{
+                background: "#232a3a",
+                color: "#fff",
+                fontWeight: 700,
+                fontSize: 15,
+                padding: "7px 20px",
+                borderRadius: 10,
+                marginRight: 0,
+                boxShadow: "0 1px 4px #0002"
+              }}>
+                1 Step Hero
+              </span>
+              <span style={{
+                background: "#283145",
+                color: "#bfc9da",
+                fontWeight: 700,
+                fontSize: 15,
+                padding: "7px 20px",
+                borderRadius: 10,
+                marginRight: 0,
+                boxShadow: "0 1px 4px #0002"
+              }}>
+                2 Step Alpha
+              </span>
+              <span style={{
+                background: COLORS.accent2,
+                color: "#fff",
+                fontWeight: 700,
+                fontSize: 15,
+                padding: "7px 20px",
+                borderRadius: 10,
+                boxShadow: "0 1px 4px #0002"
+              }}>
+                Instant Alpha
+              </span>
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: 18, color: "#fff", marginBottom: 8 }}>
