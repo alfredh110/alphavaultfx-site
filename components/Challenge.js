@@ -25,7 +25,7 @@ const ACCOUNT_SIZES = [
   { label: "$200k", value: "200k" }
 ];
 
-// This should match your GetFundedToday.js!
+// PRICING should match GetFundedToday.js
 const PRICING = {
   "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
   "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
@@ -34,7 +34,6 @@ const PRICING = {
 
 export default function Challenge() {
   const [selectedType, setSelectedType] = useState("1step");
-  const [selectedSize, setSelectedSize] = useState("25k");
 
   return (
     <section
@@ -47,7 +46,7 @@ export default function Challenge() {
     >
       <div
         style={{
-          maxWidth: 1100,
+          maxWidth: 1200,
           margin: "0 auto",
           padding: "0 16px",
         }}
@@ -63,14 +62,14 @@ export default function Challenge() {
             lineHeight: 1.1,
           }}
         >
-          AlphaVaultFX Challenge
+          AlphaVaultFX Challenge Pricing
         </h2>
         {/* Challenge Type Selector */}
         <div style={{
           display: "flex",
           justifyContent: "center",
           gap: 18,
-          marginBottom: 28,
+          marginBottom: 38,
         }}>
           {CHALLENGE_TYPES.map(type => (
             <button
@@ -93,95 +92,86 @@ export default function Challenge() {
             </button>
           ))}
         </div>
-        {/* Account Size Selector */}
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 10,
-          marginBottom: 22,
-          flexWrap: "wrap"
-        }}>
-          {ACCOUNT_SIZES.map(size => (
-            <button
-              key={size.value}
-              style={{
-                background: selectedSize === size.value ? COLORS.accent : COLORS.card,
-                color: selectedSize === size.value ? "#fff" : COLORS.textSecondary,
-                border: "none",
-                borderRadius: 8,
-                fontWeight: 700,
-                fontSize: 16,
-                padding: "8px 20px",
-                cursor: "pointer",
-                marginBottom: 6,
-                boxShadow: selectedSize === size.value ? "0 2px 10px #57c1f633" : "none",
-                transition: "background 0.16s, color 0.16s",
-              }}
-              onClick={() => setSelectedSize(size.value)}
-            >
-              {size.label}
-            </button>
-          ))}
-        </div>
-        {/* Pricing Card - matches GetFundedToday.js */}
+        {/* Pricing Cards - MATCHES HOMEPAGE PRICING DISPLAY */}
         <div
           style={{
-            background: COLORS.card,
-            border: COLORS.cardBorder,
-            borderRadius: 18,
-            padding: "34px 18px 28px 18px",
-            color: COLORS.text,
-            maxWidth: 390,
-            margin: "30px auto 0 auto",
-            textAlign: "center",
-            boxShadow: "0 4px 32px 0 #1a376633",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 30,
           }}
         >
-          <div
-            style={{
-              color: COLORS.textSecondary,
-              fontWeight: 500,
-              fontSize: 17,
-              marginBottom: 4,
-            }}
-          >
-            One-Time Fee
-          </div>
-          <div
-            style={{
-              fontWeight: 800,
-              color: COLORS.accent2,
-              fontSize: 36,
-              marginBottom: 2,
-            }}
-          >
-            ${PRICING[selectedType][selectedSize]}
-          </div>
-          <div
-            style={{
-              color: COLORS.textSecondary,
-              fontSize: 15,
-              marginBottom: 12,
-            }}
-          >
-            For {ACCOUNT_SIZES.find(s => s.value === selectedSize).label} Account
-          </div>
-          <button
-            style={{
-              background: COLORS.accent2,
-              color: "#fff",
-              border: "none",
-              borderRadius: 8,
-              padding: "13px 0",
-              width: "100%",
-              fontWeight: 700,
-              fontSize: 18,
-              cursor: "pointer",
-              boxShadow: "0 2px 8px #3c9cff33",
-            }}
-          >
-            Start Challenge
-          </button>
+          {ACCOUNT_SIZES.map(size => (
+            <div
+              key={size.value}
+              style={{
+                background: COLORS.card,
+                border: COLORS.cardBorder,
+                borderRadius: 18,
+                padding: "34px 32px 28px 32px",
+                color: COLORS.text,
+                width: 220,
+                minHeight: 180,
+                textAlign: "center",
+                boxShadow: "0 4px 32px 0 #1a376633",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                transition: "transform 0.17s, box-shadow 0.17s",
+              }}
+            >
+              <div
+                style={{
+                  fontWeight: 800,
+                  color: COLORS.accent2,
+                  fontSize: 34,
+                  marginBottom: 10,
+                  letterSpacing: 1,
+                }}
+              >
+                ${PRICING[selectedType][size.value]}
+              </div>
+              <div
+                style={{
+                  color: "#fff",
+                  fontWeight: 700,
+                  fontSize: 20,
+                  marginBottom: 5,
+                  letterSpacing: 0.5,
+                }}
+              >
+                {size.label}
+              </div>
+              <div
+                style={{
+                  color: COLORS.textSecondary,
+                  fontSize: 15,
+                  marginBottom: 8,
+                }}
+              >
+                One-Time Fee
+              </div>
+              <button
+                style={{
+                  background: COLORS.accent2,
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "11px 0",
+                  width: "100%",
+                  fontWeight: 700,
+                  fontSize: 18,
+                  cursor: "pointer",
+                  boxShadow: "0 2px 8px #3c9cff33",
+                  marginTop: 10,
+                }}
+              >
+                Start Challenge
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </section>
