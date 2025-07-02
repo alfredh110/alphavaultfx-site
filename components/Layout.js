@@ -1,4 +1,3 @@
-import React from "react";
 import Head from "next/head";
 
 export default function Layout({ children }) {
@@ -7,6 +6,7 @@ export default function Layout({ children }) {
       <Head>
         <title>AlphaVaultFX</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="site-header">
         <div className="brand">
