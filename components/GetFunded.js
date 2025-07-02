@@ -1,180 +1,143 @@
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-const COLORS = {
-  background: "linear-gradient(120deg, #141925 60%, #1e2533 100%)",
-  card: "rgba(22, 27, 38, 0.94)",
-  cardBorder: "1.5px solid #232a3a",
-  text: "#fff",
-  textSecondary: "#bfc9da",
-  accent: "#57c1f6",
-  accent2: "#3c9cff",
-};
-
-// Updated challenge types to match Challenge.js exactly
-const CHALLENGE_TYPES = [
-  { label: "1 Step Alpha", value: "1step" },
-  { label: "2 Step Alpha", value: "2step" },
-  { label: "Fast Pass", value: "fastpass" }
-];
-
-const ACCOUNT_SIZES = [
-  { label: "$5k", value: "5k" },
-  { label: "$10k", value: "10k" },
-  { label: "$25k", value: "25k" },
-  { label: "$50k", value: "50k" },
-  { label: "$100k", value: "100k" },
-  { label: "$200k", value: "200k" }
-];
-
-// Update PRICING: fastpass replaces instant
-const PRICING = {
+const pricing = {
   "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
   "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
   "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
 };
 
+const COLORS = {
+  primary: "#2186eb",
+  text: "#fff",
+  card: "rgba(20,40,60,0.85)",
+  border: "rgba(33,134,235,0.35)"
+};
+
 export default function GetFunded() {
-  const [selectedType, setSelectedType] = useState("1step");
+  const router = useRouter();
+  const { type = "1step", size = "25k" } = router.query;
+
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [processing, setProcessing] = useState(false);
+
+  const price = pricing[type]?.[size] ?? 0;
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setProcessing(true);
+
+    // Here you would integrate with your payment and user creation APIs.
+    setTimeout(() => {
+      setProcessing(false);
+      router.push("/dashboard");
+    }, 1800);
+  }
 
   return (
-    <section
-      style={{
-        width: "100%",
-        background: COLORS.background,
-        padding: "56px 0 40px 0",
-        minHeight: "80vh",
-      }}
-    >
-      <div
+    <div style={{
+      minHeight: "100vh",
+      background: `linear-gradient(120deg, #081A2B 60%, #0C2B3A 100%)`,
+      fontFamily: "Inter, Roboto, sans-serif",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
+      <form
         style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "0 16px",
-        }}
-      >
-        <h2
-          style={{
-            color: COLORS.text,
-            fontWeight: 800,
-            fontSize: 40,
-            letterSpacing: 0.5,
-            textAlign: "center",
-            marginBottom: 38,
-            lineHeight: 1.1,
-          }}
-        >
-          Get Funded Today
-        </h2>
-        {/* Challenge Type Selector */}
-        <div style={{
+          background: COLORS.card,
+          border: `2px solid ${COLORS.border}`,
+          borderRadius: 22,
+          padding: 38,
+          minWidth: 350,
+          maxWidth: 400,
+          boxShadow: `0 6px 40px 0 ${COLORS.primary}18`,
+          color: COLORS.text,
           display: "flex",
-          justifyContent: "center",
-          gap: 18,
-          marginBottom: 38,
-        }}>
-          {CHALLENGE_TYPES.map(type => (
-            <button
-              key={type.value}
-              style={{
-                background: selectedType === type.value ? COLORS.accent2 : COLORS.card,
-                color: selectedType === type.value ? "#fff" : COLORS.textSecondary,
-                border: "none",
-                borderRadius: 8,
-                fontWeight: 700,
-                fontSize: 18,
-                padding: "11px 28px",
-                cursor: "pointer",
-                boxShadow: selectedType === type.value ? "0 2px 10px #3c9cff33" : "none",
-                transition: "background 0.17s, color 0.17s",
-              }}
-              onClick={() => setSelectedType(type.value)}
-            >
-              {type.label}
-            </button>
-          ))}
+          flexDirection: "column",
+          gap: 22
+        }}
+        onSubmit={handleSubmit}
+      >
+        <h2 style={{ marginBottom: 8, color: COLORS.primary, fontWeight: 800, textAlign: "center" }}>
+          Get Funded
+        </h2>
+        <div style={{ fontSize: 17, fontWeight: 600, marginBottom: 8 }}>
+          <span>Challenge:</span>
+          <span style={{ color: COLORS.primary, marginLeft: 8 }}>
+            {type?.toUpperCase() || "-"}, {size?.toUpperCase() || "-"}
+          </span>
         </div>
-        {/* Pricing Cards */}
-        <div
+        <div style={{ fontSize: 16, marginBottom: 5 }}>
+          <span>One-Time Fee: </span>
+          <span style={{ color: COLORS.primary, fontWeight: 700, fontSize: 22 }}>${price}</span>
+        </div>
+        <input
+          required
+          type="text"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
           style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: 30,
+            padding: 12,
+            borderRadius: 10,
+            border: "1.5px solid #2196f3",
+            marginBottom: 8,
+            fontSize: 16
+          }}
+        />
+        <input
+          required
+          type="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+          style={{
+            padding: 12,
+            borderRadius: 10,
+            border: "1.5px solid #2196f3",
+            marginBottom: 8,
+            fontSize: 16
+          }}
+        />
+        <input
+          required
+          type="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+          style={{
+            padding: 12,
+            borderRadius: 10,
+            border: "1.5px solid #2196f3",
+            marginBottom: 12,
+            fontSize: 16
+          }}
+        />
+        {/* Payment Section: Replace with Stripe/PayPal integration */}
+        <button
+          type="submit"
+          disabled={processing}
+          style={{
+            background: COLORS.primary,
+            color: "#fff",
+            border: "none",
+            borderRadius: 10,
+            padding: "14px 0",
+            width: "100%",
+            fontWeight: 800,
+            fontSize: 20,
+            cursor: "pointer",
+            marginTop: 18,
+            opacity: processing ? 0.7 : 1
           }}
         >
-          {ACCOUNT_SIZES.map(size => (
-            <div
-              key={size.value}
-              style={{
-                background: COLORS.card,
-                border: COLORS.cardBorder,
-                borderRadius: 18,
-                padding: "34px 32px 28px 32px",
-                color: COLORS.text,
-                width: 220,
-                minHeight: 180,
-                textAlign: "center",
-                boxShadow: "0 4px 32px 0 #1a376633",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                transition: "transform 0.17s, box-shadow 0.17s",
-              }}
-            >
-              <div
-                style={{
-                  fontWeight: 800,
-                  color: COLORS.accent2,
-                  fontSize: 34,
-                  marginBottom: 10,
-                  letterSpacing: 1,
-                }}
-              >
-                ${PRICING[selectedType][size.value]}
-              </div>
-              <div
-                style={{
-                  color: "#fff",
-                  fontWeight: 700,
-                  fontSize: 20,
-                  marginBottom: 5,
-                  letterSpacing: 0.5,
-                }}
-              >
-                {size.label}
-              </div>
-              <div
-                style={{
-                  color: COLORS.textSecondary,
-                  fontSize: 15,
-                  marginBottom: 8,
-                }}
-              >
-                One-Time Fee
-              </div>
-              <button
-                style={{
-                  background: COLORS.accent2,
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 8,
-                  padding: "11px 0",
-                  width: "100%",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  cursor: "pointer",
-                  boxShadow: "0 2px 8px #3c9cff33",
-                  marginTop: 10,
-                }}
-              >
-                Start Challenge
-              </button>
-            </div>
-          ))}
+          {processing ? "Processing..." : "Pay & Create Account"}
+        </button>
+        <div style={{ fontSize: 13, color: "#93b4ec", textAlign: "center" }}>
+          Already have an account? <a href="/dashboard" style={{ color: COLORS.primary }}>Login</a>
         </div>
-      </div>
-    </section>
+      </form>
+    </div>
   );
 }
