@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-// Replace with your actual colors if you want to match your logo exactly
 const COLORS = {
-  primary: "#00E0FF",      // Electric blue/teal
-  secondary: "#081A2B",    // Dark navy
-  accent: "#6CFFF8",       // Accent teal
-  card: "rgba(20,40,60,0.75)", // Glassy card
-  border: "rgba(0,224,255,0.35)", // Primary border with alpha
+  primary: "#2186eb", // Your homepage blue!
+  secondary: "#081A2B",
+  accent: "#6CFFF8",
+  card: "rgba(20,40,60,0.75)",
+  border: "rgba(33,134,235,0.35)",
   text: "#fff",
   textSecondary: "#A3B4C6",
-  buttonHover: "#00bbbb"
+  buttonHover: "#1761b5"
 };
 
 const accountTypes = [
@@ -64,14 +63,12 @@ export default function Challenge() {
       fontFamily: "Inter, Roboto, sans-serif",
       padding: "0 0 60px 0"
     }}>
-      {/* Main container */}
       <div style={{
         maxWidth: 1100,
         margin: "0 auto",
         paddingTop: 48,
         paddingBottom: 48
       }}>
-        {/* Header */}
         <h1 style={{
           textAlign: "center",
           color: COLORS.text,
@@ -81,9 +78,8 @@ export default function Challenge() {
           marginBottom: 36,
           textShadow: `0 4px 24px ${COLORS.primary}55`
         }}>
-          <span style={{ color: COLORS.primary, filter: "drop-shadow(0 0 6px #00e0ff88)" }}>✦ Get Funded <span style={{ color: COLORS.text }}>Today</span> ✦</span>
+          <span style={{ color: COLORS.primary, filter: "drop-shadow(0 0 6px #2186eb88)" }}>✦ Get Funded <span style={{ color: COLORS.text }}>Today</span> ✦</span>
         </h1>
-        {/* Flex Panels */}
         <div style={{
           display: "flex",
           gap: 36,
@@ -159,7 +155,7 @@ export default function Challenge() {
             </div>
             {/* Pricing box */}
             <div style={{
-              background: "rgba(0, 224, 255, 0.10)",
+              background: "rgba(33,134,235, 0.10)",
               border: `2px solid ${COLORS.primary}`,
               borderRadius: 18,
               padding: 30,
@@ -170,20 +166,22 @@ export default function Challenge() {
               <div style={{ color: COLORS.textSecondary, fontWeight: 600, marginBottom: 7, fontSize: 16 }}>One-Time Fee</div>
               <div style={{ fontWeight: 900, color: COLORS.primary, fontSize: 38, letterSpacing: "1px", lineHeight: 1.1, textShadow: `0 0 8px ${COLORS.primary}55` }}>${price}</div>
               <div style={{ color: COLORS.textSecondary, fontSize: 16, marginBottom: 20 }}>For {accountSizes.find(s => s.value === selectedSize).label} Account</div>
-              <button style={{
-                background: COLORS.primary,
-                color: "#191c24",
-                border: "none",
-                borderRadius: 10,
-                padding: "14px 0",
-                width: "100%",
-                fontWeight: 800,
-                fontSize: 20,
-                cursor: "pointer",
-                transition: "background 0.18s",
-                boxShadow: `0 2px 16px 0 ${COLORS.primary}66`
-              }} onMouseOver={e => e.currentTarget.style.background = COLORS.buttonHover}
-                 onMouseOut={e => e.currentTarget.style.background = COLORS.primary}
+              <button
+                style={{
+                  background: COLORS.primary,
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 10,
+                  padding: "14px 0",
+                  width: "100%",
+                  fontWeight: 800,
+                  fontSize: 20,
+                  cursor: "pointer",
+                  transition: "background 0.18s",
+                  boxShadow: `0 2px 16px 0 ${COLORS.primary}66`
+                }}
+                onMouseOver={e => e.currentTarget.style.background = COLORS.buttonHover}
+                onMouseOut={e => e.currentTarget.style.background = COLORS.primary}
               >Buy Challenge</button>
             </div>
           </div>
