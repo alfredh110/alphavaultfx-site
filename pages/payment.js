@@ -414,34 +414,6 @@ export default function Payment() {
               Create an account?
             </label>
 
-            {/* Banner */}
-            <div style={{
-              background: COLORS.accent,
-              color: COLORS.card,
-              fontWeight: 700,
-              borderRadius: 10,
-              padding: "12px 18px",
-              margin: "10px 0 22px 0",
-              fontSize: 15,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              letterSpacing: 0.2,
-              boxShadow: "0 1px 8px #34bfff33"
-            }}>
-              CELEBRATE FREEDOM: 30% OFF WITH FUNDED HERO
-              <span style={{
-                background: COLORS.card,
-                color: COLORS.accent,
-                borderRadius: 6,
-                padding: "5px 15px",
-                fontWeight: 800,
-                fontSize: 15,
-                marginLeft: 10,
-                display: "inline-block"
-              }}>Code: 40FF</span>
-            </div>
-
             {/* Payment details */}
             <div style={{ marginBottom: 16 }}>
               <div style={{ fontWeight: 700, fontSize: 18, color: COLORS.text, marginBottom: 8 }}>
