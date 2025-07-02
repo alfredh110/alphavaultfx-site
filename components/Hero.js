@@ -17,6 +17,7 @@ function useCountUp(to, duration = 1500, decimals = 0) {
       else setValue(decimals > 0 ? to.toFixed(decimals) : to);
     }
     animate();
+    // eslint-disable-next-line
   }, [to, duration, decimals]);
   return value;
 }
@@ -25,7 +26,7 @@ export default function Hero() {
   const router = useRouter();
 
   // Animated numbers
-  const funding = useCountUp(1000000, 1400, 0); // $1M+
+  const funding = useCountUp(2000000, 1400, 0); // $2M+
   const payout = useCountUp(7, 1200, 0);        // 7 hrs
   const profitSplit = useCountUp(90, 1300, 0);  // 90%
   const traders = useCountUp(5000, 1700, 0);    // 5,000+
@@ -111,7 +112,7 @@ export default function Hero() {
         </button>
       </div>
 
-      {/* Animated Stats Row */}
+      {/* Animated Stats Row (ONLY THIS ROW) */}
       <div
         style={{
           display: "flex",
@@ -123,7 +124,11 @@ export default function Hero() {
       >
         <div style={statBoxStyle}>
           <div style={statNumberStyle}>
-            ${Math.floor(funding / 1000)}K<span style={{ color: "#2196f3" }}>+</span>
+            ${funding >= 1000000
+              ? (funding / 1000000).toFixed(0) + "M"
+              : Math.floor(funding / 1000) + "K"
+            }
+            <span style={{ color: "#2196f3" }}>+</span>
           </div>
           <div style={statLabelStyle}>In Funding</div>
         </div>
@@ -151,6 +156,7 @@ export default function Hero() {
   );
 }
 
+// Styles
 const statBoxStyle = {
   background: "rgba(16,24,38,0.87)",
   borderRadius: 18,
