@@ -69,9 +69,12 @@ export default function HowToGetFunded() {
           fontWeight: 800,
           fontSize: 40,
           letterSpacing: 1,
-          marginBottom: 36
+          marginBottom: 36,
+          textShadow: `0 4px 24px ${COLORS.primary}55`
         }}>
-          Get Funded Today
+          <span style={{ color: COLORS.primary, filter: "drop-shadow(0 0 6px #2186eb88)" }}>
+            ✦ Get Funded <span style={{ color: COLORS.text }}>Today</span> ✦
+          </span>
         </h2>
         <div style={{
           display: "flex",
