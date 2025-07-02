@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router"; // <-- add this import
 
 const COLORS = {
   background: "linear-gradient(120deg, #141925 60%, #1e2533 100%)",
@@ -10,7 +11,6 @@ const COLORS = {
   accent2: "#3c9cff",
 };
 
-// Updated challenge types to match Challenge.js exactly
 const CHALLENGE_TYPES = [
   { label: "1 Step Alpha", value: "1step" },
   { label: "2 Step Alpha", value: "2step" },
@@ -26,7 +26,6 @@ const ACCOUNT_SIZES = [
   { label: "$200k", value: "200k" }
 ];
 
-// Update PRICING: fastpass replaces instant
 const PRICING = {
   "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
   "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
@@ -35,6 +34,15 @@ const PRICING = {
 
 export default function GetFunded() {
   const [selectedType, setSelectedType] = useState("1step");
+  const router = useRouter(); // <-- add this line
+
+  // Handler for Start Challenge
+  const handleStartChallenge = (type, size) => {
+    // Redirect to your payment/profile page, passing type and size
+    router.push(`/payment?type=${type}&size=${size}`);
+    // If you want an external payment, use:
+    // window.location.href = `https://your-payment-center.com?type=${type}&size=${size}`;
+  };
 
   return (
     <section
@@ -168,6 +176,7 @@ export default function GetFunded() {
                   boxShadow: "0 2px 8px #3c9cff33",
                   marginTop: 10,
                 }}
+                onClick={() => handleStartChallenge(selectedType, size.value)}
               >
                 Start Challenge
               </button>
