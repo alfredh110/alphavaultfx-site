@@ -71,26 +71,20 @@ const TYPE_LABELS = {
   "fastpass": "Fast Pass",
 };
 
-// Navy blue / White / Light blue theme, vibrant animated!
-const DASHBOARD_BG = `
-  linear-gradient(120deg, #283e63 0%, #20304a 40%, #102046 100%),
-  radial-gradient(circle at 60% 30%, #1b7fd9 0%, transparent 50%),
-  linear-gradient(-45deg, #48cfff22 0%, transparent 70%)
-`;
-
+// Navy blue / White / Light blue theme, blended and animated!
 const COLORS = {
-  card: "#1a2943", // navy blue card
-  border: "#48cfff", // light blue
+  card: "rgba(24,35,58,0.85)",
+  border: "rgba(72,207,255,0.20)",
   text: "#fff",
-  textSecondary: "#cbe8ff", // very light blue for secondary text
-  bg: DASHBOARD_BG,
-  accent: "#48cfff", // light blue accent
+  textSecondary: "#cbe8ff",
+  bg: `linear-gradient(120deg, #233354 0%, #102046 100%)`,
+  accent: "#48cfff",
   accentHover: "#8ce3ff",
   buttonActive: "#48cfff",
   buttonActiveText: "#18233a",
-  buttonInactive: "transparent",
+  buttonInactive: "rgba(24,35,58,0.85)",
   buttonInactiveText: "#cbe8ff",
-  buttonBorder: "#284366",
+  buttonBorder: "rgba(72,207,255,0.18)",
 };
 
 export default function Challenge() {
@@ -112,7 +106,6 @@ export default function Challenge() {
     pricingArr = PRICING["fastpass"];
   }
 
-  // Find the pricing for the selected size
   const activePricing = pricingArr.find(
     (p) => p.size.replace("k", "") === accountSize.replace("k", "")
   );
@@ -120,22 +113,34 @@ export default function Challenge() {
   const sizeLabel = SIZES.find((s) => s.key === accountSize)?.label || "$0";
 
   return (
-    <div style={{position:"relative", minHeight:"100vh"}}>
-      {/* Animated background and overlays */}
-      <div className="challenge-bg"
+    <div style={{ position: "relative", minHeight: "100vh" }}>
+      {/* Soft radial overlay for extra blending */}
+      <div
+        style={{
+          pointerEvents: "none",
+          position: "fixed",
+          inset: 0,
+          zIndex: 0,
+          background:
+            "radial-gradient(circle at 60% 30%, #3bbcfb22 0%, transparent 70%)",
+          mixBlendMode: "screen",
+        }}
+      />
+      {/* Animated grid and candles */}
+      <div
+        className="challenge-bg"
         style={{
           minHeight: "100vh",
           background: COLORS.bg,
-          backgroundBlendMode: "overlay",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           position: "relative",
           zIndex: 1,
           padding: "60px 16px",
           fontFamily: "Inter, Roboto, sans-serif",
-          overflow:"hidden"
-        }}>
-        {/* Main content */}
+          overflow: "hidden",
+        }}
+      >
         <style>{`
           .challenge-row {
             display: flex;
@@ -144,75 +149,53 @@ export default function Challenge() {
             align-items: flex-start;
             margin-top: 32px;
           }
-          .challenge-col {
-            flex: 1 1 400px;
-            min-width: 370px;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-          }
-          .challenge-controls {
-            margin-bottom: 18px;
+          .card-blur {
+            backdrop-filter: blur(8px);
           }
           .pricing-card, .rules-card {
+            background: ${COLORS.card};
+            backdrop-filter: blur(8px);
+            border-radius: 18px;
+            box-shadow: 0 8px 48px #0af1, 0 1.5px 0 0 ${COLORS.border};
+            border: 1.5px solid ${COLORS.border};
             margin: 0;
           }
-          .account-type-group {
-            display: flex;
-            gap: 18px;
-          }
-          .account-type-btn {
-            flex: 1 1 0;
-            padding: 18px 0;
-            font-size: 18px;
-            font-weight: 700;
-            border: 2px solid ${COLORS.buttonBorder};
-            border-radius: 12px;
-            background: ${COLORS.buttonInactive};
-            color: ${COLORS.buttonInactiveText};
-            cursor: pointer;
-            transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
-          }
-          .account-type-btn.active {
-            background: ${COLORS.buttonActive};
-            color: ${COLORS.buttonActiveText};
-            border-color: ${COLORS.buttonActive};
-            box-shadow: 0 2px 14px #48cfff15;
-          }
-          .account-size-group {
-            display: flex;
-            gap: 18px;
-          }
-          .account-size-btn {
-            flex: 1 1 0;
-            padding: 18px 0;
-            font-size: 18px;
-            font-weight: 700;
-            border: 2px solid ${COLORS.buttonBorder};
-            border-radius: 12px;
-            background: ${COLORS.buttonInactive};
-            color: ${COLORS.buttonInactiveText};
-            cursor: pointer;
-            transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
-          }
-          .account-size-btn.active {
-            background: ${COLORS.buttonActive};
-            color: ${COLORS.buttonActiveText};
-            border-color: ${COLORS.buttonActive};
-            box-shadow: 0 2px 14px #48cfff15;
-          }
           .pricing-card {
-            background: ${COLORS.card};
-            border-radius: 18px;
-            box-shadow: 0 4px 36px #0af3;
-            border: 2px solid ${COLORS.border};
             padding: 38px 34px 32px 34px;
             min-width: 340px;
-            margin-bottom: 0;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: stretch;
+          }
+          .rules-card {
+            min-width: 340px;
+            max-width: 700px;
+            overflow: hidden;
+            padding-bottom: 6px;
+          }
+          .account-type-group, .account-size-group {
+            display: flex;
+            gap: 18px;
+          }
+          .account-type-btn, .account-size-btn {
+            flex: 1 1 0;
+            padding: 18px 0;
+            font-size: 18px;
+            font-weight: 700;
+            border: 2px solid ${COLORS.buttonBorder};
+            border-radius: 12px;
+            background: ${COLORS.buttonInactive};
+            color: ${COLORS.buttonInactiveText};
+            cursor: pointer;
+            transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
+            backdrop-filter: blur(8px);
+          }
+          .account-type-btn.active, .account-size-btn.active {
+            background: ${COLORS.buttonActive};
+            color: ${COLORS.buttonActiveText};
+            border-color: ${COLORS.buttonActive};
+            box-shadow: 0 2px 16px #48cfff33;
           }
           .pricing-card .one-time-label {
             color: ${COLORS.textSecondary};
@@ -249,16 +232,6 @@ export default function Challenge() {
           }
           .pricing-card .buy-btn:hover {
             background: ${COLORS.accentHover};
-          }
-          .rules-card {
-            background: ${COLORS.card};
-            border-radius: 18px;
-            box-shadow: 0 4px 36px #0af3;
-            border: 2px solid ${COLORS.border};
-            min-width: 340px;
-            max-width: 700px;
-            overflow: hidden;
-            padding-bottom: 6px;
           }
           .rules-card table {
             width: 100%;
@@ -302,7 +275,6 @@ export default function Challenge() {
             .challenge-row { flex-direction: column; }
             .rules-card, .pricing-card { max-width: 100% !important; }
           }
-          /* Animated bg, grid lines */
           .bg-grid {
             position: fixed;
             inset: 0;
@@ -317,7 +289,6 @@ export default function Challenge() {
             0% {opacity:0;}
             100% {opacity:1;}
           }
-          /* Animated candles */
           .candle {
             position: fixed;
             bottom: 0;
@@ -335,7 +306,7 @@ export default function Challenge() {
           }
         `}</style>
 
-        {/* Account Type & Size Controls */}
+        {/* Controls */}
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           {/* Account Type */}
           <div className="challenge-controls">
@@ -354,19 +325,19 @@ export default function Challenge() {
                 className={`account-type-btn${challengeType === "1step" ? " active" : ""}`}
                 onClick={() => setChallengeType("1step")}
               >
-                {TYPE_LABELS["1step"]}
+                1 Step Alpha
               </button>
               <button
                 className={`account-type-btn${challengeType === "2step" ? " active" : ""}`}
                 onClick={() => setChallengeType("2step")}
               >
-                {TYPE_LABELS["2step"]}
+                2 Step Alpha
               </button>
               <button
                 className={`account-type-btn${challengeType === "fastpass" ? " active" : ""}`}
                 onClick={() => setChallengeType("fastpass")}
               >
-                {TYPE_LABELS["fastpass"]}
+                Fast Pass
               </button>
             </div>
           </div>
@@ -395,18 +366,15 @@ export default function Challenge() {
             </div>
           </div>
         </div>
-
-        {/* PRICING + RULES GRID */}
+        {/* Pricing + Rules */}
         <div className="challenge-row" style={{ maxWidth: 1400, margin: "32px auto 0 auto" }}>
-          {/* Pricing Card */}
-          <div className="pricing-card">
+          <div className="pricing-card card-blur">
             <div className="one-time-label">One-Time Fee</div>
             <div className="price">{price}</div>
             <div className="for-label">For {sizeLabel} Account</div>
             <button className="buy-btn">Buy Challenge</button>
           </div>
-          {/* Rules Table */}
-          <div className="rules-card">
+          <div className="rules-card card-blur">
             <table>
               <thead>
                 <tr>
@@ -430,10 +398,8 @@ export default function Challenge() {
           </div>
         </div>
       </div>
-
       {/* Animated overlays */}
       <div className="bg-grid" />
-      {/* Example animated candles (random lefts, animationDelay for realism) */}
       <div className="candle" style={{ left: "18%", animationDelay: "0s" }} />
       <div className="candle" style={{ left: "32%", animationDelay: "2s" }} />
       <div className="candle" style={{ left: "55%", animationDelay: "1s" }} />
