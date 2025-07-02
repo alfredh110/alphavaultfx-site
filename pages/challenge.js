@@ -71,20 +71,23 @@ const TYPE_LABELS = {
   "fastpass": "Fast Pass",
 };
 
-// Use your dashboard background here:
+// Navy blue / White / Light blue theme
 const DASHBOARD_BG =
-  "radial-gradient(circle at 60% 30%, #161e2e 50%, #0d1117 100%)";
+  "radial-gradient(circle at 60% 30%, #18233a 60%, #10182a 100%)";
 
 const COLORS = {
-  card: "#18233a",
-  border: "#34bfff",
+  card: "#1a2943", // navy blue card
+  border: "#48cfff", // light blue
   text: "#fff",
-  textSecondary: "#b4c7e7",
+  textSecondary: "#cbe8ff", // very light blue for secondary text
   bg: DASHBOARD_BG,
-  accent: "#34bfff",
-  accentHover: "#86dbff",
-  yellow: "#ffd43b",
-  darkYellow: "#e6c200",
+  accent: "#48cfff", // light blue accent
+  accentHover: "#8ce3ff",
+  buttonActive: "#48cfff",
+  buttonActiveText: "#18233a",
+  buttonInactive: "transparent",
+  buttonInactiveText: "#cbe8ff",
+  buttonBorder: "#284366",
 };
 
 export default function Challenge() {
@@ -153,17 +156,18 @@ export default function Challenge() {
           padding: 18px 0;
           font-size: 18px;
           font-weight: 700;
-          border: 2px solid #363c4e;
+          border: 2px solid ${COLORS.buttonBorder};
           border-radius: 12px;
-          background: transparent;
-          color: ${COLORS.textSecondary};
+          background: ${COLORS.buttonInactive};
+          color: ${COLORS.buttonInactiveText};
           cursor: pointer;
-          transition: background 0.13s, color 0.13s, border 0.13s;
+          transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
         }
         .account-type-btn.active {
-          background: ${COLORS.yellow};
-          color: #23252B;
-          border-color: ${COLORS.yellow};
+          background: ${COLORS.buttonActive};
+          color: ${COLORS.buttonActiveText};
+          border-color: ${COLORS.buttonActive};
+          box-shadow: 0 2px 14px #48cfff15;
         }
         .account-size-group {
           display: flex;
@@ -174,23 +178,24 @@ export default function Challenge() {
           padding: 18px 0;
           font-size: 18px;
           font-weight: 700;
-          border: 2px solid #363c4e;
+          border: 2px solid ${COLORS.buttonBorder};
           border-radius: 12px;
-          background: transparent;
-          color: ${COLORS.textSecondary};
+          background: ${COLORS.buttonInactive};
+          color: ${COLORS.buttonInactiveText};
           cursor: pointer;
-          transition: background 0.13s, color 0.13s, border 0.13s;
+          transition: background 0.13s, color 0.13s, border 0.13s, box-shadow 0.13s;
         }
         .account-size-btn.active {
-          background: ${COLORS.yellow};
-          color: #23252B;
-          border-color: ${COLORS.yellow};
+          background: ${COLORS.buttonActive};
+          color: ${COLORS.buttonActiveText};
+          border-color: ${COLORS.buttonActive};
+          box-shadow: 0 2px 14px #48cfff15;
         }
         .pricing-card {
           background: ${COLORS.card};
           border-radius: 18px;
-          box-shadow: 0 4px 36px #0005;
-          border: 2px solid ${COLORS.yellow};
+          box-shadow: 0 4px 36px #0007;
+          border: 2px solid ${COLORS.border};
           padding: 38px 34px 32px 34px;
           min-width: 340px;
           margin-bottom: 0;
@@ -218,8 +223,8 @@ export default function Challenge() {
           margin-bottom: 28px;
         }
         .pricing-card .buy-btn {
-          background: ${COLORS.yellow};
-          color: #23252B;
+          background: ${COLORS.accent};
+          color: ${COLORS.card};
           border: none;
           border-radius: 12px;
           width: 100%;
@@ -230,16 +235,16 @@ export default function Challenge() {
           margin-top: 6px;
           margin-bottom: 0;
           transition: background 0.13s;
-          box-shadow: 0 2px 12px #ffd43b22;
+          box-shadow: 0 2px 12px #48cfff22;
         }
         .pricing-card .buy-btn:hover {
-          background: ${COLORS.darkYellow};
+          background: ${COLORS.accentHover};
         }
         .rules-card {
           background: ${COLORS.card};
           border-radius: 18px;
-          box-shadow: 0 4px 36px #0005;
-          border: 2px solid ${COLORS.yellow};
+          box-shadow: 0 4px 36px #0007;
+          border: 2px solid ${COLORS.border};
           min-width: 340px;
           max-width: 700px;
           overflow: hidden;
@@ -257,22 +262,24 @@ export default function Challenge() {
         .rules-card th {
           text-align: center;
           font-weight: 700;
-          color: ${COLORS.textSecondary};
+          color: ${COLORS.accent};
           font-size: 17px;
           padding: 24px 20px;
           letter-spacing: 1px;
+          background: #22345a60;
         }
         .rules-card th:first-child, .rules-card td:first-child {
           text-align: left;
         }
         .rules-card tbody tr {
-          border-top: 1.5px solid #223150;
+          border-top: 1.5px solid #284366;
         }
         .rules-card td {
           text-align: center;
           padding: 18px;
           font-weight: 900;
           color: ${COLORS.text};
+          background: transparent;
         }
         .rules-card td:first-child {
           font-weight: 700;
