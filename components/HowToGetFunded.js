@@ -1,16 +1,65 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-// ALPHAVAULTFX THEME COLORS - aligned to logo (deep blue, white, silver/gray)
 const COLORS = {
   background: "linear-gradient(120deg, #141925 60%, #1e2533 100%)",
   card: "rgba(22, 27, 38, 0.94)",
   cardBorder: "1.5px solid #232a3a",
   text: "#fff",
   textSecondary: "#bfc9da",
-  accent: "#57c1f6", // lighter blue from logo
-  accent2: "#3c9cff", // blue from logo
-  accentLine: "#b0bac7", // silver/gray
+  accent: "#57c1f6",
+  accent2: "#3c9cff",
+  accentLine: "#b0bac7",
 };
+
+function useFadeInOnMount() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (el) {
+      el.style.opacity = 1;
+      el.style.transform = "translateY(0px)";
+    }
+  }, []);
+  return ref;
+}
+
+function Card({ children, style }) {
+  const ref = useFadeInOnMount();
+  return (
+    <div
+      ref={ref}
+      className="animated-card"
+      style={{
+        background: COLORS.card,
+        border: COLORS.cardBorder,
+        borderRadius: 18,
+        padding: 30,
+        color: COLORS.text,
+        minHeight: 250,
+        boxShadow: "0 0 0 0 transparent",
+        alignItems: "flex-start",
+        opacity: 0,
+        transform: "translateY(40px)",
+        transition: "opacity 0.8s cubic-bezier(.21,.61,.35,1) 0.1s, transform 0.7s cubic-bezier(.21,.61,.35,1) 0.1s, box-shadow 0.25s, transform 0.25s",
+        willChange: "opacity, transform",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        ...style,
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.boxShadow = "0 8px 32px 0 #202b3a77";
+        e.currentTarget.style.transform = "translateY(-8px) scale(1.025)";
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.boxShadow = "0 0 0 0 transparent";
+        e.currentTarget.style.transform = "translateY(0px) scale(1)";
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function HowToGetFunded() {
   return (
@@ -19,12 +68,18 @@ export default function HowToGetFunded() {
       background: COLORS.background,
       padding: "56px 0 40px 0",
     }}>
+      <style>{`
+        @media (max-width: 900px) {
+          .animated-card-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
       <div style={{
         maxWidth: 1100,
         margin: "0 auto",
         padding: "0 16px"
       }}>
-        {/* Header - centered, no stars, logo blue/white */}
         <h2 style={{
           color: COLORS.text,
           fontWeight: 800,
@@ -36,28 +91,17 @@ export default function HowToGetFunded() {
         }}>
           How To Get Funded
         </h2>
-        {/* Card grid - more aligned */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gridTemplateRows: "1fr 1fr",
-          gap: 28,
-        }}>
+        <div
+          className="animated-card-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridTemplateRows: "1fr 1fr",
+            gap: 28,
+          }}
+        >
           {/* Card 1 */}
-          <div style={{
-            background: COLORS.card,
-            border: COLORS.cardBorder,
-            borderRadius: 18,
-            padding: 30,
-            color: COLORS.text,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            minHeight: 250,
-            boxShadow: "0 0 0 0 transparent",
-            alignItems: "flex-start"
-          }}>
-            {/* FIXED: Button steps, not overlapping */}
+          <Card>
             <div style={{ marginBottom: 20, display: "flex", gap: 12 }}>
               <span style={{
                 background: "#232a3a",
@@ -103,21 +147,9 @@ export default function HowToGetFunded() {
                 Choose a funding program that suits your goals and demonstrate your skills through our straightforward evaluation process AlphaVaultFX.
               </div>
             </div>
-          </div>
-
+          </Card>
           {/* Card 2 - Profit Chart */}
-          <div style={{
-            background: COLORS.card,
-            border: COLORS.cardBorder,
-            borderRadius: 18,
-            padding: 30,
-            color: COLORS.text,
-            minHeight: 250,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            alignItems: "flex-start"
-          }}>
+          <Card>
             <div style={{
               background: "#222938",
               borderRadius: 14,
@@ -160,21 +192,9 @@ export default function HowToGetFunded() {
                 Once you pass the evaluation, AlphaVaultFX funds you immediately. Focus on trading while we handle the rest.
               </div>
             </div>
-          </div>
-
+          </Card>
           {/* Card 3 - Progress */}
-          <div style={{
-            background: COLORS.card,
-            border: COLORS.cardBorder,
-            borderRadius: 18,
-            padding: 30,
-            color: COLORS.text,
-            minHeight: 250,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            alignItems: "flex-start"
-          }}>
+          <Card>
             <div style={{ marginBottom: 22, width: "100%" }}>
               <div style={{
                 color: COLORS.textSecondary,
@@ -215,7 +235,7 @@ export default function HowToGetFunded() {
                 Trade consistently and achieve the profit target while adhering to risk management rules. Show us your edge in the market.
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
