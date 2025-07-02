@@ -66,8 +66,8 @@ const SIZES = [
 ];
 
 const TYPE_LABELS = {
-  "1step": "1 Step Hero",
-  "2step": "2 Step Villain",
+  "1step": "1 Step Alpha",
+  "2step": "2 Step Alpha",
   "fastpass": "Fast Pass",
 };
 
