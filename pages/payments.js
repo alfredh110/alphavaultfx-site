@@ -1,82 +1,102 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-// Use the same pricing as GetFunded.js
-const PRICING = {
-  "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
-  "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
-  "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 }
-};
+// Helper to get coordinates for a city using Open-Meteo's geocoding API
+async function fetchCoordinates(city) {
+  const resp = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`);
+  const data = await resp.json();
+  if (data.results && data.results.length > 0) {
+    return {
+      lat: data.results[0].latitude,
+      lon: data.results[0].longitude,
+      name: data.results[0].name,
+      country: data.results[0].country
+    };
+  }
+  throw new Error("City not found");
+}
 
-export default function Payment() {
-  const router = useRouter();
-  const { type, size } = router.query;
-  const [price, setPrice] = useState(null);
+export default function WeatherDashboard() {
+  const [city, setCity] = useState("");
+  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
 
-  useEffect(() => {
-    if(type && size) {
-      setPrice(PRICING[type]?.[size] ?? null);
+  async function handleSearch(e) {
+    e.preventDefault();
+    setWeather(null);
+    setErr("");
+    setLoading(true);
+
+    try {
+      const coords = await fetchCoordinates(city);
+      // Fetch current weather
+      const weatherResp = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current_weather=true`
+      );
+      const weatherData = await weatherResp.json();
+      setWeather({
+        ...coords,
+        ...weatherData.current_weather
+      });
+    } catch (error) {
+      setErr(error.message);
     }
-  }, [type, size]);
-
-  if (!type || !size) {
-    return <div style={{ padding: 40, color: "#fff" }}>Invalid payment link.</div>
+    setLoading(false);
   }
 
   return (
     <div style={{
-      minHeight: "100vh",
-      background: "linear-gradient(120deg, #141925 60%, #1e2533 100%)",
-      fontFamily: "Inter, Roboto, sans-serif",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
+      maxWidth: 400,
+      margin: "40px auto",
+      padding: 24,
+      borderRadius: 16,
+      background: "#222e3a",
+      color: "#fff",
+      boxShadow: "0 4px 24px #0003"
     }}>
-      <div style={{
-        background: "rgba(22, 27, 38, 0.94)",
-        border: "1.5px solid #232a3a",
-        borderRadius: 18,
-        padding: 40,
-        minWidth: 350,
-        color: "#fff",
-        boxShadow: "0 4px 32px 0 #1a376633",
-        textAlign: "center"
-      }}>
-        <h2 style={{ color: "#3c9cff", fontWeight: 800, marginBottom: 16 }}>
-          Payment Center
-        </h2>
-        <div style={{ fontSize: 18, marginBottom: 8 }}>
-          <span>Challenge: </span>
-          <strong style={{ color: "#57c1f6" }}>{type?.toUpperCase()}</strong>
-          <span> | </span>
-          <strong style={{ color: "#57c1f6" }}>{size?.toUpperCase()}</strong>
-        </div>
-        <div style={{ fontSize: 18, marginBottom: 20 }}>
-          One-Time Fee: <span style={{ color: "#3c9cff", fontWeight: 700, fontSize: 22 }}>${price}</span>
-        </div>
-        {/* Integrate Stripe, PayPal, or your custom payment component here */}
-        <div style={{ margin: "30px 0", color: "#bfc9da" }}>
-          <em>Payment processing coming soon.<br />
-            Integrate Stripe, PayPal, or your gateway here.</em>
-        </div>
-        <button
+      <h2 style={{ textAlign: "center" }}>Weather Dashboard</h2>
+      <form onSubmit={handleSearch} style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+        <input
+          type="text"
+          placeholder="Enter city (e.g. London)"
+          value={city}
+          onChange={e => setCity(e.target.value)}
           style={{
-            background: "#3c9cff",
-            color: "#fff",
-            border: "none",
+            flex: 1,
+            padding: 10,
             borderRadius: 8,
-            padding: "14px 0",
-            width: "100%",
-            fontWeight: 700,
-            fontSize: 18,
-            cursor: "pointer",
-            marginTop: 18
+            border: "1px solid #445"
           }}
-          onClick={() => router.push("/GetFunded")}
-        >
-          Go Back
+          required
+        />
+        <button type="submit" style={{
+          padding: "10px 18px",
+          borderRadius: 8,
+          border: "none",
+          background: "#3c9cff",
+          color: "#fff",
+          fontWeight: 700,
+          cursor: "pointer"
+        }}>
+          {loading ? "..." : "Search"}
         </button>
-      </div>
+      </form>
+      {err && <div style={{ color: "#f66", marginBottom: 12 }}>{err}</div>}
+      {weather && (
+        <div style={{
+          background: "#263446",
+          borderRadius: 12,
+          padding: 16,
+          textAlign: "center"
+        }}>
+          <h3>{weather.name}, {weather.country}</h3>
+          <div style={{ fontSize: 36, fontWeight: 700 }}>{weather.temperature}°C</div>
+          <div style={{ fontSize: 18, color: "#aaf", marginBottom: 8 }}>
+            {weather.weathercode === 0 ? "Clear" : "See docs for code"}
+          </div>
+          <div>Wind: {weather.windspeed} km/h</div>
+        </div>
+      )}
     </div>
   );
 }
