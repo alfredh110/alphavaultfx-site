@@ -1,26 +1,54 @@
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-// You can enhance this with state to make it interactive!
+const accountTypes = [
+  { label: "1 Step Alpha", value: "1step" },
+  { label: "2 Step Alpha", value: "2step" },
+  { label: "Fast Pass", value: "fastpass" },
+];
+
+const accountSizes = [
+  { label: "$5k", value: "5k" },
+  { label: "$10k", value: "10k" },
+  { label: "$25k", value: "25k" },
+  { label: "$50k", value: "50k" },
+  { label: "$100k", value: "100k" },
+  { label: "$200k", value: "200k" },
+];
+
+// These are example configs. Update to match your actual pricing/rules!
+const pricing = {
+  "1step":   { "5k": 49,  "10k": 69,  "25k": 119, "50k": 229, "100k": 399, "200k": 699 },
+  "2step":   { "5k": 39,  "10k": 59,  "25k": 99,  "50k": 199, "100k": 349, "200k": 599 },
+  "fastpass":{ "5k": 79,  "10k": 109, "25k": 179, "50k": 299, "100k": 499, "200k": 899 },
+};
+
+const rules = {
+  "1step": {
+    phase1: { profitTarget: "8%", dailyLoss: "6%", maxLoss: "12%", drawdown: "Static" },
+    funded: { profitTarget: "-", dailyLoss: "5%", maxLoss: "10%", drawdown: "Static" }
+  },
+  "2step": {
+    phase1: { profitTarget: "8%", dailyLoss: "5%", maxLoss: "10%", drawdown: "Static" },
+    funded: { profitTarget: "-", dailyLoss: "4%", maxLoss: "8%", drawdown: "Static" }
+  },
+  "fastpass": {
+    phase1: { profitTarget: "10%", dailyLoss: "8%", maxLoss: "16%", drawdown: "Static" },
+    funded: { profitTarget: "-", dailyLoss: "6%", maxLoss: "12%", drawdown: "Static" }
+  }
+};
+
 export default function Challenge() {
   const { data } = useSession() || {};
+  const [selectedType, setSelectedType] = useState("1step");
+  const [selectedSize, setSelectedSize] = useState("25k");
 
-  // Example state for selected items (optional, for full interactivity)
-  // import { useState } from "react";
-  // const [accountType, setAccountType] = useState("1 Step Alpha");
-  // const [accountSize, setAccountSize] = useState("$25k");
+  const price = pricing[selectedType][selectedSize];
+  const rule = rules[selectedType];
 
   return (
-    <div style={{
-      background: "#161e2e",
-      minHeight: "100vh",
-      padding: "0 0 60px 0"
-    }}>
-      <div style={{
-        maxWidth: 900,
-        margin: "0 auto",
-        paddingTop: 40,
-        paddingBottom: 40
-      }}>
+    <div style={{ background: "#161e2e", minHeight: "100vh", padding: "0 0 60px 0" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto", paddingTop: 40, paddingBottom: 40 }}>
         <h1 style={{
           textAlign: "center",
           color: "#2186eb",
@@ -31,11 +59,7 @@ export default function Challenge() {
         }}>
           <span style={{ color: "#2186eb" }}>✨ Get Funded <span style={{ color: "#fff" }}>Today</span> ✨</span>
         </h1>
-        <div style={{
-          display: "flex",
-          gap: 32,
-          justifyContent: "center"
-        }}>
+        <div style={{ display: "flex", gap: 32, justifyContent: "center" }}>
           {/* LEFT PANEL */}
           <div style={{
             background: "#192136",
@@ -52,48 +76,12 @@ export default function Challenge() {
             <div>
               <div style={{ fontWeight: 700, color: "#b8cfff", marginBottom: 10 }}>Account Type</div>
               <div style={{ display: "flex", gap: 10 }}>
-                <button style={{
-                  background: "#2186eb",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 8,
-                  padding: "8px 18px",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  cursor: "pointer",
-                  boxShadow: "0 0 0 1.5px #2186eb"
-                }}>1 Step Alpha</button>
-                <button style={{
-                  background: "none",
-                  color: "#b8cfff",
-                  border: "1.5px solid #2186eb",
-                  borderRadius: 8,
-                  padding: "8px 18px",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  cursor: "pointer"
-                }}>2 Step Alpha</button>
-                <button style={{
-                  background: "none",
-                  color: "#b8cfff",
-                  border: "1.5px solid #2186eb",
-                  borderRadius: 8,
-                  padding: "8px 18px",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  cursor: "pointer"
-                }}>Fast Pass</button>
-              </div>
-            </div>
-            <div>
-              <div style={{ fontWeight: 700, color: "#b8cfff", marginBottom: 10, marginTop: 10 }}>Account Size</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-                {["$5k", "$10k", "$25k", "$50k", "$100k", "$200k"].map((size, i) => (
+                {accountTypes.map((type) => (
                   <button
-                    key={size}
+                    key={type.value}
                     style={{
-                      background: size === "$25k" ? "#2186eb" : "none",
-                      color: size === "$25k" ? "#fff" : "#b8cfff",
+                      background: selectedType === type.value ? "#2186eb" : "none",
+                      color: selectedType === type.value ? "#fff" : "#b8cfff",
                       border: "1.5px solid #2186eb",
                       borderRadius: 8,
                       padding: "8px 18px",
@@ -101,8 +89,32 @@ export default function Challenge() {
                       fontSize: 15,
                       cursor: "pointer"
                     }}
+                    onClick={() => setSelectedType(type.value)}
                   >
-                    {size}
+                    {type.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, color: "#b8cfff", marginBottom: 10, marginTop: 10 }}>Account Size</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                {accountSizes.map((size) => (
+                  <button
+                    key={size.value}
+                    style={{
+                      background: selectedSize === size.value ? "#2186eb" : "none",
+                      color: selectedSize === size.value ? "#fff" : "#b8cfff",
+                      border: "1.5px solid #2186eb",
+                      borderRadius: 8,
+                      padding: "8px 18px",
+                      fontWeight: 600,
+                      fontSize: 15,
+                      cursor: "pointer"
+                    }}
+                    onClick={() => setSelectedSize(size.value)}
+                  >
+                    {size.label}
                   </button>
                 ))}
               </div>
@@ -116,8 +128,8 @@ export default function Challenge() {
               textAlign: "center"
             }}>
               <div style={{ color: "#b8cfff", fontWeight: 500, marginBottom: 8 }}>One-Time Fee</div>
-              <div style={{ fontWeight: 900, color: "#fff", fontSize: 32 }}>$119</div>
-              <div style={{ color: "#b8cfff", fontSize: 15, marginBottom: 16 }}>For $25k Account</div>
+              <div style={{ fontWeight: 900, color: "#fff", fontSize: 32 }}>${price}</div>
+              <div style={{ color: "#b8cfff", fontSize: 15, marginBottom: 16 }}>For {accountSizes.find(s => s.value === selectedSize).label} Account</div>
               <button style={{
                 background: "#2186eb",
                 color: "#fff",
@@ -157,23 +169,23 @@ export default function Challenge() {
               <tbody>
                 <tr>
                   <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Profit Target</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>8%</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>-</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.profitTarget}</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.profitTarget}</td>
                 </tr>
                 <tr>
                   <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Daily Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>6%</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>5%</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.dailyLoss}</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.dailyLoss}</td>
                 </tr>
                 <tr>
                   <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Maximum Loss</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>12%</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>10%</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.maxLoss}</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.maxLoss}</td>
                 </tr>
                 <tr>
                   <td style={{ color: "#b8cfff", fontWeight: 500, padding: "8px 0" }}>Maximum Drawdown Type</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>Static</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>Static</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.phase1.drawdown}</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>{rule.funded.drawdown}</td>
                 </tr>
               </tbody>
             </table>
