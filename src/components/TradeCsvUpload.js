@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { Button } from "@mui/material";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 
-// Improved CSV parser for your sample
 function parseCSV(text) {
   const lines = text.split(/\r?\n/).filter(Boolean);
   if (lines.length < 2) return [];
@@ -8,7 +9,6 @@ function parseCSV(text) {
 
   const results = [];
   for (let i = 1; i < lines.length; i++) {
-    // Split while preserving commas inside quotes
     const row = [];
     let inQuotes = false, cell = "";
     for (const char of lines[i]) {
@@ -28,7 +28,6 @@ function parseCSV(text) {
       entry[h] = row[idx]?.replace(/"/g, '').trim();
     });
 
-    // Only keep rows with BUY or SELL and a real symbol
     if (
       entry["Order Type"] &&
       ["buy", "sell"].includes(entry["Order Type"].toLowerCase()) &&
@@ -61,8 +60,7 @@ export default function TradeCsvUpload({ onTradesParsed, clearFile }) {
   const [message, setMessage] = useState("");
   const fileRef = useRef();
 
-  // If clearFile is set, reset file input and message
-  React.useEffect(() => {
+  useEffect(() => {
     if (clearFile && fileRef.current) {
       fileRef.current.value = "";
       setMessage("");
@@ -82,7 +80,7 @@ export default function TradeCsvUpload({ onTradesParsed, clearFile }) {
           setMessage(`Imported ${trades.length} trades!`);
         }
         if (onTradesParsed) onTradesParsed(trades, file.name);
-      } catch (error) {
+      } catch {
         setMessage("Import failed.");
       }
     };
@@ -90,14 +88,35 @@ export default function TradeCsvUpload({ onTradesParsed, clearFile }) {
   };
 
   return (
-    <form style={{ marginBottom: 32 }}>
-      <input
-        type="file"
-        accept=".csv"
-        onChange={handleFileChange}
-        ref={fileRef}
-      />
-      {message && <div style={{ marginTop: 8 }}>{message}</div>}
+    <form>
+      <Button
+        component="label"
+        startIcon={<UploadFileIcon />}
+        variant="contained"
+        color="primary"
+        sx={{
+          textTransform: "none",
+          boxShadow: "0 0 8px #03dac6aa",
+          fontWeight: 600
+        }}
+      >
+        Import CSV
+        <input
+          type="file"
+          accept=".csv"
+          onChange={handleFileChange}
+          hidden
+          ref={fileRef}
+        />
+      </Button>
+      {message && (
+        <div style={{
+          marginTop: 8,
+          color: "#ffd700",
+          fontFamily: "monospace",
+          fontSize: "0.95rem"
+        }}>{message}</div>
+      )}
     </form>
   );
 }
