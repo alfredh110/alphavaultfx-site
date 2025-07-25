@@ -1,9 +1,12 @@
-<svg width="489" height="147" viewBox="0 0 489 147" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="18" width="469" height="111" rx="28" fill="#0A2342" stroke="#fff" stroke-width="2"/>
-  <rect x="34" y="42" width="421" height="63" rx="14" fill="none" stroke="#4FC3F7" stroke-width="1.5"/>
-  <text x="50%" y="87" text-anchor="middle" fill="#4FC3F7"
+<svg width="556" height="175" viewBox="0 0 556 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer dark navy rounded rectangle -->
+  <rect x="8" y="18" width="540" height="139" rx="42" fill="#0A2342"/>
+  <!-- Inner light blue rounded rectangle -->
+  <rect x="38" y="48" width="480" height="80" rx="28" fill="none" stroke="#4FC3F7" stroke-width="3"/>
+  <!-- Centered text, fits perfectly -->
+  <text x="50%" y="103" text-anchor="middle" fill="#4FC3F7"
     font-family="Georgia, 'Times New Roman', Times, serif"
-    font-size="44"
+    font-size="38"
     font-weight="bold"
     letter-spacing="2"
     alignment-baseline="middle"
