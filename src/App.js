@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  ThemeProvider, CssBaseline, Container, Typography, Paper, Box, Button, Stack, TextField
+  ThemeProvider, CssBaseline, Container, Typography, Box, Button, Stack, TextField
 } from "@mui/material";
 import TradeCsvUpload from "./components/TradeCsvUpload";
 import TradeTable from "./components/TradeTable";
@@ -16,7 +16,7 @@ function App() {
   const [capitalEvents, setCapitalEvents] = useState([{ amount: INITIAL_INVESTMENT, atIndex: 0 }]);
   const [capitalAmount, setCapitalAmount] = useState("");
 
-  // Simple nav state for smooth scrolling
+  // Smooth scroll for navigation (optional)
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -26,6 +26,8 @@ function App() {
     setTrades(parsedTrades);
     setFileName(selectedFileName);
     setClearFile(false);
+    // Reset capital events to only the initial investment when changing CSV
+    setCapitalEvents([{ amount: INITIAL_INVESTMENT, atIndex: 0 }]);
   };
 
   const handleRemoveExport = () => {
@@ -118,7 +120,7 @@ function App() {
             {fileName && (
               <>
                 <Button variant="outlined" color="error" onClick={handleRemoveExport}>
-                  Remove Export
+                  Remove CSV
                 </Button>
                 <Typography variant="body2" color="secondary" sx={{ fontFamily: "monospace" }}>
                   {fileName}
@@ -127,7 +129,7 @@ function App() {
             )}
           </Stack>
           <Box my={2}>
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack direction={{ xs: "column", sm: "row" }} alignItems="center" spacing={2}>
               <TextField
                 size="small"
                 type="number"
