@@ -5,10 +5,10 @@ const theme = createTheme({
     mode: "dark",
     background: {
       default: "#151a1e",
-      paper: "rgba(23, 26, 33, 0.97)"
+      paper: "rgba(24, 54, 97, 0.97)"
     },
     primary: {
-      main: "#03dac6"
+      main: "#4FC3F7"
     },
     secondary: {
       main: "#ffd700"
@@ -21,7 +21,7 @@ const theme = createTheme({
     },
     text: {
       primary: "#fff",
-      secondary: "#aaa"
+      secondary: "#4FC3F7"
     }
   },
   typography: {
@@ -36,9 +36,9 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          background: "rgba(23, 26, 33, 0.97)",
+          background: "rgba(24, 54, 97, 0.97)",
           borderRadius: 20,
-          boxShadow: "0 8px 32px 0 rgba(0,0,0,0.40)",
+          boxShadow: "0 8px 32px 0 rgba(10,35,66,0.40)",
           backdropFilter: "blur(8px)"
         }
       }
