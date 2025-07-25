@@ -1,0 +1,10 @@
+body {
+  background: linear-gradient(135deg, #151a1e 60%, #222f3e 100%);
+  min-height: 100vh;
+  /* Subtle grid overlay */
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  font-family: 'IBM Plex Mono', 'Roboto Mono', monospace;
+}
