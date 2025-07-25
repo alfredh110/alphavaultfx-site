@@ -9,7 +9,6 @@
 body {
   background: linear-gradient(135deg, #151a1e 60%, #222f3e 100%);
   min-height: 100vh;
-  /* Subtle grid overlay */
   background-image:
     linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
@@ -28,6 +27,28 @@ header, .navbar {
 .logo {
   height: 80px;
   max-width: 90vw;
+  vertical-align: middle;
+}
+
+.nav-links {
+  display: inline-block;
+  margin-left: 40px;
+  vertical-align: middle;
+}
+.nav-link {
+  color: var(--color-blue);
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin: 0 12px;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-link:hover, .nav-link.active {
+  background: var(--color-blue-light);
+  color: var(--color-navy);
 }
 
 a {
@@ -64,4 +85,14 @@ button:hover, .btn-primary:hover {
   margin: 2em auto;
   max-width: 600px;
   box-shadow: 0 2px 12px rgba(10,35,66, 0.12);
+}
+
+@media (max-width: 600px) {
+  .logo {
+    height: 48px;
+  }
+  .card, .panel {
+    padding: 1em;
+    max-width: 98vw;
+  }
 }
