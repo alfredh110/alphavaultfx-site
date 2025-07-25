@@ -1,3 +1,11 @@
+:root {
+  --color-navy: #0A2342;
+  --color-blue: #4FC3F7;
+  --color-white: #fff;
+  --color-navy-light: #183661;
+  --color-blue-light: #E6F7FF;
+}
+
 body {
   background: linear-gradient(135deg, #151a1e 60%, #222f3e 100%);
   min-height: 100vh;
@@ -6,5 +14,55 @@ body {
     linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
   background-size: 40px 40px;
-  font-family: 'IBM Plex Mono', 'Roboto Mono', monospace;
+  color: var(--color-white);
+  font-family: 'Georgia', 'Times New Roman', Times, serif;
+  margin: 0;
+}
+
+header, .navbar {
+  background: var(--color-navy-light);
+  padding: 1.5em 0 1em 0;
+  text-align: center;
+}
+
+.logo {
+  height: 80px;
+  max-width: 90vw;
+  vertical-align: middle;
+}
+
+a {
+  color: var(--color-blue);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: var(--color-blue-light);
+}
+
+button, .btn-primary {
+  background: var(--color-blue);
+  color: var(--color-navy);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 0.6em 1.5em;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+button:hover, .btn-primary:hover {
+  background: var(--color-blue-light);
+  color: var(--color-navy);
+}
+
+.card, .panel {
+  background: var(--color-navy-light);
+  border: 1px solid var(--color-blue);
+  border-radius: 16px;
+  padding: 2em;
+  margin: 2em auto;
+  max-width: 700px;
+  box-shadow: 0 2px 12px rgba(10,35,66, 0.12);
 }
