@@ -1,38 +1,51 @@
 import React, { useState } from "react";
 
-// Helper to parse CSV
+// Improved CSV parser for your sample
 function parseCSV(text) {
-  const lines = text.split(/\r?\n/);
-  const headers = lines[0]?.split(",");
-  const results = [];
+  const lines = text.split(/\r?\n/).filter(Boolean);
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(",").map(h => h.replace(/"/g, '').trim());
 
+  const results = [];
   for (let i = 1; i < lines.length; i++) {
-    const row = lines[i].split(",");
-    // Skip empty or malformed rows
-    if (row.length !== headers.length) continue;
+    // Split while preserving commas inside quotes
+    const row = [];
+    let inQuotes = false, cell = "";
+    for (const char of lines[i]) {
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ',' && !inQuotes) {
+        row.push(cell);
+        cell = "";
+      } else {
+        cell += char;
+      }
+    }
+    row.push(cell);
 
     const entry = {};
-    for (let j = 0; j < headers.length; j++) {
-      entry[headers[j].trim()] = row[j].trim();
-    }
-    // Only keep BUY and SELL trades
+    headers.forEach((h, idx) => {
+      entry[h] = row[idx]?.replace(/"/g, '').trim();
+    });
+
+    // Only keep rows with BUY or SELL and a real symbol
     if (
-      (entry["Order Type"] === "BUY" || entry["Order Type"] === "SELL") &&
-      entry["Symbol"] !== "No Symbol"
+      entry["Order Type"] &&
+      ["buy", "sell"].includes(entry["Order Type"].toLowerCase()) &&
+      entry["Symbol"] &&
+      entry["Symbol"].toLowerCase() !== "no symbol"
     ) {
       results.push({
         ticket: entry["Ticket"],
         type: entry["Order Type"],
         symbol: entry["Symbol"],
-        volume: parseFloat(entry["Volume"]),
+        volume: parseFloat(entry["Volume"]) || 0,
         sl: entry["S/L"] ? parseFloat(entry["S/L"]) : null,
         tp: entry["T/P"] ? parseFloat(entry["T/P"]) : null,
-        openedAt: entry["Opened At"] ? new Date(entry["Opened At"]) : null,
+        openedAt: entry["Opened At"] ? entry["Opened At"] : null,
         openPrice: entry["Open Price"] ? parseFloat(entry["Open Price"]) : null,
-        closedAt: entry["Closed At"] ? new Date(entry["Closed At"]) : null,
-        closePrice: entry["Close Price"]
-          ? parseFloat(entry["Close Price"])
-          : null,
+        closedAt: entry["Closed At"] ? entry["Closed At"] : null,
+        closePrice: entry["Close Price"] ? parseFloat(entry["Close Price"]) : null,
         swaps: entry["Swaps"] ? parseFloat(entry["Swaps"]) : 0,
         commission: entry["Commission"] ? parseFloat(entry["Commission"]) : 0,
         profit: entry["Profit/Balance"]
