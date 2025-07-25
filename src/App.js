@@ -31,7 +31,7 @@ function App() {
             color: "secondary.main",
             textShadow: "0 0 16px #ffd70055"
           }}>
-            AlphaVaultFX Trading Journal
+            Alpha Vault FX Trading Journal
           </Typography>
           <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
             <TradeCsvUpload onTradesParsed={handleTradesParsed} clearFile={clearFile} />
