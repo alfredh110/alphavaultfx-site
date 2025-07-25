@@ -9,15 +9,34 @@
   <header class="navbar">
     <img src="alphavaultfx-logo.svg" alt="AlphaVaultFX Logo" class="logo" />
     <nav class="nav-links">
-      <a href="index.html" class="nav-link active">Home</a>
-      <a href="trading-journal.html" class="nav-link">Trading Journal</a>
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#trading-journal" class="nav-link">Trading Journal</a>
     </nav>
   </header>
   <main>
-    <section class="card">
+    <section class="card" id="home">
       <h1>Welcome to AlphaVaultFX</h1>
       <p>Your trusted platform for secure, elegant financial solutions.</p>
-      <a class="btn-primary" href="#get-started">Get Started</a>
+      <a class="btn-primary" href="#trading-journal">Get Started</a>
+    </section>
+
+    <section class="card" id="trading-journal">
+      <h1>Trading Journal</h1>
+      <p>Record, review, and reflect on your trades for continual improvement and discipline.</p>
+      <form>
+        <label>Trade Date: <input type="date" name="trade-date" /></label><br><br>
+        <label>Asset: <input type="text" name="asset" /></label><br><br>
+        <label>Direction: 
+          <select name="direction">
+            <option>Buy</option>
+            <option>Sell</option>
+          </select>
+        </label><br><br>
+        <label>Notes:<br>
+          <textarea name="notes"></textarea>
+        </label><br>
+        <button type="submit" class="btn-primary">Add Trade</button>
+      </form>
     </section>
   </main>
 </body>
