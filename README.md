@@ -1,23 +1,42 @@
 # AlphaVaultFX Trading Journal
 
-A personal trading journal for CSV exports from TradeLocker/KOT4X.  
-Built with Node.js/Express (backend) and React (frontend).  
-CSV import parses only actual trades (ignores commissions, deposits, etc).
-
-## Quick Start
-
-1. `cd backend && npm install`
-2. Set up your MongoDB string in `backend/.env`
-3. `node server.js` (or `npm run dev` for nodemon)
-4. `cd ../frontend && npm install`
-5. `npm start`
-6. Go to [http://localhost:3000](http://localhost:3000)
+A professional, public trading journal web app for logging, importing, and reviewing your trades from TradeLocker/KOT4X.
 
 ## Features
 
-- Upload TradeLocker CSVs
-- Auto-import only real trades (BUY/SELL)
-- View trades in a table
-- Extend with analytics as you like!
+- Upload TradeLocker CSV exports
+- Automatically imports only real trades (BUY/SELL)
+- View trades in a sortable table
+- Ready to extend with analytics and stats
+
+## Stack
+
+- **Frontend:** React (create-react-app)
+- **Backend:** Node.js/Express, MongoDB (Mongoose)
+- **Deploy:** Frontend can be deployed on Vercel, Netlify, or GitHub Pages. Backend can be hosted on Render, Railway, etc.
 
 ---
+
+## Quick Start
+
+### 1. Backend
+
+```bash
+cd backend
+npm install
+# Edit .env for your MongoDB connection
+npm run dev
+```
+
+### 2. Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+---
+
+- Visit [http://localhost:3000](http://localhost:3000) to use your journal.
+- Deploy the frontend publicly for a professional look!
