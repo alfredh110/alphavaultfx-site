@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 // Improved CSV parser for your sample
 function parseCSV(text) {
@@ -57,8 +57,17 @@ function parseCSV(text) {
   return results;
 }
 
-export default function TradeCsvUpload({ onTradesParsed }) {
+export default function TradeCsvUpload({ onTradesParsed, clearFile }) {
   const [message, setMessage] = useState("");
+  const fileRef = useRef();
+
+  // If clearFile is set, reset file input and message
+  React.useEffect(() => {
+    if (clearFile && fileRef.current) {
+      fileRef.current.value = "";
+      setMessage("");
+    }
+  }, [clearFile]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -72,7 +81,7 @@ export default function TradeCsvUpload({ onTradesParsed }) {
         } else {
           setMessage(`Imported ${trades.length} trades!`);
         }
-        if (onTradesParsed) onTradesParsed(trades);
+        if (onTradesParsed) onTradesParsed(trades, file.name);
       } catch (error) {
         setMessage("Import failed.");
       }
@@ -82,7 +91,12 @@ export default function TradeCsvUpload({ onTradesParsed }) {
 
   return (
     <form style={{ marginBottom: 32 }}>
-      <input type="file" accept=".csv" onChange={handleFileChange} />
+      <input
+        type="file"
+        accept=".csv"
+        onChange={handleFileChange}
+        ref={fileRef}
+      />
       {message && <div style={{ marginTop: 8 }}>{message}</div>}
     </form>
   );
