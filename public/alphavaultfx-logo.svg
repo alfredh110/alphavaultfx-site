@@ -1,0 +1,20 @@
+<svg width="340" height="90" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="340" height="90" rx="20" fill="#0A2342"/>
+  <!-- Stylized AVFX Letters -->
+  <g font-family="'IBM Plex Mono', 'Roboto Mono', monospace" font-weight="bold">
+    <!-- A (triangle) -->
+    <polygon points="35,70 55,20 75,70" fill="#4FC3F7"/>
+    <rect x="48" y="50" width="14" height="6" rx="3" fill="#0A2342"/>
+    <!-- V -->
+    <polyline points="90,20 100,70 110,20" fill="none" stroke="#4FC3F7" stroke-width="7" stroke-linecap="round"/>
+    <!-- F -->
+    <rect x="130" y="20" width="7" height="50" rx="3.5" fill="#4FC3F7"/>
+    <rect x="137" y="20" width="22" height="7" rx="3.5" fill="#4FC3F7"/>
+    <rect x="137" y="39" width="16" height="7" rx="3.5" fill="#4FC3F7"/>
+    <!-- X -->
+    <line x1="170" y1="22" x2="190" y2="68" stroke="#4FC3F7" stroke-width="7" stroke-linecap="round"/>
+    <line x1="190" y1="22" x2="170" y2="68" stroke="#4FC3F7" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <!-- Text: AlphaVaultFX -->
+  <text x="210" y="58" fill="#fff" font-family="'IBM Plex Mono', 'Roboto Mono', monospace" font-size="28" font-weight="bold" letter-spacing="2">AlphaVaultFX</text>
+</svg>
